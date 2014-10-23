@@ -8,6 +8,7 @@ package br.com.sigha.Dao;
 import br.com.sigha.Beans.HorarioAulaBeans;
 import br.com.sigha.Beans.HorarioAulaPesquisaBeans;
 import br.com.sigha.Beans.MateriaBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,6 +46,7 @@ public class HorarioAulaDao {
                 pstm.setString(5, anoletivo);
                 pstm.setString(6, new SimpleDateFormat("yyyy.MM.dd").format(datageracao));
                 pstm.setInt(7, idunidade);
+                new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
                 pstm.execute();
                 pstm.close();
 
@@ -60,6 +62,7 @@ public class HorarioAulaDao {
             pstm.setString(1, anoletivo);
             pstm.setString(2, new SimpleDateFormat("yyyy.MM.dd").format(datageracao));
             pstm.setInt(3, idcurso);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<HorarioAulaBeans> lhorario = new ArrayList<>();
             while (rs.next()) {
@@ -96,6 +99,7 @@ public class HorarioAulaDao {
             pstm.setString(2, new SimpleDateFormat("yyyy.MM.dd").format(datageracao));
             pstm.setInt(3, idcurso);
             pstm.setInt(4, periodo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<HorarioAulaBeans> lhorario = new ArrayList<>();
             while (rs.next()) {
@@ -131,6 +135,7 @@ public class HorarioAulaDao {
             pstm.setString(1, anoletivo);
             pstm.setString(2, new SimpleDateFormat("yyyy.MM.dd").format(datageracao));
             pstm.setInt(3, idcurso);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<HorarioAulaBeans> lhorario = new ArrayList<>();
             while (rs.next()) {
@@ -151,10 +156,11 @@ public class HorarioAulaDao {
             String datageracaof = new SimpleDateFormat("yyyy.MM.dd").format(datageracao);
             String sql = "select h.* from horarioaula h where \n"
                     + "h.segunda=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "' or(h.terca=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') or(h.quarta=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') or(h.quinta=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') "
-                    + "or(h.sexta=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') or(h.sabado=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') or(h.domingo=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') ";
+                    + "or(h.sexta=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') or(h.sabado=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') or(h.domingo=" + idprofessor + " and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "') ";            
             PreparedStatement pstm = conexao.prepareStatement(sql);
 //        pstm.setString(1, anoletivo);
 //        pstm.setString(2, new SimpleDateFormat("yyyy.MM.dd").format(datageracao));
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<HorarioAulaBeans> lhorario = new ArrayList<>();
             while (rs.next()) {
@@ -217,8 +223,9 @@ public class HorarioAulaDao {
             int ocorrencia = 0;
             String sql = "select * from (select h.* from horarioaula h , professormateria p where "
                     + "h." + dia + "=p.id and anoletivo='" + anoletivo + "' and datageracao='" + datageracaof + "' and p.idprofessor=" + idprofessor + " "
-                    + ") ho where inicio='" + inicio + "' and termino='" + fim + "'";
+                    + ") ho where inicio='" + inicio + "' and termino='" + fim + "'";            
             PreparedStatement pst = conexao.prepareStatement(sql);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             // JOptionPane.showMessageDialog(null, sql);
 
@@ -245,12 +252,13 @@ public class HorarioAulaDao {
     //metodo utilizado no algoritmo guloso
     public int VerificaOcorrencProfDia(String dia, int periodo, Date datageracao, String anoletivo, int idprofessor) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
-            String sql = "select count(id) from horarioaula where " + dia + "=? and periodo=? and datageracao=? and anoletivo=?";
+            String sql = "select count(id) from horarioaula where " + dia + "=? and periodo=? and datageracao=? and anoletivo=?";            
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idprofessor);
             pst.setInt(2, periodo);
             pst.setString(3, new SimpleDateFormat("yyyy.MM.dd").format(datageracao));
             pst.setString(4, anoletivo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             int res = 0;
             while (rs.next()) {
@@ -275,6 +283,7 @@ public class HorarioAulaDao {
             pst.setInt(6, periodo);
             pst.setInt(7, idcurso);
             pst.setInt(8, idunidade);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             pst.execute();
             pst.close();
 
@@ -284,8 +293,9 @@ public class HorarioAulaDao {
     public List<HorarioAulaPesquisaBeans> BuscaHorario(String valor, String campo) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             String sql = "select * from (select c.nome curso,h.anoletivo,h.datageracao,u.razao unidade from horarioaula h left join curso c on(h.idcurso=c.id)"
-                    + "left join unidade u on(h.idunidade=u.id) group by 1,2,3,4) sh where sh."+campo+" like '%"+valor+"%'";
+                    + "left join unidade u on(h.idunidade=u.id) group by 1,2,3,4) sh where sh."+campo+" like '%"+valor+"%'";          
             PreparedStatement pst=conexao.prepareStatement(sql);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs=pst.executeQuery();
             List<HorarioAulaPesquisaBeans> lhap=new ArrayList<>();
             while(rs.next()){
@@ -296,7 +306,9 @@ public class HorarioAulaDao {
                 hap.setCurso(rs.getString("curso"));
                 lhap.add(hap);
             }
-                    return lhap;
+            rs.close();
+            pst.close();
+            return lhap;
         }
     }
 
@@ -307,7 +319,9 @@ public class HorarioAulaDao {
         PreparedStatement pstm=conexao.prepareStatement(sql);
         pstm.setString(1, datahorario);
         pstm.setString(2, anoletivo);
+        new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
         pstm.execute();
+        pstm.close();
         resp=true;
         }
         return resp;
@@ -321,7 +335,9 @@ public class HorarioAulaDao {
         pstm.setString(1, datahorario);
         pstm.setString(2, anoletivo);
         pstm.setInt(3, idcurso);
+        new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
         pstm.execute();
+        pstm.close();
         resp=true;
         }
         return resp;

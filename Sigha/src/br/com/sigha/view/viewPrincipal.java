@@ -135,7 +135,7 @@ public class viewPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/MATERIA32X32.png"))); // NOI18N
-        jMenuItem6.setText("Cadastro De Materias");
+        jMenuItem6.setText("Cadastro De Disciplina");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -231,15 +231,6 @@ public class viewPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-//        if (!viewconfiguracao.isVisible()) {
-//            viewconfiguracao.setVisible(true);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Janela ja Aberta", "Alerta", JOptionPane.WARNING_MESSAGE);
-//        }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         System.exit(0);
@@ -280,10 +271,10 @@ public class viewPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
 
-            if (!getJanelaAberta("Cadastro de Materias")) {
+            if (!getJanelaAberta("Cadastro de Disciplina")) {
                 Component component = new Component() {};
                 ViewPCadMaterias viewcadmaterias = new ViewPCadMaterias();
-                jTAPabasjanelas.addTab("Cadastro de Materias", null, viewcadmaterias);
+                jTAPabasjanelas.addTab("Cadastro de Disciplina", null, viewcadmaterias);
                 jTAPabasjanelas.setSelectedComponent(viewcadmaterias);
                 int j = jTAPabasjanelas.getSelectedIndex();
                 jTAPabasjanelas.setTabComponentAt(j, new ButtonTabComponent(jTAPabasjanelas));
@@ -326,6 +317,15 @@ public class viewPrincipal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Janela ja Aberta", "Alerta", JOptionPane.WARNING_MESSAGE);
             }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        //        if (!viewconfiguracao.isVisible()) {
+            //            viewconfiguracao.setVisible(true);
+            //        } else {
+            //            JOptionPane.showMessageDialog(null, "Janela ja Aberta", "Alerta", JOptionPane.WARNING_MESSAGE);
+            //        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

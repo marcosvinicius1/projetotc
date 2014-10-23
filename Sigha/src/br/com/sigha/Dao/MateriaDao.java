@@ -6,12 +6,14 @@
 package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.MateriaBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ public class MateriaDao {
                     + " left join curso on(materia.idcurso=curso.id) where curso.idunidade=?;";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idunidade);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<MateriaBeans> lmb = new ArrayList<MateriaBeans>();
             while (rs.next()) {
@@ -63,12 +66,13 @@ public class MateriaDao {
     }
 
     //metodo busca materia pela sigla metodo utilizado na geracao de horario
-    public List<MateriaBeans> BuscaMateriaSigla(String sigla, int periodo) throws SQLException {
+    public List<MateriaBeans> BuscaIdMateria(String sigla, int periodo) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
-            String sql = "SELECT * FROM gerador.materia where sigla in('" + sigla + "') and periodo=? and ativo='true'";
+            String sql = "SELECT * FROM gerador.materia where id in(" + sigla + ") and periodo=? and ativo='true'";
             PreparedStatement pst = conexao.prepareStatement(sql);
             // pst.setString(1, sigla);
             pst.setInt(1, periodo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<MateriaBeans> lmb = new ArrayList<MateriaBeans>();
             while (rs.next()) {
@@ -108,6 +112,7 @@ public class MateriaDao {
                     + "materia.domingo,curso.nome as nomecurso,materia.sigla FROM gerador.materia left join curso on(materia.idcurso=curso.id) where materia.idcurso=? and materia.ativo='true';";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idcurso);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<MateriaBeans> lmb = new ArrayList<MateriaBeans>();
             while (rs.next()) {
@@ -140,6 +145,7 @@ public class MateriaDao {
                     + "where materia.idcurso=? and materia.ativo='true' group by materia.periodo,horariocurso.inicio,horariocurso.termino";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idcurso);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<MateriaBeans> lmb = new ArrayList<MateriaBeans>();
             while (rs.next()) {
@@ -169,6 +175,7 @@ public class MateriaDao {
             String sql = "SELECT * FROM gerador.materia  where id=?";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idmateria);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             MateriaBeans mb = new MateriaBeans();
             while (rs.next()) {

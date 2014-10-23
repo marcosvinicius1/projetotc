@@ -111,8 +111,19 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         jTsigla = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("CARGA HORARIA"));
         jPanel7.setForeground(new java.awt.Color(204, 0, 0));
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
+            }
+        });
 
         jLabel18.setText("Carga Horaria Anual");
 
@@ -122,6 +133,7 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         jFhoraanual.setText("000:00");
+        jFhoraanual.setToolTipText("Carga Horária Anual da Disciplina");
         jFhoraanual.setEnabled(false);
 
         jLabel19.setText("hs");
@@ -134,6 +146,7 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         jFhoraaula.setText("00:00");
+        jFhoraaula.setToolTipText("Carga Horária de Cada Aula no Dia");
         jFhoraaula.setEnabled(false);
 
         jLabel23.setText("hs");
@@ -141,6 +154,7 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         jLabel16.setText("Quant.Aulas Semanais");
 
         jSqtdesemana.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jSqtdesemana.setToolTipText("Quantidade de Aula na Semana");
         jSqtdesemana.setEnabled(false);
         jSqtdesemana.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -156,12 +170,14 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         jLabel20.setText("Quant.Aula Dia");
 
         jSqtdedia.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        jSqtdedia.setToolTipText("Quantidade de Aula no dia");
         jSqtdedia.setEnabled(false);
 
         jLabel21.setText("Aulas");
 
         jCsequencial.setSelected(true);
         jCsequencial.setText("Sim");
+        jCsequencial.setToolTipText("Sé as Aulas no Dia for Seguidamente");
         jCsequencial.setEnabled(false);
 
         jLabel6.setText("Aulas Sequencial");
@@ -237,7 +253,7 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MATERIA", "PERIODO", "CURSO", "CARGA H.ANUAL", "QTDE.SEMANAL"
+                "DISCIPLINA", "PERIODO", "CURSO", "CARGA H.ANUAL", "QTDE.SEMANAL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -334,10 +350,12 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         jLabel2.setText("Periodo");
 
         jCcurso.setMaximumRowCount(20);
+        jCcurso.setToolTipText("Curso que ela Pertence");
         jCcurso.setEnabled(false);
 
         jTnome.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(50)
         );
+        jTnome.setToolTipText("Nome da Disciplina");
         jTnome.setEnabled(false);
         jTnome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,6 +369,12 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("DIAS PROVAVEIS DE AULA"));
+        jPanel1.setToolTipText("Dias Que Podera Ter Aula");
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         jCsegunda.setSelected(true);
         jCsegunda.setText("Segunda-feira");
@@ -439,11 +463,13 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         jRativo.setEnabled(false);
 
         jCperiodo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jCperiodo.setToolTipText("Perio/Ano da Disciplina");
         jCperiodo.setEnabled(false);
 
-        jTsigla.setEditable(false);
         jTsigla.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(5)
         );
+        jTsigla.setToolTipText("Sigla para Disciplina");
+        jTsigla.setEnabled(false);
 
         jLabel5.setForeground(new java.awt.Color(204, 0, 0));
         jLabel5.setText("Sigla");
@@ -617,6 +643,21 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jSqtdesemanaMouseClicked
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+       avisoCadastro(); 
+    }//GEN-LAST:event_formMouseClicked
+
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        // TODO add your handling code here:
+        avisoCadastro();
+    }//GEN-LAST:event_jPanel7MouseClicked
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        // TODO add your handling code here:
+        avisoCadastro();
+    }//GEN-LAST:event_jPanel1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBcancelar;
@@ -714,7 +755,7 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         jCsexta.setEnabled(true);
         jCsabado.setEnabled(true);
         jCdomingo.setEnabled(true);
-        jTsigla.setEditable(true);
+        jTsigla.setEnabled(true);
         jCsequencial.setEnabled(true);
         
     }
@@ -735,7 +776,7 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
         jCsexta.setEnabled(false);
         jCsabado.setEnabled(false);
         jCdomingo.setEnabled(false);
-        jTsigla.setEditable(false);
+        jTsigla.setEnabled(false);
         jCsequencial.setEnabled(false);
     }
 
@@ -880,5 +921,10 @@ public class ViewPCadMaterias extends javax.swing.JPanel {
             ver=true;
         }
         return ver;
+    }
+    private void avisoCadastro(){       
+        if(jBnovo.isEnabled()&& "".equals(jTnome.getText())){
+              JOptionPane.showMessageDialog(null, "Click em Novo Para Cadastrar", "Cadatro", JOptionPane.WARNING_MESSAGE);
+        }
     }
 }

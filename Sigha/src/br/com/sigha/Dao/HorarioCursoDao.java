@@ -6,12 +6,14 @@
 package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.HorarioCursoBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +51,7 @@ public class HorarioCursoDao {
             String sql = "SELECT * FROM gerador.horariocurso where idcurso=?";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idcurso);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<HorarioCursoBeans> listahorario = new ArrayList<HorarioCursoBeans>();
             while (rs.next()) {
@@ -77,6 +80,7 @@ public class HorarioCursoDao {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             String sql = "SELECT * FROM gerador.horariocurso where idcurso in(" + idcurso + ") group by inicio,termino order by inicio";
             PreparedStatement pst = conexao.prepareStatement(sql);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<HorarioCursoBeans> listahorario = new ArrayList<HorarioCursoBeans>();
             while (rs.next()) {

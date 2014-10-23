@@ -6,12 +6,14 @@
 package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.CursoBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,6 +73,7 @@ public class CursoDao {
             String sql = "select curso.*,professor.nome as nomecoordenador from curso left join professor on(curso.idprofessor=professor.id) where curso.idunidade=? and curso.ativo='true'";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idunidade);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<CursoBeans> lcb = new ArrayList<CursoBeans>();
             while (rs.next()) {

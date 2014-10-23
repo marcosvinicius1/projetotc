@@ -30,6 +30,7 @@ public class ProfessorBeans {
     private String bairro;
     private String cidade;
     private String estado;
+    private Integer idcidade;
 
     public Integer getId() {
         return id;
@@ -173,6 +174,14 @@ public class ProfessorBeans {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Integer getIdcidade() {
+        return idcidade;
+    }
+
+    public void setIdcidade(Integer idcidade) {
+        this.idcidade = idcidade;
     }
     
     

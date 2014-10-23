@@ -7,6 +7,7 @@ package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.ProfessorBeans;
 import br.com.sigha.Beans.ProfessorMateriaBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +42,7 @@ public class ProfessorMateriaDao {
             while (rs.next()) {
                 idmateriaprofessor = rs.getInt(1);
             }
+            rs.close();
             pstm.close();
             return idmateriaprofessor;
         }
@@ -52,6 +55,7 @@ public class ProfessorMateriaDao {
                     + "where professormateria.idmateria=materia.id and materia.idcurso=curso.id and professormateria.idprofessor=?";
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idprofessor);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<ProfessorMateriaBeans> lprofessormateria = new ArrayList<ProfessorMateriaBeans>();
             while (rs.next()) {
@@ -80,6 +84,7 @@ public class ProfessorMateriaDao {
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idmateria);
             pstm.setInt(2, idunidade);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<ProfessorMateriaBeans> lprofessormateria = new ArrayList<ProfessorMateriaBeans>();
             while (rs.next()) {
@@ -104,6 +109,7 @@ public class ProfessorMateriaDao {
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idmateria);
             pstm.setInt(2, idunidade);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             ProfessorBeans pb = new ProfessorBeans();
             while (rs.next()) {
@@ -141,15 +147,16 @@ public class ProfessorMateriaDao {
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idmateria);
             pstm.setInt(2, idunidade);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             ProfessorMateriaBeans pfb = new ProfessorMateriaBeans();
             while (rs.next()) {
                 pfb.setId(rs.getInt("id"));
                 pfb.setIdmateria(rs.getInt("idmateria"));
                 pfb.setIdprofessor(rs.getInt("idprofessor"));
-            }
-            pstm.close();
+            }            
             rs.close();
+            pstm.close();
             return pfb;
         }
     }
@@ -157,6 +164,7 @@ public class ProfessorMateriaDao {
     public void DeletaMateria(String id, int idprofessor) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             String sql = "delete from professormateria where idprofessor=? and id not in(" + id + ")";
+            
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idprofessor);
             pstm.execute();
@@ -185,10 +193,13 @@ public class ProfessorMateriaDao {
             PreparedStatement pst=conexao.prepareCall(sql);
             pst.setInt(1, idcurso);
             pst.setInt(2, periodo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs=pst.executeQuery();
             while(rs.next()){
                 res=rs.getInt("qtde");
             }
+            rs.close();
+            pst.close();
         }
         return res;
     }
@@ -200,10 +211,13 @@ public class ProfessorMateriaDao {
                     + "join professor p on(pm.idprofessor=p.id) left join materia m on(m.id=pm.idmateria) where pm.id=?";
             PreparedStatement pst=conexao.prepareStatement(sql);
             pst.setInt(1, idprofessormateria);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs=pst.executeQuery();
             while(rs.next()){
                 res=rs.getInt("qtdeaulasem");
             }
+            rs.close();
+            pst.close();
         }
         return res;
     }

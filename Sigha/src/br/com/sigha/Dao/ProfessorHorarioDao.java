@@ -6,12 +6,14 @@
 package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.ProfessorHorarioBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,6 +52,7 @@ public class ProfessorHorarioDao {
                     + "on(professormateria.id=horarioprofessor.idprofessormateria) where idprofessor=? group by inicio,termino ";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, idprofessor);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<ProfessorHorarioBeans> listahorario = new ArrayList<>();
             while (rs.next()) {
@@ -83,14 +86,15 @@ public class ProfessorHorarioDao {
         }
     }
 
-    public List<ProfessorHorarioBeans> BuscaProfessorHorarioSigla(String sigla) throws SQLException {
+    public List<ProfessorHorarioBeans> BuscaProfessorHorarioSigla(Integer sigla) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             String sql = "select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) "
                     + "left join materia m on(pm.idmateria=m.id) "
                     + "left join horarioprofessor hp on(hp.idprofessormateria=pm.id) "
-                    + "where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.sigla=?";
+                    + "where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=?";
             PreparedStatement pstm=conexao.prepareStatement(sql);
-            pstm.setString(1, sigla);
+            pstm.setInt(1, sigla);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs= pstm.executeQuery();
             List<ProfessorHorarioBeans> listahorario=new ArrayList<>();
             while (rs.next()) {                

@@ -23,6 +23,7 @@ import br.com.sigha.Util.DataSistema;
 import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.Util.QtdeOcorrenciaCaracter;
 import br.com.sigha.conexao.ConexaoBanco;
+import java.io.File;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -466,7 +467,7 @@ public class ViewPHorarioAula extends javax.swing.JPanel {
         try {
             if (jTcurso.getRowCount() > 0 && Integer.valueOf(jTanohorario.getText()) > 0) {
                 aguarde("Aguarde Gerando Horario");
-
+                new LogsTxt().criaPasta(new DataSistema().getDia()+"."+new DataSistema().getMes()+"."+new DataSistema().getAno());
                 ThreadGeraHorario t = new ThreadGeraHorario(this, jYanohorario.getValue() + "/" + jTanohorario.getText(), new Date());
                 new Thread(t).start();
 
@@ -654,17 +655,22 @@ public class ViewPHorarioAula extends javax.swing.JPanel {
         jBemprimir.setEnabled(true);
     }
 
-     public void GeraHorario(int geracao) {       
+     public void GeraHorario(int geracao) {  
+         //sera utilizado para gerar mais de um horario de aula do mesmo curso
         jTanohorario.setText(String.valueOf(Integer.valueOf(jTanohorario.getText())+geracao));       
         LAuxGradeHorario lf = new LAuxGradeHorario(jYanohorario.getValue() + "/" + jTanohorario.getText());
         try {
 
             for (int i = 0; i < jTcurso.getRowCount(); i++) {
+                //preenche tabela horarioauxiliar
                  lf.GradeHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
+                 //sincroniza professores no horario, de acordo com suas preferencias e configuraçao no horario
                 SincronizaProfessor(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
                 while(verificaHorario(jYanohorario.getValue() + "/" + jTanohorario.getText(),Integer.valueOf(jTcurso.getValueAt(i, 0).toString()),new Date())){                                       
                     LProfessorHorario lpo=new LProfessorHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));        
+                    //cadastra horario de aula
                     lpo.CadastraHorarioAula(jYanohorario.getValue() + "/" + jTanohorario.getText(),new Date());
+                    //sincroniza professor com horario de aula
                     SincronizaProfessor(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
                 }               
             }
@@ -676,7 +682,7 @@ public class ViewPHorarioAula extends javax.swing.JPanel {
     }
 
     private void BuscaCursos() {
-
+        new LogsTxt().criaPasta(new DataSistema().getDia()+"."+new DataSistema().getMes()+"."+new DataSistema().getAno());
         try {
             CursoDao cd = new CursoDao();
             lcurso = cd.BuscaCursoAtivo(new UnidadeLogadoBeans().getId());

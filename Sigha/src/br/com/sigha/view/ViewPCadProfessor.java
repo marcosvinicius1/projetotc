@@ -5,6 +5,7 @@
  */
 package br.com.sigha.view;
 import br.com.sigha.Beans.AuxVerificaProfrHorAulaBeans;
+import br.com.sigha.Beans.CidadeBeans;
 import br.com.sigha.Beans.CursoBeans;
 import br.com.sigha.Beans.HorarioCursoBeans;
 import br.com.sigha.Beans.ProfessorHorarioBeans;
@@ -14,6 +15,7 @@ import br.com.sigha.Beans.ProfessorBeans;
 import br.com.sigha.Beans.ProfessorMateriaBeans;
 import br.com.sigha.Beans.UnidadeLogadoBeans;
 import br.com.sigha.Dao.AuxVerificaProfHorAulaDao;
+import br.com.sigha.Dao.CidadeDao;
 import br.com.sigha.Dao.CursoDao;
 import br.com.sigha.Dao.HorarioCursoDao;
 import br.com.sigha.Dao.ProfessorHorarioDao;
@@ -23,12 +25,20 @@ import br.com.sigha.Dao.ProfessorMateriaDao;
 import br.com.sigha.Validacao.Cpf;
 import br.com.sigha.Util.PintarLinhasTabela;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -43,6 +53,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
      * Creates new form ViewPCadProfessor
      */
     private int idprofessor;//guarda o id do professor que esta sendo editado
+    private int idcidade;//guarda o id da cidade utilizado no momento
     List<CursoBeans> lcurso;
     List<MateriaBeans> lmateria;
     List<HorarioCursoBeans> lhorariocurso;
@@ -52,6 +63,8 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
     private List<ProfessorBeans> lprofessor;//lista de professores cadastrados
     DefaultTableModel tabelacurso, tabelahorario;
     Boolean adcionoumateria = false;//verifica se a grade de materia relacionado ao professor foi mudada
+    private List<CidadeBeans> lcidade;//lista de cidades
+    
 
     public ViewPCadProfessor() {
 
@@ -63,6 +76,12 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         jTcursos.getColumnModel().getColumn(1).setMinWidth(330);
         jTcursos.getColumnModel().getColumn(2).setMaxWidth(250);
         jTcursos.getColumnModel().getColumn(2).setMinWidth(250);
+        jDjTcidade.getColumnModel().getColumn(1).setMaxWidth(250);
+        jDjTcidade.getColumnModel().getColumn(1).setMinWidth(250);
+        jDjTcidade.getColumnModel().getColumn(2).setMaxWidth(250);
+        jDjTcidade.getColumnModel().getColumn(2).setMinWidth(250);
+        jDjTcidade.getColumnModel().getColumn(3).setMaxWidth(150);
+        jDjTcidade.getColumnModel().getColumn(3).setMinWidth(150);
         OcultaCampo();
 
     }
@@ -76,12 +95,15 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
+        jDprofessor = new javax.swing.JDialog();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTcadprofessor = new javax.swing.JTable();
         jTpesquisa = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jCcampopesquisa = new javax.swing.JComboBox();
+        jDcidade = new javax.swing.JDialog();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jDjTcidade = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTnome = new javax.swing.JTextField();
@@ -112,6 +134,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jTnumero = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
+        jBcidade = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jFfixo = new javax.swing.JFormattedTextField();
@@ -139,11 +162,12 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         jBpsquisar = new javax.swing.JButton();
         jBcancelar = new javax.swing.JButton();
 
-        jDialog1.setMinimumSize(new java.awt.Dimension(635, 350));
-        jDialog1.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog1.addWindowListener(new java.awt.event.WindowAdapter() {
+        jDprofessor.setTitle("Pesquisa Professor");
+        jDprofessor.setMinimumSize(new java.awt.Dimension(635, 350));
+        jDprofessor.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDprofessor.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                jDialog1WindowClosed(evt);
+                jDprofessorWindowClosed(evt);
             }
         });
 
@@ -189,31 +213,31 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
 
         jCcampopesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NOME", "TIPO", "REGISTRO" }));
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jDprofessorLayout = new javax.swing.GroupLayout(jDprofessor.getContentPane());
+        jDprofessor.getContentPane().setLayout(jDprofessorLayout);
+        jDprofessorLayout.setHorizontalGroup(
+            jDprofessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDprofessorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDprofessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
-                    .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addGroup(jDprofessorLayout.createSequentialGroup()
                         .addComponent(jLabel27)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addGroup(jDprofessorLayout.createSequentialGroup()
                         .addComponent(jTpesquisa)
                         .addGap(18, 18, 18)
                         .addComponent(jCcampopesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(93, 93, 93)))
                 .addContainerGap())
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+        jDprofessorLayout.setVerticalGroup(
+            jDprofessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDprofessorLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel27)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jDprofessorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTpesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCcampopesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -221,22 +245,89 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        jDialog1.getAccessibleContext().setAccessibleParent(null);
+        jDprofessor.getAccessibleContext().setAccessibleParent(null);
+
+        jDcidade.setTitle("Cidades");
+        jDcidade.setMinimumSize(new java.awt.Dimension(651, 269));
+        jDcidade.setModal(true);
+        jDcidade.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jDcidadeComponentShown(evt);
+            }
+        });
+
+        jDjTcidade.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "CIDADE", "DISTRITO", "ESTADO", "UF", "PAIS"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jDjTcidade.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jDjTcidade.getTableHeader().setResizingAllowed(false);
+        jDjTcidade.getTableHeader().setReorderingAllowed(false);
+        jDjTcidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jDjTcidadeKeyPressed(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jDjTcidade);
+        if (jDjTcidade.getColumnModel().getColumnCount() > 0) {
+            jDjTcidade.getColumnModel().getColumn(0).setResizable(false);
+            jDjTcidade.getColumnModel().getColumn(1).setResizable(false);
+            jDjTcidade.getColumnModel().getColumn(2).setResizable(false);
+            jDjTcidade.getColumnModel().getColumn(3).setResizable(false);
+            jDjTcidade.getColumnModel().getColumn(4).setResizable(false);
+            jDjTcidade.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        javax.swing.GroupLayout jDcidadeLayout = new javax.swing.GroupLayout(jDcidade.getContentPane());
+        jDcidade.getContentPane().setLayout(jDcidadeLayout);
+        jDcidadeLayout.setHorizontalGroup(
+            jDcidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+        );
+        jDcidadeLayout.setVerticalGroup(
+            jDcidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDcidadeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
         jLabel1.setText("Nome:");
 
         jTnome.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(80)
         );
+        jTnome.setToolTipText("Nome do Professor");
 
         jLabel2.setText("E-mail");
 
-        jTemail.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20));
+        jTemail.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(40));
+        jTemail.setToolTipText("Email do Professor");
+        jTemail.setNextFocusableComponent(jFcpf);
 
         jLabel3.setForeground(new java.awt.Color(204, 0, 0));
         jLabel3.setText("Data Cadastro");
+
+        jDdatacadastro.setToolTipText("Data que Foi Cadastrado");
 
         jLabel14.setText("Situação");
 
@@ -315,6 +406,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         jFcpf.setText("000.000.000-00");
+        jFcpf.setToolTipText("CPF Valido do Professor");
         jFcpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFcpfActionPerformed(evt);
@@ -346,17 +438,29 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
 
         jLabel8.setText("Bairro");
 
+        jLabel9.setForeground(new java.awt.Color(204, 0, 0));
         jLabel9.setText("Cidade");
 
+        jTcidade.setEditable(false);
         jTcidade.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(30));
 
+        jTestado.setEditable(false);
         jTestado.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20));
 
+        jLabel10.setForeground(new java.awt.Color(204, 0, 0));
         jLabel10.setText("Estado");
 
         jTnumero.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(10));
 
         jLabel26.setText("Numero");
+
+        jBcidade.setText("...");
+        jBcidade.setEnabled(false);
+        jBcidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBcidadeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -367,7 +471,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addGap(0, 392, Short.MAX_VALUE))
+                        .addGap(0, 404, Short.MAX_VALUE))
                     .addComponent(jTrua))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,17 +481,19 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTbairro, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                        .addGap(0, 113, Short.MAX_VALUE))
+                    .addComponent(jTbairro, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jTcidade, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
-                .addGap(27, 27, 27)
+                    .addComponent(jTcidade, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
+                .addComponent(jBcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jTestado, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
-                .addGap(22, 22, 22))
+                    .addComponent(jTestado, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,8 +510,9 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
                     .addComponent(jTbairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTcidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 26, Short.MAX_VALUE))
+                    .addComponent(jTnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBcidade))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("TELEFONE"));
@@ -418,6 +525,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         jFfixo.setText("(00)0000-0000");
+        jFfixo.setNextFocusableComponent(jFcelular);
 
         jLabel12.setText("Celular");
 
@@ -427,6 +535,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         jFcelular.setText("(00)0000-0000");
+        jFcelular.setNextFocusableComponent(jTrua);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -455,6 +564,8 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         );
 
         jTregistro.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20));
+        jTregistro.setToolTipText("Numero do Registro do Professor na Unidade");
+        jTregistro.setNextFocusableComponent(jFfixo);
 
         jLabel25.setForeground(new java.awt.Color(204, 0, 0));
         jLabel25.setText("Registro");
@@ -485,7 +596,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
                             .addComponent(jTregistro, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 78, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -845,8 +956,8 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
 
     private void jBpsquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBpsquisarActionPerformed
         // TODO add your handling code here:
-        jDialog1.setLocationRelativeTo(null);
-        jDialog1.setVisible(true);
+        jDprofessor.setLocationRelativeTo(null);
+        jDprofessor.setVisible(true);
         DefaultTableModel tabelaprofessor = (DefaultTableModel) jTcadprofessor.getModel();
         tabelaprofessor.setNumRows(0);
     }//GEN-LAST:event_jBpsquisarActionPerformed
@@ -856,6 +967,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         AtivaTela();
         LimpaTela();
         SalvarCancelar();
+        
     }//GEN-LAST:event_jBnovoActionPerformed
 
     private void jBcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcancelarActionPerformed
@@ -875,7 +987,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         try {
             LimpaTela();
             ClickProfessor();
-            jDialog1.setVisible(false);
+            jDprofessor.setVisible(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Preencher Dados Na Tela\n" + e, "Cadastro de Professor", JOptionPane.ERROR_MESSAGE);
         }
@@ -883,10 +995,10 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jTcadprofessorMouseClicked
 
-    private void jDialog1WindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDialog1WindowClosed
+    private void jDprofessorWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jDprofessorWindowClosed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jDialog1WindowClosed
+    }//GEN-LAST:event_jDprofessorWindowClosed
 
     private void jBalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBalterarActionPerformed
         // TODO add your handling code here:
@@ -921,6 +1033,9 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         if (jTabbedPane1.getSelectedIndex() != 1) {
             jCcursos.removeAllItems();
             jCmateria.removeAllItems();
+        }
+        if(jBnovo.isEnabled() && "".equals(jTnome.getText())){
+              JOptionPane.showMessageDialog(null, "Click em Novo Para Cadastrar", "Cadatro", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
@@ -964,11 +1079,45 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jThorarioMouseClicked
 
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        // TODO add your handling code here:
+        if(jBnovo.isEnabled()&& "".equals(jTnome.getText())){
+              JOptionPane.showMessageDialog(null, "Click em Novo Para Cadastrar", "Cadatro", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jBcidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcidadeActionPerformed
+        // TODO add your handling code here:
+        jDcidade.setLocationRelativeTo(null);
+        jDcidade.setVisible(true);
+    }//GEN-LAST:event_jBcidadeActionPerformed
+
+    private void jDcidadeComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDcidadeComponentShown
+        // TODO add your handling code here:
+        BuscaCidade("");
+    }//GEN-LAST:event_jDcidadeComponentShown
+
+    private void jDjTcidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDjTcidadeKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            for(int i=0;i<lcidade.size();i++){
+                if(jDjTcidade.getSelectedRow()==i){
+                    jTcidade.setText(lcidade.get(i).getCidade());
+                    jTestado.setText(lcidade.get(i).getUf());
+                    jDcidade.setVisible(false);
+                    this.idcidade=lcidade.get(i).getId();
+                }
+            }
+        }
+    }//GEN-LAST:event_jDjTcidadeKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBadciona;
     private javax.swing.JButton jBalterar;
     private javax.swing.JButton jBcancelar;
+    private javax.swing.JButton jBcidade;
     private javax.swing.JButton jBexcluir;
     private javax.swing.JButton jBnovo;
     private javax.swing.JButton jBpsquisar;
@@ -979,9 +1128,11 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
     private javax.swing.JComboBox jCestadocivil;
     private javax.swing.JComboBox jCmateria;
     private javax.swing.JComboBox jCtipo;
+    private javax.swing.JDialog jDcidade;
     private com.toedter.calendar.JDateChooser jDdatacadastro;
     private com.toedter.calendar.JDateChooser jDdatanascimento;
-    private javax.swing.JDialog jDialog1;
+    private javax.swing.JTable jDjTcidade;
+    private javax.swing.JDialog jDprofessor;
     private javax.swing.JFormattedTextField jFcelular;
     private javax.swing.JFormattedTextField jFcpf;
     private javax.swing.JFormattedTextField jFfixo;
@@ -1015,6 +1166,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTbairro;
     private javax.swing.JTable jTcadprofessor;
@@ -1051,6 +1203,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         tabelacurso.setNumRows(0);
         tabelahorario.setNumRows(0);
         lmateriagrid.clear();
+        this.idcidade=0;
     }
 
     private void AtivaTela() {
@@ -1068,12 +1221,12 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         jTrua.setEnabled(true);
         jTnumero.setEnabled(true);
         jTbairro.setEnabled(true);
-        jTcidade.setEnabled(true);
-        jTestado.setEnabled(true);
         jCcursos.setEnabled(true);
         jCmateria.setEnabled(true);
         jBadciona.setEnabled(true);
-        jBretira.setEnabled(true);
+        jTnome.requestFocus();
+        jBcidade.setEnabled(true);
+        
     }
 
     private void DesativaTela() {
@@ -1091,12 +1244,11 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         jTrua.setEnabled(false);
         jTnumero.setEnabled(false);
         jTbairro.setEnabled(false);
-        jTcidade.setEnabled(false);
-        jTestado.setEnabled(false);
         jCcursos.setEnabled(false);
         jCmateria.setEnabled(false);
         jBadciona.setEnabled(false);
         jBretira.setEnabled(false);
+        jBcidade.setEnabled(false);
     }
 
     public void NovoAlterarExcluirPesquisa() {
@@ -1138,8 +1290,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         pb.setRua(jTrua.getText());
         pb.setNumero(jTnumero.getText());
         pb.setBairro(jTbairro.getText());
-        pb.setCidade(jTcidade.getText());
-        pb.setEstado(jTestado.getText());
+        pb.setIdcidade(idcidade);
         try {
             ProfessorDao pfd = new ProfessorDao();
             idprofessor = pfd.cadastrar(pb);
@@ -1154,7 +1305,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
     }
 
     private boolean VerificaCampos() {
-        return !"".equals(jTnome.getText()) && null != jDdatacadastro.getDate() && jDdatanascimento.getDate() != null && !"".equals(jTregistro.getText());
+        return !"".equals(jTnome.getText()) && null != jDdatacadastro.getDate() && jDdatanascimento.getDate() != null && !"".equals(jTregistro.getText()) && idcidade>0 ;
     }
 
     private void AlteraProfessor() {
@@ -1175,8 +1326,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         pb.setRua(jTrua.getText());
         pb.setNumero(jTnumero.getText());
         pb.setBairro(jTbairro.getText());
-        pb.setCidade(jTcidade.getText());
-        pb.setEstado(jTestado.getText());
+        pb.setIdcidade(this.idcidade);
         try {
             ProfessorDao pfd = new ProfessorDao();
             pfd.Alterar(pb);
@@ -1228,6 +1378,7 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
                 jFcelular.setText(lprofessor.get(i).getTelcel());
                 jFfixo.setText(lprofessor.get(i).getTelfixo());
                 idprofessor = lprofessor.get(i).getId();
+                this.idcidade=lprofessor.get(i).getIdcidade();
                 BuscaMateriaProfessor(idprofessor);//busca materias ministrada pelo professor
                 BuscaHorarioClick();//busca horario do curso que o professor ministra aula
             }
@@ -1514,5 +1665,48 @@ public class ViewPCadProfessor extends javax.swing.JPanel {
         TableColumn coluna3=jTcursos.getColumnModel().getColumn(3);
         coluna3.setMinWidth(0);
         coluna3.setMaxWidth(0);
+        TableColumn colunacidade=jDjTcidade.getColumnModel().getColumn(0);
+        colunacidade.setMinWidth(0);
+        colunacidade.setMaxWidth(0);
     }
+    
+    /** 
+Método responsável por manipular a ação do TAB para os JTextFields. 
+*/  
+//private void FieldTABActionEdit(final JTextField    ao_principal,final JTextField ao_alvo)  
+//{  
+//    // Adiciona a tecla e o nome do evento ao mapa de entrada.  
+//    ao_principal.getInputMap(ao_principal.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put  
+//    (  
+//        KeyStroke.getKeyStroke("TAB"),  
+//        "tabAction"  
+//    );  
+//      
+//    // Adiciona o evento ao mapa de eventos.  
+//    ao_principal.getActionMap().put("tabAction", new AbstractAction() {   
+//                  
+//            public void actionPerformed(ActionEvent e) {  
+//                  
+//                    // Requisita o foco para o JTextField2  
+//                    ao_alvo.requestFocus();                       
+//                }  
+//            }  
+//    );  
+//}    
+
+    private void BuscaCidade(String cidade) {
+        DefaultTableModel tabelacidade= (DefaultTableModel) jDjTcidade.getModel();
+        tabelacidade.setNumRows(0);
+        try {
+            lcidade=new CidadeDao().BuscaCidade(cidade);
+            for(int i=0; i<lcidade.size();i++){
+                tabelacidade.addRow(new Object[]{lcidade.get(i).getId(),lcidade.get(i).getCidade(),lcidade.get(i).getDistrito(),lcidade.get(i).getEstado(),lcidade.get(i).getUf(),lcidade.get(i).getPais()});
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro Preencher Tabela Cidade\n" + ex, "Cadastro de Professor", JOptionPane.ERROR_MESSAGE);
+        }
+        
+                
+    }
+
 }

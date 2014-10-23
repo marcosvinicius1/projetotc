@@ -62,6 +62,7 @@ public class ViewPCadOperador extends javax.swing.JPanel {
         jPsenhaadm = new javax.swing.JPasswordField();
         jTid = new javax.swing.JTextField();
 
+        jTnome.setToolTipText("Nome do Usuário");
         jTnome.setEnabled(false);
         jTnome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -72,6 +73,7 @@ public class ViewPCadOperador extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(204, 0, 0));
         jLabel3.setText("Usuario");
 
+        jTusuario.setToolTipText("Usuário Usado para Login");
         jTusuario.setEnabled(false);
         jTusuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -82,6 +84,7 @@ public class ViewPCadOperador extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(204, 0, 0));
         jLabel4.setText("Senha");
 
+        jPsenha.setToolTipText("Senha Usado para Login");
         jPsenha.setEnabled(false);
 
         jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -200,10 +203,12 @@ public class ViewPCadOperador extends javax.swing.JPanel {
         jRativo.setEnabled(false);
 
         jCtipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "USUARIO", "SUPERVISSOR" }));
+        jCtipo.setToolTipText("Tipo de Usuário");
         jCtipo.setEnabled(false);
 
         jLabel6.setText("Senha Adm.");
 
+        jPsenhaadm.setToolTipText("Senha Administrativa");
         jPsenhaadm.setEnabled(false);
 
         jTid.setEnabled(false);

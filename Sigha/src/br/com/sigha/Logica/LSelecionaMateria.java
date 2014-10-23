@@ -127,7 +127,7 @@ public class LSelecionaMateria {
 
         // verifica se a materia sera chamada futuramente 
         for (int i = 0; i < resmataux.size(); i++) {
-            if (!new LAuxGradeHorario(anoletivo).verificaChamaMateria(dia, inicio, termino, resmataux.get(i).getSigla(), idcurso)) {
+            if (!new LAuxGradeHorario(anoletivo).verificaChamaMateria(dia, inicio, termino, String.valueOf(resmataux.get(i).getId()), idcurso)) {
                 lauxmateria.add(resmataux.get(i));
             }
         }

@@ -33,7 +33,7 @@ public class LSincronizaProfessor {
             //metodo busca horario na tabela auxhorariocurso
             List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(idcurso, anoletivo);            
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getSegunda()) && !"".equals(lauxhorario.get(i).getSegunda())) {
+                if (!"false".equals(lauxhorario.get(i).getSegunda())) {
                     // JOptionPane.showMessageDialog(null, "segunda");
                     new LProfessorHorario(idcurso).FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getSegunda(), datageracao, "segunda");
                 }

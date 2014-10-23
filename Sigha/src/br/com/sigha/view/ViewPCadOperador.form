@@ -104,6 +104,7 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jTnome">
       <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Nome do Usu&#xe1;rio"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -120,6 +121,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTusuario">
       <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Usu&#xe1;rio Usado para Login"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -136,6 +138,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="jPsenha">
       <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Senha Usado para Login"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
@@ -308,6 +311,7 @@
             <StringItem index="1" value="SUPERVISSOR"/>
           </StringArray>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Tipo de Usu&#xe1;rio"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
@@ -318,6 +322,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="jPsenhaadm">
       <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Senha Administrativa"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>

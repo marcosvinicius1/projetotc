@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Events>
+    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formMouseClicked"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -122,6 +125,9 @@
           <Color blue="0" green="0" red="cc" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel7MouseClicked"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -219,6 +225,7 @@
               <Format format="###:##" subtype="-1" type="5"/>
             </Property>
             <Property name="text" type="java.lang.String" value="000:00"/>
+            <Property name="toolTipText" type="java.lang.String" value="Carga Hor&#xe1;ria Anual da Disciplina"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -238,6 +245,7 @@
               <Format format="##:##" subtype="-1" type="5"/>
             </Property>
             <Property name="text" type="java.lang.String" value="00:00"/>
+            <Property name="toolTipText" type="java.lang.String" value="Carga Hor&#xe1;ria de Cada Aula no Dia"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -256,6 +264,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Quantidade de Aula na Semana"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -278,6 +287,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Quantidade de Aula no dia"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -290,6 +300,7 @@
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Sim"/>
+            <Property name="toolTipText" type="java.lang.String" value="S&#xe9; as Aulas no Dia for Seguidamente"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -311,12 +322,41 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
-                <Column editable="false" title="MATERIA" type="java.lang.Object"/>
+                <Column editable="false" title="DISCIPLINA" type="java.lang.Object"/>
                 <Column editable="false" title="PERIODO" type="java.lang.Object"/>
                 <Column editable="false" title="CURSO" type="java.lang.Object"/>
                 <Column editable="false" title="CARGA H.ANUAL" type="java.lang.Object"/>
                 <Column editable="false" title="QTDE.SEMANAL" type="java.lang.Object"/>
               </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
@@ -442,6 +482,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Curso que ela Pertence"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
@@ -450,6 +491,7 @@
         <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="new br.com.sigha.Util.LimitaCaracterUpper(50)&#xd;&#xa;" type="code"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Nome da Disciplina"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -464,7 +506,11 @@
             <TitledBorder title="DIAS PROVAVEIS DE AULA"/>
           </Border>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Dias Que Podera Ter Aula"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel1MouseClicked"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -621,15 +667,17 @@
             <StringItem index="19" value="20"/>
           </StringArray>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Perio/Ano da Disciplina"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTsigla">
       <Properties>
-        <Property name="editable" type="boolean" value="false"/>
         <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="new br.com.sigha.Util.LimitaCaracterUpper(5)&#xd;&#xa;" type="code"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Sigla para Disciplina"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">

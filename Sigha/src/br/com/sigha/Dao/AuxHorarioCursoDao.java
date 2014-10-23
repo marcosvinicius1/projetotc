@@ -7,6 +7,7 @@ package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.AuxHorarioCursoBeans;
 import br.com.sigha.Beans.HorarioCursoBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +31,7 @@ public class AuxHorarioCursoDao {
 
     public void CadastraAuxHorarioCurso(HorarioCursoBeans hcb, String anoletivo) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
-            String sql = "insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(?,?,?,?,?,?,?,?,?,?,?)";            
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setInt(1, hcb.getIdcurso());
             pst.setString(2, hcb.getSegunda().equals("true") ? "" : "false");
@@ -42,18 +44,20 @@ public class AuxHorarioCursoDao {
             pst.setString(9, hcb.getInicio());
             pst.setString(10, hcb.getTermino());
             pst.setString(11, anoletivo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             pst.execute();
             pst.close();
         }
     }
 
-    public void AtualizaAuxHoararioCurso(String sigla, int idcurso, String anoletivo, String camposemana,String inicio,String termino) throws SQLException {
+    public void AtualizaAuxHoararioCurso(String idmateria, int idcurso, String anoletivo, String camposemana,String inicio,String termino) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
-            String sql = "update auxhorariocurso set " + camposemana + "=concat(" + camposemana + ",'" + sigla + "')"
-                    + " where curso=" + idcurso + " and anoletivo='" + anoletivo + "' and " + camposemana + "<>'false' and inicio=? and termino=?";            
+            String sql = "update auxhorariocurso set " + camposemana + "=concat(" + camposemana + ",'" + idmateria + "')"
+                    + " where curso=" + idcurso + " and anoletivo='" + anoletivo + "' and " + camposemana + "<>'false' and inicio=? and termino=?";                        
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setString(1, inicio);
             pst.setString(2, termino);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             pst.execute();
             pst.close();
         }
@@ -66,6 +70,7 @@ public class AuxHorarioCursoDao {
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, curso);
             pstm.setString(2, anoletivo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<AuxHorarioCursoBeans> lauxhorario = new ArrayList<>();
             while (rs.next()) {
@@ -94,6 +99,7 @@ public class AuxHorarioCursoDao {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             String sql = "delete from auxhorariocurso";
             PreparedStatement pstm = conexao.prepareStatement(sql);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             pstm.execute();
             pstm.close();
         }
@@ -102,10 +108,11 @@ public class AuxHorarioCursoDao {
     public Boolean OcorrenciaMateria(String dia, int curso, String anoletivo, String sigla) throws SQLException {
         Boolean resp = false;
         try (Connection conexao = new ConexaoBanco().getConnect()) {
-            String sql = "select * from auxhorariocurso where " + dia + " like '%"+sigla+"|%' and curso=? and anoletivo=?";
+            String sql = "select * from auxhorariocurso where " + dia + " like '%"+sigla+"|%' and curso=? and anoletivo=?";            
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, curso);
             pstm.setString(2, anoletivo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {                
                 resp = true;

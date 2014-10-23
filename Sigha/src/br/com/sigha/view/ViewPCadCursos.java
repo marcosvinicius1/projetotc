@@ -94,7 +94,6 @@ public class ViewPCadCursos extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        jDcoordenador.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         jDcoordenador.setTitle("COORDENADOR");
         jDcoordenador.setMinimumSize(new java.awt.Dimension(400, 202));
         jDcoordenador.setModal(true);
@@ -150,6 +149,12 @@ public class ViewPCadCursos extends javax.swing.JPanel {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
+
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -590,6 +595,11 @@ public class ViewPCadCursos extends javax.swing.JPanel {
         jDcoordenador.setVisible(false);
     }//GEN-LAST:event_jTbcoordenadorMouseClicked
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        avisoCadastro();       
+    }//GEN-LAST:event_formMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBcancelar;
@@ -853,6 +863,11 @@ private void LimpaTela() {
 
     private void OcultaCampos() {
         jTidcurso.setVisible(false);
+    }
+    private void avisoCadastro(){       
+        if(jBnovo.isEnabled()&& "".equals(jTnomecurso.getText())){
+              JOptionPane.showMessageDialog(null, "Click em Novo Para Cadastrar", "Cadatro", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
 }

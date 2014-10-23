@@ -114,7 +114,7 @@ public class LProfessorHorario {
 //                if(inicio.equals(lhorario.get(i).getInicio()) && termino.equals(lhorario.get(i).getTermino())){
 //                    for(int j=0;j<lcurso.size();j++){
 //                        //lista com as materias referente a sigla passada
-//                        List<MateriaBeans> lmateria=new MateriaDao().BuscaMateriaSigla(lcurso.get(j).replace("|", ""));
+//                        List<MateriaBeans> lmateria=new MateriaDao().BuscaIdMateria(lcurso.get(j).replace("|", ""));
 //                        for(int l=0;l<lmateria.size();l++){
 //                            //compara o periodo da materia com o periodo do horario
 //                            if(lmateria.get(l).getPeriodo()==lhorario.get(i).getPeriodo()){
@@ -136,7 +136,7 @@ public class LProfessorHorario {
 //            Logger.getLogger(LProfessorHorario.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
+//busca horario do dia e verifica se pode ser usado
     public void FiltraGrava(String anoletivo, String inicio, String termino, String materias, Date datageracao, String dia) {
         try {
             //lista de sigla de cursos que esta no campo segunda da tabela auxiliar
@@ -147,11 +147,11 @@ public class LProfessorHorario {
             // List<HorarioAulaBeans> lhorariop = new HorarioAulaDao().HorarioGroupPeriodo(idcurso, anoletivo, datageracao);
             for (int i = 0; i < lhorario.size(); i++) {
                 if (inicio.equals(lhorario.get(i).getInicio()) && termino.equals(lhorario.get(i).getTermino())) {
-                    //lista com as materias referente a sigla e ao periodo passada 
-                    List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(materias.replace("|", "','"), lhorario.get(i).getPeriodo());
+                    //lista com as materias referente a id da materia e ao periodo passada 
+                    List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(materias.replace("|", ",0"), lhorario.get(i).getPeriodo());
                     //seleciona uma materia do periodo passado como parametro   
                     // compara o horario passado para a funcao e com o horario de aula se tem materia usando o dia
-                    if (verificadia(dia, inicio, termino, lhorario.get(i).getPeriodo(), anoletivo, datageracao)) {
+                    if (verificadia(dia, inicio, termino, lhorario.get(i).getPeriodo(), anoletivo, datageracao)) {                        
                         MateriaBeans materia = new LSelecionaMateria().FiltraMateria(lmateria, lhorario.get(i).getPeriodo(), lhorario.get(i).getInicio(), lhorario.get(i).getTermino(), anoletivo, datageracao, dia, lhorario.get(i).getIdcurso());
                         //objeto recebe o professor referente a materia para inserção                        
                         ProfessorMateriaBeans lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(materia.getId(), new UnidadeLogadoBeans().getId());
@@ -309,13 +309,13 @@ public class LProfessorHorario {
         LogsTxt logs=new LogsTxt();
         if (verQtdeAulaMatEDia(anoletivo, datageracao)) {
             for (int i = 0; i < erroperiodo.size(); i++) {
-                logs.setTxt(new Date()+"  Periodos com Erros"+String.valueOf(erroperiodo.size()));
+                logs.setTxt(new Date()+"  Periodos com Erros"+String.valueOf(erroperiodo.size()),"Erro");
             }
-            logs.setTxt(new Date()+"  -------------------------");
+            logs.setTxt(new Date()+"  -------------------------","Erro");
             //verifica se tem dia sem aula e se as materia do dia sem aula esta todas utilizadas
             if (verificaQtdeDiaProfHor(anoletivo, datageracao)) {
-                logs.setTxt(new Date()+"  Tem erro QtdeDiaProfHora");
-                logs.setTxt(new Date()+"  -------------------------");
+                logs.setTxt(new Date()+"  Tem erro QtdeDiaProfHora","Erro");
+                logs.setTxt(new Date()+"  -------------------------","Erro");
                 resp = true;
 
             } else if (respexevqtdeauh == 3) {
@@ -327,7 +327,7 @@ public class LProfessorHorario {
                     JOptionPane.showMessageDialog(null, "Conflito de horario de Mais de uma materia\nProblema "
                             + "Esta Sendo Resolvido pela Programação\nCausa do Problema:Mais de Uma materia escolhido o mesmo dia e horario e com a quantidade exata somente para ministrar as aulas");
                     logs.setTxt(new Date()+"  Conflito de horario de Mais de uma materia\nProblema "
-                            + "Esta Sendo Resolvido pela Programação\nCausa do Problema:Mais de Uma materia escolhido o mesmo dia e horario e com a quantidade exata somente para ministrar as aulas");
+                            + "Esta Sendo Resolvido pela Programação\nCausa do Problema:Mais de Uma materia escolhido o mesmo dia e horario e com a quantidade exata somente para ministrar as aulas","Erro");
                 } 
             }
 
@@ -407,10 +407,10 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getSegunda().equals("false") && !lauxhorario.get(j).getSegunda().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(lauxhorario.get(j).getSegunda().replace("|", "','"), lhaula.get(i).getPeriodo());
+                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSegunda().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao retorna true se pode utilizar
                                 resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                                logs.setTxt(new Date()+"  Segunda" + lauxhorario.get(j).getSegunda() + "resp:" + resp);
+                                logs.setTxt(new Date()+"  Segunda" + lauxhorario.get(j).getSegunda() + "resp:" + resp,"Erro");
                                 if (resp) {
                                     respexevqtdeauh = 2;
                                 } else {
@@ -427,10 +427,10 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getTerca().equals("false") && !lauxhorario.get(j).getTerca().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(lauxhorario.get(j).getTerca().replace("|", "','"), lhaula.get(i).getPeriodo());
+                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getTerca().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
                                 resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                                logs.setTxt(new Date()+"  terca" + lauxhorario.get(j).getTerca() + "resp:" + resp);
+                                logs.setTxt(new Date()+"  terca" + lauxhorario.get(j).getTerca() + "resp:" + resp,"Erro");
                                 if (resp) {
                                     respexevqtdeauh = 2;
                                 } else {
@@ -446,10 +446,10 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getQuarta().equals("false") && !lauxhorario.get(j).getQuarta().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(lauxhorario.get(j).getQuarta().replace("|", "','"), lhaula.get(i).getPeriodo());
+                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getQuarta().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
                                 resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                             logs.setTxt(new Date()+" quarta" + lauxhorario.get(j).getQuarta() + "resp:" + resp);
+                             logs.setTxt(new Date()+" quarta" + lauxhorario.get(j).getQuarta() + "resp:" + resp,"Erro");
                                 if (resp) {
                                     respexevqtdeauh = 2;
                                 } else {
@@ -465,10 +465,10 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getQuinta().equals("false") && !lauxhorario.get(j).getQuinta().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(lauxhorario.get(j).getQuinta().replace("|", "','"), lhaula.get(i).getPeriodo());
+                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getQuinta().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
                                 resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                            logs.setTxt(new Date()+"  quinta" + lauxhorario.get(j).getQuinta() + "resp:" + resp);
+                            logs.setTxt(new Date()+"  quinta" + lauxhorario.get(j).getQuinta() + "resp:" + resp,"Erro");
                                 if (resp) {
                                     respexevqtdeauh = 2;
                                 } else {
@@ -484,10 +484,10 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getSexta().equals("false") && !lauxhorario.get(j).getSexta().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(lauxhorario.get(j).getSexta().replace("|", "','"), lhaula.get(i).getPeriodo());
+                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSexta().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
                                 resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                            logs.setTxt(new Date()+"  sexta" + lauxhorario.get(j).getSexta() + "resp:" + resp);
+                            logs.setTxt(new Date()+"  sexta" + lauxhorario.get(j).getSexta() + "resp:" + resp,"Erro");
                                 if (resp) {
                                     respexevqtdeauh = 2;
                                 } else {
@@ -503,10 +503,10 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getSabado().equals("false") && !lauxhorario.get(j).getSabado().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(lauxhorario.get(j).getSabado().replace("|", "','"), lhaula.get(i).getPeriodo());
+                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSabado().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
                                 resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                            logs.setTxt(new Date()+"  sabado" + lauxhorario.get(j).getSabado() + "resp:" + resp);
+                            logs.setTxt(new Date()+"  sabado" + lauxhorario.get(j).getSabado() + "resp:" + resp,"Erro");
                                 if (resp) {
                                     respexevqtdeauh = 2;
                                 } else {
@@ -522,10 +522,10 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getDomingo().equals("false") && !lauxhorario.get(j).getDomingo().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaMateriaSigla(lauxhorario.get(j).getDomingo().replace("|", "','"), lhaula.get(i).getPeriodo());
+                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getDomingo().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
                                 resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                          logs.setTxt(new Date()+"  domingo" + lauxhorario.get(j).getDomingo() + "resp:" + resp);
+                          logs.setTxt(new Date()+"  domingo" + lauxhorario.get(j).getDomingo() + "resp:" + resp,"Erro");
                                 if (resp) {
                                     respexevqtdeauh = 2;
                                 } else {

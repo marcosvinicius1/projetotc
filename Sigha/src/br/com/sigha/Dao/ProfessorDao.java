@@ -5,6 +5,7 @@
 package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.ProfessorBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.Date;
@@ -33,7 +34,7 @@ public class ProfessorDao {
             int idprofessor = 0;
             String sql = "insert into professor(idunidade,nome,ativo,datacadastro,tipo,email,cpf,"
                     + "datanascimento,estadocivil,registro,telfixo,telcel,rua,"
-                    + "numero,bairro,cidade,estado) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + "numero,bairro,idcidade) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pstm = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, pf.getIdunidade());
             pstm.setString(2, pf.getNome());
@@ -50,13 +51,13 @@ public class ProfessorDao {
             pstm.setString(13, pf.getRua());
             pstm.setString(14, pf.getNumero());
             pstm.setString(15, pf.getBairro());
-            pstm.setString(16, pf.getCidade());
-            pstm.setString(17, pf.getEstado());
+            pstm.setInt(16, pf.getIdcidade());
             pstm.execute();
             ResultSet rs = pstm.getGeneratedKeys();
             while (rs.next()) {
                 idprofessor = rs.getInt(1);
             }
+            rs.close();
             pstm.close();
             return idprofessor;
         }
@@ -89,7 +90,7 @@ public class ProfessorDao {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             String sql = "update professor set idunidade=?,nome=?,ativo=?,datacadastro=?,tipo=?,email=?,cpf=?,"
                     + "datanascimento=?,estadocivil=?,registro=?,telfixo=?,telcel=?,rua=?,"
-                    + "numero=?,bairro=?,cidade=?,estado=? where id=?";
+                    + "numero=?,bairro=?,idcidade=? where id=?";
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, pb.getIdunidade());
             pstm.setString(2, pb.getNome());
@@ -106,9 +107,8 @@ public class ProfessorDao {
             pstm.setString(13, pb.getRua());
             pstm.setString(14, pb.getNumero());
             pstm.setString(15, pb.getBairro());
-            pstm.setString(16, pb.getCidade());
-            pstm.setString(17, pb.getEstado());
-            pstm.setInt(18, pb.getId());
+            pstm.setInt(16, pb.getIdcidade());
+            pstm.setInt(17, pb.getId());
             pstm.execute();
             pstm.close();
         }
@@ -116,10 +116,14 @@ public class ProfessorDao {
 
     public List<ProfessorBeans> ListaProfessor(Integer idunidade, String campo, String valorcampo) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
-            String sql = "select * from professor where " + campo + " like? and idunidade=?";
+            String sql = "select professor.id,professor.nome,ativo,idunidade,datacadastro,tipo,email,cpf,datanascimento," +
+"estadocivil,registro,telfixo,telcel,rua,numero,bairro,idcidade,cidade.nome cidade,estado.uf estado" +
+" from professor left join cidade on (professor.idcidade=cidade.id)" +
+" left join estado on (estado.id=cidade.estado) where professor."+campo+" like? and idunidade=?";
             PreparedStatement pst = conexao.prepareStatement(sql);
             pst.setString(1, "%" + valorcampo + "%");
             pst.setInt(2, idunidade);
+            new LogsTxt().setTxt(new java.util.Date()+"Sql Execultada"+pst.toString());
             ResultSet rs = pst.executeQuery();
             List<ProfessorBeans> lpb = new ArrayList<ProfessorBeans>();
             while (rs.next()) {
@@ -142,6 +146,7 @@ public class ProfessorDao {
                 pb.setBairro(rs.getString("bairro"));
                 pb.setCidade(rs.getString("cidade"));
                 pb.setEstado(rs.getString("estado"));
+                pb.setIdcidade(rs.getInt("idcidade"));
                 lpb.add(pb);
             }
             rs.close();

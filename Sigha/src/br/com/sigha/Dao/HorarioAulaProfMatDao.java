@@ -6,6 +6,7 @@
 package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.HorarioAulaProfMatBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,6 +62,7 @@ public class HorarioAulaProfMatDao {
                     +"left join curso s on(h.idcurso=s.id) "
                     + "where h.anoletivo='"+anoletivo+"' and h.datageracao='"+new SimpleDateFormat("yyyy.MM.dd").format(datageracao)+"'";
             PreparedStatement pst = conexao.prepareStatement(sql);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
             //pst.setString(1, anoletivo);
             //pst.setString(2, new SimpleDateFormat("yyyy.MM.dd").format(datageracao));
             ResultSet rs = pst.executeQuery(sql);
@@ -90,6 +92,8 @@ public class HorarioAulaProfMatDao {
                 hapm.setDatageracao(rs.getDate("datageracao"));
                 hapmb.add(hapm);
             }
+            rs.close();
+            pst.close();
             return hapmb;
         }
 

@@ -5,24 +5,37 @@
  */
 package br.com.sigha.view;
 
-import br.com.sigha.Beans.ConfigxmlBeans;
+import br.com.sigha.Beans.ConfigBeans;
 import br.com.sigha.Beans.OperadorBeans;
 import br.com.sigha.Beans.OperadorLogadoBeans;
 import br.com.sigha.Beans.UnidadeBeans;
 import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Config.Configxml;
+import br.com.sigha.Config.Config;
 import br.com.sigha.Dao.OperadorDao;
 import br.com.sigha.Dao.UnidadeDao;
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
+import com.jtattoo.plaf.aero.AeroLookAndFeel;
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
+import com.jtattoo.plaf.fast.FastLookAndFeel;
+import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
+import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
@@ -41,10 +54,13 @@ public class ViewLogin extends javax.swing.JFrame {
      * Creates new form viewLogin
      */
     List<UnidadeBeans> lunb;
+    int idtema;
+    int idunidade;
+
     public ViewLogin() {
         initComponents();
         ListaUnidade();
-        
+
     }
 
     /**
@@ -70,6 +86,14 @@ public class ViewLogin extends javax.swing.JFrame {
         jDunidade = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTunidade = new javax.swing.JTable();
+        jPMtema = new javax.swing.JPopupMenu();
+        jMIAero = new javax.swing.JMenuItem();
+        jMIAcryl = new javax.swing.JMenuItem();
+        jMIAluminim = new javax.swing.JMenuItem();
+        jMIBernstein = new javax.swing.JMenuItem();
+        jMIFast = new javax.swing.JMenuItem();
+        jMIGraphite = new javax.swing.JMenuItem();
+        jMIHifi = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -249,11 +273,71 @@ public class ViewLogin extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
         );
 
+        jPMtema.setLabel("TEMA");
+        jPMtema.setName("TEMA"); // NOI18N
+
+        jMIAero.setText("Aero");
+        jMIAero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIAeroActionPerformed(evt);
+            }
+        });
+        jPMtema.add(jMIAero);
+
+        jMIAcryl.setText("Acryl");
+        jMIAcryl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIAcrylActionPerformed(evt);
+            }
+        });
+        jPMtema.add(jMIAcryl);
+
+        jMIAluminim.setText("Aluminim");
+        jMIAluminim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIAluminimActionPerformed(evt);
+            }
+        });
+        jPMtema.add(jMIAluminim);
+
+        jMIBernstein.setText("Bernstein");
+        jMIBernstein.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIBernsteinActionPerformed(evt);
+            }
+        });
+        jPMtema.add(jMIBernstein);
+
+        jMIFast.setText("Fast");
+        jMIFast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIFastActionPerformed(evt);
+            }
+        });
+        jPMtema.add(jMIFast);
+
+        jMIGraphite.setText("Graphite");
+        jMIGraphite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIGraphiteActionPerformed(evt);
+            }
+        });
+        jPMtema.add(jMIGraphite);
+
+        jMIHifi.setText("Hifi");
+        jMIHifi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIHifiActionPerformed(evt);
+            }
+        });
+        jPMtema.add(jMIHifi);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("LOGIN USUARIO");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("LOGIM USUARIO"));
+        jPanel1.setComponentPopupMenu(jPMtema);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel1.setText("Login:");
@@ -315,6 +399,7 @@ public class ViewLogin extends javax.swing.JFrame {
         );
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/LOGIN128X128.png"))); // NOI18N
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel4.setText("USUARIO DO SISTEMA");
 
@@ -389,7 +474,7 @@ public class ViewLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -439,7 +524,7 @@ public class ViewLogin extends javax.swing.JFrame {
 
     private void jPsenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPsenhaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jBok.doClick();
         }
     }//GEN-LAST:event_jPsenhaKeyPressed
@@ -450,13 +535,19 @@ public class ViewLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if(criar()){
-            //JOptionPane.showMessageDialog(null, "Configuração Salva");
+        try {
+            // TODO add your handling code here:
+            new Config().createConfig(jTlocalbanco.getText(), jTusuario.getText(), jTsenha.getText(), "0", "0");
             System.exit(0);
-        }else{
-            JOptionPane.showMessageDialog(null, "Erro ao Salvar Configuração");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Salvar Configuração\n" + ex);
         }
+//        if (criarConfig()) {
+//            //JOptionPane.showMessageDialog(null, "Configuração Salva");
+//            System.exit(0);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Erro ao Salvar Configuração");
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jDconfigComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDconfigComponentHidden
@@ -467,17 +558,17 @@ public class ViewLogin extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         jDunidade.setLocationRelativeTo(null);
-        jDunidade.setVisible(true);        
+        jDunidade.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jDunidadeComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDunidadeComponentShown
         try {
             // TODO add your handling code here:
-            lunb=new UnidadeDao().consultarUnidade();
-            DefaultTableModel tabelaunidade=(DefaultTableModel) jTunidade.getModel();
+            lunb = new UnidadeDao().consultarUnidade();
+            DefaultTableModel tabelaunidade = (DefaultTableModel) jTunidade.getModel();
             tabelaunidade.setNumRows(0);
-            for(int i=0;i<lunb.size();i++){
-                tabelaunidade.addRow(new Object[]{lunb.get(i).getRazao(),lunb.get(i).getFantasia()});
+            for (int i = 0; i < lunb.size(); i++) {
+                tabelaunidade.addRow(new Object[]{lunb.get(i).getRazao(), lunb.get(i).getFantasia()});
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Buscar Operador", "Login", JOptionPane.ERROR_MESSAGE);
@@ -486,26 +577,68 @@ public class ViewLogin extends javax.swing.JFrame {
 
     private void jTunidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTunidadeMouseClicked
         // TODO add your handling code here:
-        for(int i=0;i<lunb.size();i++){
-            if(jTunidade.getSelectedRow()==i){
-                ConfigxmlBeans xmlb=new Configxml().ConexaoBanco();
-                alterarXml(xmlb.getLocal(), xmlb.getUsuario(), xmlb.getSenha(), String.valueOf(lunb.get(i).getId()));
+        for (int i = 0; i < lunb.size(); i++) {
+            if (jTunidade.getSelectedRow() == i) {
+                idunidade = lunb.get(i).getId();
+                try {
+                    Properties prop = new Config().getProp();
+                    prop.setProperty("empresa", String.valueOf(idunidade));
+                    prop.store(new FileOutputStream("./config/config.properties"), null);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao Selecionar Unidade" + ex);
+                }
                 jDunidade.setVisible(false);
                 ListaUnidade();
             }
         }
-        
+
     }//GEN-LAST:event_jTunidadeMouseClicked
+
+    private void jMIAeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAeroActionPerformed
+        // TODO add your handling code here:
+        selecionaTema(1);
+    }//GEN-LAST:event_jMIAeroActionPerformed
+
+    private void jMIAcrylActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAcrylActionPerformed
+        // TODO add your handling code here:
+        selecionaTema(2);
+    }//GEN-LAST:event_jMIAcrylActionPerformed
+
+    private void jMIAluminimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAluminimActionPerformed
+        // TODO add your handling code here:
+        selecionaTema(3);
+    }//GEN-LAST:event_jMIAluminimActionPerformed
+
+    private void jMIBernsteinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIBernsteinActionPerformed
+        // TODO add your handling code here:
+        selecionaTema(4);
+    }//GEN-LAST:event_jMIBernsteinActionPerformed
+
+    private void jMIFastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIFastActionPerformed
+        // TODO add your handling code here:
+        selecionaTema(5);
+    }//GEN-LAST:event_jMIFastActionPerformed
+
+    private void jMIGraphiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIGraphiteActionPerformed
+        // TODO add your handling code here:
+        selecionaTema(6);
+    }//GEN-LAST:event_jMIGraphiteActionPerformed
+
+    private void jMIHifiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIHifiActionPerformed
+        // TODO add your handling code here:
+        selecionaTema(7);
+    }//GEN-LAST:event_jMIHifiActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) throws UnsupportedLookAndFeelException {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        try {
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+             * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+             */
 //        try {
 //            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 //                if ("Nimbus".equals(info.getName())) {
@@ -513,7 +646,16 @@ public class ViewLogin extends javax.swing.JFrame {
 //                    break;
 //                }
 //            }
-        UIManager.setLookAndFeel(new com.jtattoo.plaf.aluminium.AluminiumLookAndFeel());
+            //UIManager.setLookAndFeel(new com.jtattoo.plaf.aluminium.AluminiumLookAndFeel());
+            ConfigBeans cf = new Config().getConfig();
+            int idtema = cf.getTema();
+            UIManager.setLookAndFeel(new ViewLogin().getTema(idtema));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Aplicar Tema" + ex, "Erro Tema", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Ler Arquivo Config " + ex, "Erro Tema", JOptionPane.ERROR_MESSAGE);
+        }
+
 //        } catch (ClassNotFoundException ex) {
 //            java.util.logging.Logger.getLogger(ViewLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
@@ -524,7 +666,6 @@ public class ViewLogin extends javax.swing.JFrame {
 //            java.util.logging.Logger.getLogger(ViewLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -549,6 +690,14 @@ public class ViewLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLunidade;
+    private javax.swing.JMenuItem jMIAcryl;
+    private javax.swing.JMenuItem jMIAero;
+    private javax.swing.JMenuItem jMIAluminim;
+    private javax.swing.JMenuItem jMIBernstein;
+    private javax.swing.JMenuItem jMIFast;
+    private javax.swing.JMenuItem jMIGraphite;
+    private javax.swing.JMenuItem jMIHifi;
+    private javax.swing.JPopupMenu jPMtema;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -569,7 +718,7 @@ public class ViewLogin extends javax.swing.JFrame {
             for (int i = 0; i < opb.size(); i++) {
                 if (jTnome.getText().equals(opb.get(i).getUsuario()) && jPsenha.getText().equals(opb.get(i).getSenha())) {
                     //SE TIVER O USUARIO ELE GRAVA OS DADOS ESTATICAMENTE EM VARIAVEIS
-                    OperadorLogadoBeans opl=new OperadorLogadoBeans();
+                    OperadorLogadoBeans opl = new OperadorLogadoBeans();
                     opl.setLogadonome(opb.get(i).getNome());
                     opl.setLogadosenhaadm(opb.get(i).getSenhaadm());
                     opl.setLogadotipo(opb.get(i).getTipo());
@@ -584,9 +733,10 @@ public class ViewLogin extends javax.swing.JFrame {
 
     private void ListaUnidade() {
         try {
-            int idunidade=new Configxml().Idunidade();
-            UnidadeBeans unb=new UnidadeDao().consultarUnidade(idunidade);
-            UnidadeLogadoBeans ulb=new UnidadeLogadoBeans();
+            ConfigBeans cf = new Config().getConfig();
+            this.idunidade = cf.getEmpresa();
+            UnidadeBeans unb = new UnidadeDao().consultarUnidade(idunidade);
+            UnidadeLogadoBeans ulb = new UnidadeLogadoBeans();
             ulb.setBairro(unb.getBairro());
             ulb.setCep(unb.getCep());
             ulb.setCidade(unb.getCidade());
@@ -600,87 +750,97 @@ public class ViewLogin extends javax.swing.JFrame {
             ulb.setRazao(unb.getRazao());
             ulb.setTelefone(unb.getTelefone());
             jLunidade.setText(ulb.getRazao());
-          
-        } catch (SQLException ex) {
-            ConfigxmlBeans cxb=new Configxml().ConexaoBanco();
-            jTlocalbanco.setText(cxb.getLocal());
-            jTusuario.setText(cxb.getUsuario());
-            jTsenha.setText(cxb.getSenha());
-            JOptionPane.showMessageDialog(null, "Erro ao Conectar ao Banco\n"+ex, "Login", JOptionPane.ERROR_MESSAGE);
-            jDconfig.setLocationRelativeTo(null);
-            jDconfig.setVisible(true);
-            
+
+        } catch (SQLException | IOException ex) {
+            try {
+                ConfigBeans cf = new Config().getConfig();
+                jTlocalbanco.setText(cf.getLocal());
+                jTusuario.setText(cf.getUsuario());
+                jTsenha.setText(cf.getSenha());
+                JOptionPane.showMessageDialog(null, "Erro ao Conectar ao Banco\n" + ex, "Login", JOptionPane.ERROR_MESSAGE);
+                jDconfig.setLocationRelativeTo(null);
+                jDconfig.setVisible(true);
+            } catch (IOException ex1) {
+                JOptionPane.showMessageDialog(null, "Erro ao Ler Arquivo\n" + ex, "Login", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }
 //salv as coniguracoes do banco ouedita as novas
-    private boolean criar() {
-        Document doc=new Document();
-        Element root=new Element("configuracao");
-        
-        Element banco=new Element("banco");
-        Attribute local=new Attribute("local",jTlocalbanco.getText());
-        banco.setAttribute(local);
-        
-        Element usuario=new Element("usuario");
-        usuario.setText(jTusuario.getText());
-        banco.addContent(usuario);
-        
-        Element senha=new Element("senha");
-        senha.setText(jTsenha.getText());
-        banco.addContent(senha);
-        
-        Element idunidade=new Element("id");
-        idunidade.setText("0");
-        banco.addContent(idunidade);
-        
-        root.addContent(banco);
-        doc.setRootElement(root);
-        try {
-            FileOutputStream file=new FileOutputStream(new File("./Configuracao/config.xml"));
-            XMLOutputter xml=new XMLOutputter();
-            xml.output(doc, file);
-            return true;
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Erro \n"+ex);
-            return false;
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Erro \n"+ex);
-            return false;
+
+//    private boolean criarConfig() {
+//        try {
+//            File file = new File("./config");
+//            file.mkdir();
+//            file=new File("./config/config.properties");            
+//            file.createNewFile();
+//            FileInputStream finput=new FileInputStream("./config/config.properties");
+//            Properties prop=new Properties();
+//            prop.load(finput);
+//            prop.put("senha", jTsenha.getText());
+//            prop.put("bancolocal", jTlocalbanco.getText());
+//            prop.put("usuario", jTsenha.getText());
+//            prop.put("tema", "0");
+//            prop.put("empresa", "0");            
+//            prop.store(new FileOutputStream("./config/config.properties"), null);
+//            return true;
+//        } catch (IOException ex) {
+//            Logger.getLogger(ViewLogin.class.getName()).log(Level.SEVERE, null, ex);
+//            return false;
+//        }
+//        
+//    }
+    public LookAndFeel getTema(int idtema) {
+        Properties props = new Properties();
+        props.put("logoString", "Sigha");
+        LookAndFeel tema = new com.jtattoo.plaf.aluminium.AluminiumLookAndFeel();
+        switch (idtema) {
+            case 1:
+                AeroLookAndFeel.setCurrentTheme(props);
+                tema = new com.jtattoo.plaf.aero.AeroLookAndFeel();
+                break;
+            case 2:
+                AcrylLookAndFeel.setCurrentTheme(props);
+                tema = new com.jtattoo.plaf.acryl.AcrylLookAndFeel();
+                break;
+            case 3:
+                AluminiumLookAndFeel.setCurrentTheme(props);
+                tema = new com.jtattoo.plaf.aluminium.AluminiumLookAndFeel();
+                break;
+            case 4:
+                BernsteinLookAndFeel.setCurrentTheme(props);
+                tema = new com.jtattoo.plaf.bernstein.BernsteinLookAndFeel();
+                break;
+            case 5:
+                FastLookAndFeel.setCurrentTheme(props);
+                tema = new com.jtattoo.plaf.fast.FastLookAndFeel();
+                break;
+            case 6:
+                GraphiteLookAndFeel.setCurrentTheme(props);
+                tema = new com.jtattoo.plaf.graphite.GraphiteLookAndFeel();
+                break;
+            case 7:
+                HiFiLookAndFeel.setCurrentTheme(props);
+                tema = new com.jtattoo.plaf.hifi.HiFiLookAndFeel();
+                break;
+
         }
+        return tema;
     }
-    private boolean alterarXml(String local,String usuario,String senha,String idunidade) {
-        Document doc=new Document();
-        Element root=new Element("configuracao");
-        
-        Element banco=new Element("banco");
-        Attribute alocal=new Attribute("local",local);
-        banco.setAttribute(alocal);
-        
-        Element ausuario=new Element("usuario");
-        ausuario.setText(usuario);
-        banco.addContent(ausuario);
-        
-        Element asenha=new Element("senha");
-        asenha.setText(senha);
-        banco.addContent(asenha);
-        
-        Element aidunidade=new Element("id");
-        aidunidade.setText(idunidade);
-        banco.addContent(aidunidade);
-        
-        root.addContent(banco);
-        doc.setRootElement(root);
+//troca o tema selecionado
+
+    private void selecionaTema(int idtema) {
         try {
-            FileOutputStream file=new FileOutputStream(new File("./Configuracao/config.xml"));
-            XMLOutputter xml=new XMLOutputter();
-            xml.output(doc, file);
-            return true;
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Erro \n"+ex);
-            return false;
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Erro \n"+ex);
-            return false;
+            Properties prop = new Config().getProp();
+            prop.setProperty("tema", String.valueOf(idtema));
+            prop.store(new FileOutputStream("./config/config.properties"), null);
+            this.idtema = idtema;
+            //seta o tema
+            UIManager.setLookAndFeel(new ViewLogin().getTema(this.idtema));
+            //atualiza em temo de execulsão
+            javax.swing.SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Trocar Tema" + ex);
         }
     }
 }

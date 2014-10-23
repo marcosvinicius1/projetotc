@@ -6,12 +6,14 @@
 package br.com.sigha.Dao;
 
 import br.com.sigha.Beans.AuxVerificaProfrHorAulaBeans;
+import br.com.sigha.Util.LogsTxt;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +34,7 @@ public class AuxVerificaProfHorAulaDao {
                     + "or h.sexta=s.id or h.sabado=s.id or h.domingo=s.id group by s.id) as h where h.idprofessor=?";
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idprofessor);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<AuxVerificaProfrHorAulaBeans> lauxver = new ArrayList<>();
             while (rs.next()) {

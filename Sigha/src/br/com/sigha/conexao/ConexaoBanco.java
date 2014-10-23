@@ -6,11 +6,14 @@ package br.com.sigha.conexao;
 
 
 
-import br.com.sigha.Beans.ConfigxmlBeans;
-import br.com.sigha.Config.Configxml;
+import br.com.sigha.Beans.ConfigBeans;
+import br.com.sigha.Config.Config;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,8 +21,14 @@ import java.sql.SQLException;
  */
 public class ConexaoBanco {
     public Connection getConnect() throws SQLException{
-        ConfigxmlBeans cxb;
-        cxb=new Configxml().ConexaoBanco();
-        return DriverManager.getConnection(cxb.getLocal(),cxb.getUsuario(),cxb.getSenha());
+        ConfigBeans cxb;
+        Connection conexao=null;
+        try {
+            cxb=new Config().getConfig();
+            conexao=DriverManager.getConnection(cxb.getLocal(),cxb.getUsuario(),cxb.getSenha());
+        } catch (IOException ex) {
+            Logger.getLogger(ConexaoBanco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return conexao;
     }
 }
