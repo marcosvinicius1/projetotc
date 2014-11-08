@@ -1,0 +1,43 @@
+
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@3107a4: update auxhorariocurso set sabado=concat(sabado,'29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='13:30' and termino='14:20'
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1e11f9c: update auxhorariocurso set sabado=concat(sabado,'29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='14:20' and termino='15:10'
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d6926d: update auxhorariocurso set sabado=concat(sabado,'29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='15:30' and termino='16:20'
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1cf9e34: update auxhorariocurso set sabado=concat(sabado,'29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='16:20' and termino='17:10'
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@182b9dd: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@16ad9d: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1c4e7a5: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@11adfc3: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4f3298: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1fc8454: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@581664: select materia.periodo,materia.idcurso,horariocurso.inicio,horariocurso.termino,horariocurso.segunda,horariocurso.terca,horariocurso.quarta,horariocurso.quinta,horariocurso.sexta,horariocurso.sabado,horariocurso.domingo from materia 
+left join horariocurso on (materia.idcurso=horariocurso.idcurso) 
+where materia.idcurso=1 and materia.ativo='true' group by materia.periodo,horariocurso.inicio,horariocurso.termino
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@62af29: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'13:30','14:20','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@61ff4b: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'14:20','15:10','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@150f5c3: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'15:30','16:20','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@d4e861: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'16:20','17:10','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@293e3f: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'19:00','19:50','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@7263f4: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'19:50','20:40','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1c69005: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'20:50','21:40','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@8acde1: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'21:40','22:30','2014/3','2014.10.18',1)
+---------------------------
+Sat Oct 18 17:19:13 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ad0f2f: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'13:30','14:20','2014/3','2014.10.18',1)

@@ -1,0 +1,29 @@
+
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@15aad0c: update auxhorariocurso set terca=concat(terca,'11|') where curso=1 and anoletivo='2014/2' and terca<>'false' and inicio='20:50' and termino='21:40'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@19ec4b6: update auxhorariocurso set terca=concat(terca,'11|') where curso=1 and anoletivo='2014/2' and terca<>'false' and inicio='21:40' and termino='22:30'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1bac50f: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=11
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1cfde49: update auxhorariocurso set quarta=concat(quarta,'11|') where curso=1 and anoletivo='2014/2' and quarta<>'false' and inicio='19:00' and termino='19:50'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d64969: update auxhorariocurso set quarta=concat(quarta,'11|') where curso=1 and anoletivo='2014/2' and quarta<>'false' and inicio='19:50' and termino='20:40'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1a046fe: update auxhorariocurso set quarta=concat(quarta,'11|') where curso=1 and anoletivo='2014/2' and quarta<>'false' and inicio='20:50' and termino='21:40'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@10c247a: update auxhorariocurso set quarta=concat(quarta,'11|') where curso=1 and anoletivo='2014/2' and quarta<>'false' and inicio='21:40' and termino='22:30'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@25abb1: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=11
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@269232: update auxhorariocurso set quinta=concat(quinta,'11|') where curso=1 and anoletivo='2014/2' and quinta<>'false' and inicio='19:00' and termino='19:50'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@dacf27: update auxhorariocurso set quinta=concat(quinta,'11|') where curso=1 and anoletivo='2014/2' and quinta<>'false' and inicio='19:50' and termino='20:40'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@153b61e: update auxhorariocurso set quinta=concat(quinta,'11|') where curso=1 and anoletivo='2014/2' and quinta<>'false' and inicio='20:50' and termino='21:40'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@57d6ee: update auxhorariocurso set quinta=concat(quinta,'11|') where curso=1 and anoletivo='2014/2' and quinta<>'false' and inicio='21:40' and termino='22:30'
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@33cf4d: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=11
+---------------------------
+Sat Oct 18 17:07:52 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@111fe80: update auxhorariocurso set sexta=concat(sexta,'11|') where curso=1 and anoletivo='2014/2' and sexta<>'false' and inicio='19:00' and termino='19:50'

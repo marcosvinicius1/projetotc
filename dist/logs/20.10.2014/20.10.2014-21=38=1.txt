@@ -1,0 +1,25 @@
+
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1cc4a32: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=22
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1052dd0: update auxhorariocurso set sabado=concat(sabado,'22|') where curso=1 and anoletivo='2014/5' and sabado<>'false' and inicio='13:30' and termino='14:20'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@8ce525: update auxhorariocurso set sabado=concat(sabado,'22|') where curso=1 and anoletivo='2014/5' and sabado<>'false' and inicio='14:20' and termino='15:10'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ce6303: update auxhorariocurso set sabado=concat(sabado,'22|') where curso=1 and anoletivo='2014/5' and sabado<>'false' and inicio='15:30' and termino='16:20'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@14b1008: update auxhorariocurso set sabado=concat(sabado,'22|') where curso=1 and anoletivo='2014/5' and sabado<>'false' and inicio='16:20' and termino='17:10'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@149c220: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=23
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@132c615: update auxhorariocurso set segunda=concat(segunda,'23|') where curso=1 and anoletivo='2014/5' and segunda<>'false' and inicio='19:00' and termino='19:50'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@19c6035: update auxhorariocurso set segunda=concat(segunda,'23|') where curso=1 and anoletivo='2014/5' and segunda<>'false' and inicio='19:50' and termino='20:40'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@29f7c: update auxhorariocurso set segunda=concat(segunda,'23|') where curso=1 and anoletivo='2014/5' and segunda<>'false' and inicio='20:50' and termino='21:40'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@73a403: update auxhorariocurso set segunda=concat(segunda,'23|') where curso=1 and anoletivo='2014/5' and segunda<>'false' and inicio='21:40' and termino='22:30'
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@ca7c93: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=23
+---------------------------
+Mon Oct 20 21:38:01 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1aee937: update auxhorariocurso set terca=concat(terca,'23|') where curso=1 and anoletivo='2014/5' and terca<>'false' and inicio='19:00' and termino='19:50'
