@@ -1,0 +1,9 @@
+
+---------------------------
+Mon Oct 20 21:37:09 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1fa8f74: delete from auxhorariocurso
+---------------------------
+Mon Oct 20 21:37:09 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@cf7607: SELECT * FROM gerador.horariocurso where idcurso=1
+---------------------------
+Mon Oct 20 21:37:09 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4e3801: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'','','','','','false','false','19:00','19:50','2014/5')
+---------------------------
+Mon Oct 20 21:37:09 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@10f67d1: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'','','','','','false','false','19:50','20:40','2014/5')

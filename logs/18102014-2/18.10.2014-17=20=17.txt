@@ -1,0 +1,9 @@
+
+---------------------------
+Sat Oct 18 17:20:17 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@cd82a8: select * from auxhorariocurso where sexta like '%TEORC|%' and curso=1 and anoletivo='2014/3'
+---------------------------
+Sat Oct 18 17:20:17 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@5432f7: select * from auxhorariocurso where sexta like '%TEORC|%' and curso=1 and anoletivo='2014/3'
+---------------------------
+Sat Oct 18 17:20:17 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@12faf74: select * from auxhorariocurso where sexta like '%TEORC|%' and curso=1 and anoletivo='2014/3'
+---------------------------
+Sat Oct 18 17:20:17 BRT 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@f60828: select * from auxhorariocurso where sexta like '%SIOPE|%' and curso=1 and anoletivo='2014/3'
