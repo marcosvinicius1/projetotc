@@ -5,14 +5,14 @@
  */
 package br.com.sigha.view;
 
-import br.com.sigha.Beans.ConfigBeans;
-import br.com.sigha.Beans.OperadorBeans;
-import br.com.sigha.Beans.OperadorLogadoBeans;
-import br.com.sigha.Beans.UnidadeBeans;
-import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Config.Config;
-import br.com.sigha.Dao.OperadorDao;
-import br.com.sigha.Dao.UnidadeDao;
+import br.com.sigha.beans.ConfigBeans;
+import br.com.sigha.beans.OperadorBeans;
+import br.com.sigha.beans.OperadorLogadoBeans;
+import br.com.sigha.beans.UnidadeBeans;
+import br.com.sigha.beans.UnidadeLogadoBeans;
+import br.com.sigha.config.Config;
+import br.com.sigha.dao.OperadorDao;
+import br.com.sigha.dao.UnidadeDao;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
 import com.jtattoo.plaf.aero.AeroLookAndFeel;
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
@@ -345,7 +345,7 @@ public class ViewLogin extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel2.setText("Senha:");
 
-        jTnome.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(30)
+        jTnome.setDocument(new br.com.sigha.util.LimitaCaracterUpper(30)
         );
         jTnome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {

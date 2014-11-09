@@ -5,9 +5,9 @@
  */
 
 package br.com.sigha.view;
-import br.com.sigha.Beans.OperadorBeans;
-import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Dao.OperadorDao;
+import br.com.sigha.beans.OperadorBeans;
+import br.com.sigha.beans.UnidadeLogadoBeans;
+import br.com.sigha.dao.OperadorDao;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;

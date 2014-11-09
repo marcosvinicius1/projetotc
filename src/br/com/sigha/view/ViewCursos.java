@@ -5,14 +5,14 @@
  */
 package br.com.sigha.view;
 
-import br.com.sigha.Beans.CursoBeans;
-import br.com.sigha.Beans.HorarioCursoBeans;
-import br.com.sigha.Beans.ProfessorBeans;
-import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Dao.CursoDao;
-import br.com.sigha.Dao.HorarioCursoDao;
-import br.com.sigha.Dao.ProfessorDao;
-import br.com.sigha.Util.DataSistema;
+import br.com.sigha.beans.CursoBeans;
+import br.com.sigha.beans.HorarioCursoBeans;
+import br.com.sigha.beans.ProfessorBeans;
+import br.com.sigha.beans.UnidadeLogadoBeans;
+import br.com.sigha.dao.CursoDao;
+import br.com.sigha.dao.HorarioCursoDao;
+import br.com.sigha.dao.ProfessorDao;
+import br.com.sigha.util.DataSistema;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -239,7 +239,7 @@ public class ViewCursos extends javax.swing.JPanel {
         jRativo.setText("Ativo");
         jRativo.setEnabled(false);
 
-        jTnomecurso.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(50));
+        jTnomecurso.setDocument(new br.com.sigha.util.LimitaCaracterUpper(50));
         jTnomecurso.setEnabled(false);
         jTnomecurso.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

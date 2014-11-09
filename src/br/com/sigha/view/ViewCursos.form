@@ -279,7 +279,7 @@
     <Component class="javax.swing.JTextField" name="jTnomecurso">
       <Properties>
         <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new br.com.sigha.Util.LimitaCaracterUpper(50)" type="code"/>
+          <Connection code="new br.com.sigha.util.LimitaCaracterUpper(50)" type="code"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>

@@ -171,7 +171,7 @@
         <Component class="javax.swing.JTextField" name="jdTFpesquisahorario">
           <Properties>
             <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new br.com.sigha.Util.LimitaCaracterUpper(80)" type="code"/>
+              <Connection code="new br.com.sigha.util.LimitaCaracterUpper(80)" type="code"/>
             </Property>
           </Properties>
           <Events>

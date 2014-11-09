@@ -4,9 +4,9 @@
  */
 package br.com.sigha.view;
 
-import br.com.sigha.Beans.OperadorLogadoBeans;
-import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Util.ButtonTabComponent;
+import br.com.sigha.beans.OperadorLogadoBeans;
+import br.com.sigha.beans.UnidadeLogadoBeans;
+import br.com.sigha.util.ButtonTabComponent;
 import java.awt.Component;
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import javax.swing.Icon;

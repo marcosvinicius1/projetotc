@@ -5,22 +5,22 @@
  */
 package br.com.sigha.view;
 
-import br.com.sigha.Beans.CursoBeans;
-import br.com.sigha.Beans.HorarioAulaBeans;
-import br.com.sigha.Beans.HorarioAulaPesquisaBeans;
-import br.com.sigha.Beans.HorarioAulaProfMatBeans;
-import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Dao.AuxHorarioCursoDao;
-import br.com.sigha.Dao.CursoDao;
-import br.com.sigha.Dao.HorarioAulaDao;
-import br.com.sigha.Dao.HorarioAulaProfMatDao;
-import br.com.sigha.Logica.LAuxGradeHorario;
-import br.com.sigha.Logica.LProfessorHorario;
-import br.com.sigha.Logica.ThreadGeraHorario;
-import br.com.sigha.Logica.ThreadRelatorioHorario;
-import br.com.sigha.Util.DataSistema;
-import br.com.sigha.Util.LogsTxt;
-import br.com.sigha.Util.QtdeOcorrenciaCaracter;
+import br.com.sigha.beans.CursoBeans;
+import br.com.sigha.beans.HorarioAulaBeans;
+import br.com.sigha.beans.HorarioAulaPesquisaBeans;
+import br.com.sigha.beans.HorarioAulaProfMatBeans;
+import br.com.sigha.beans.UnidadeLogadoBeans;
+import br.com.sigha.dao.AuxHorarioCursoDao;
+import br.com.sigha.dao.CursoDao;
+import br.com.sigha.dao.HorarioAulaDao;
+import br.com.sigha.dao.HorarioAulaProfMatDao;
+import br.com.sigha.logica.LAuxGradeHorario;
+import br.com.sigha.logica.LProfessorHorario;
+import br.com.sigha.logica.ThreadGeraHorario;
+import br.com.sigha.logica.ThreadRelatorioHorario;
+import br.com.sigha.util.DataSistema;
+import br.com.sigha.util.LogsTxt;
+import br.com.sigha.util.QtdeOcorrenciaCaracter;
 import br.com.sigha.conexao.ConexaoBanco;
 import java.io.File;
 import java.sql.SQLException;
@@ -178,7 +178,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
 
         jLabel4.setText("Pesquisa:");
 
-        jdTFpesquisahorario.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(80));
+        jdTFpesquisahorario.setDocument(new br.com.sigha.util.LimitaCaracterUpper(80));
         jdTFpesquisahorario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jdTFpesquisahorarioKeyReleased(evt);

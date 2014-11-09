@@ -4,26 +4,26 @@
  * and open the template in the editor.
  */
 package br.com.sigha.view;
-import br.com.sigha.Beans.AuxVerificaProfrHorAulaBeans;
-import br.com.sigha.Beans.CidadeBeans;
-import br.com.sigha.Beans.CursoBeans;
-import br.com.sigha.Beans.HorarioCursoBeans;
-import br.com.sigha.Beans.ProfessorHorarioBeans;
-import br.com.sigha.Beans.MateriaBeans;
-import br.com.sigha.Beans.TempMateriaGridBeans;
-import br.com.sigha.Beans.ProfessorBeans;
-import br.com.sigha.Beans.ProfessorMateriaBeans;
-import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Dao.AuxVerificaProfHorAulaDao;
-import br.com.sigha.Dao.CidadeDao;
-import br.com.sigha.Dao.CursoDao;
-import br.com.sigha.Dao.HorarioCursoDao;
-import br.com.sigha.Dao.ProfessorHorarioDao;
-import br.com.sigha.Dao.MateriaDao;
-import br.com.sigha.Dao.ProfessorDao;
-import br.com.sigha.Dao.ProfessorMateriaDao;
-import br.com.sigha.Validacao.Cpf;
-import br.com.sigha.Util.PintarLinhasTabela;
+import br.com.sigha.beans.AuxVerificaProfrHorAulaBeans;
+import br.com.sigha.beans.CidadeBeans;
+import br.com.sigha.beans.CursoBeans;
+import br.com.sigha.beans.HorarioCursoBeans;
+import br.com.sigha.beans.ProfessorHorarioBeans;
+import br.com.sigha.beans.MateriaBeans;
+import br.com.sigha.beans.TempMateriaGridBeans;
+import br.com.sigha.beans.ProfessorBeans;
+import br.com.sigha.beans.ProfessorMateriaBeans;
+import br.com.sigha.beans.UnidadeLogadoBeans;
+import br.com.sigha.dao.AuxVerificaProfHorAulaDao;
+import br.com.sigha.dao.CidadeDao;
+import br.com.sigha.dao.CursoDao;
+import br.com.sigha.dao.HorarioCursoDao;
+import br.com.sigha.dao.ProfessorHorarioDao;
+import br.com.sigha.dao.MateriaDao;
+import br.com.sigha.dao.ProfessorDao;
+import br.com.sigha.dao.ProfessorMateriaDao;
+import br.com.sigha.validacao.Cpf;
+import br.com.sigha.util.PintarLinhasTabela;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -314,13 +314,13 @@ public class ViewProfessor extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
         jLabel1.setText("Nome:");
 
-        jTnome.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(80)
+        jTnome.setDocument(new br.com.sigha.util.LimitaCaracterUpper(80)
         );
         jTnome.setToolTipText("Nome do Professor");
 
         jLabel2.setText("E-mail");
 
-        jTemail.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(40));
+        jTemail.setDocument(new br.com.sigha.util.LimitaCaracterUpper(40));
         jTemail.setToolTipText("Email do Professor");
         jTemail.setNextFocusableComponent(jFcpf);
 
@@ -427,9 +427,9 @@ public class ViewProfessor extends javax.swing.JPanel {
 
         jLabel7.setText("Rua");
 
-        jTrua.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(80));
+        jTrua.setDocument(new br.com.sigha.util.LimitaCaracterUpper(80));
 
-        jTbairro.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(30));
+        jTbairro.setDocument(new br.com.sigha.util.LimitaCaracterUpper(30));
         jTbairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTbairroActionPerformed(evt);
@@ -442,15 +442,15 @@ public class ViewProfessor extends javax.swing.JPanel {
         jLabel9.setText("Cidade");
 
         jTcidade.setEditable(false);
-        jTcidade.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(30));
+        jTcidade.setDocument(new br.com.sigha.util.LimitaCaracterUpper(30));
 
         jTestado.setEditable(false);
-        jTestado.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20));
+        jTestado.setDocument(new br.com.sigha.util.LimitaCaracterUpper(20));
 
         jLabel10.setForeground(new java.awt.Color(204, 0, 0));
         jLabel10.setText("Estado");
 
-        jTnumero.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(10));
+        jTnumero.setDocument(new br.com.sigha.util.LimitaCaracterUpper(10));
 
         jLabel26.setText("Numero");
 
@@ -563,7 +563,7 @@ public class ViewProfessor extends javax.swing.JPanel {
                 .addGap(0, 27, Short.MAX_VALUE))
         );
 
-        jTregistro.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20));
+        jTregistro.setDocument(new br.com.sigha.util.LimitaCaracterUpper(20));
         jTregistro.setToolTipText("Numero do Registro do Professor na Unidade");
         jTregistro.setNextFocusableComponent(jFfixo);
 

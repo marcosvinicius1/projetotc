@@ -5,8 +5,8 @@
  */
 
 package br.com.sigha.view;
-import br.com.sigha.Beans.UnidadeBeans;
-import br.com.sigha.Dao.UnidadeDao;
+import br.com.sigha.beans.UnidadeBeans;
+import br.com.sigha.dao.UnidadeDao;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
@@ -110,13 +110,13 @@ public class ViewUnidade extends javax.swing.JPanel {
             }
         });
 
-        jtfCidade.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(30));
+        jtfCidade.setDocument(new br.com.sigha.util.LimitaCaracterUpper(30));
         jtfCidade.setEnabled(false);
 
         jlRazaoSocial.setForeground(new java.awt.Color(204, 0, 0));
         jlRazaoSocial.setText("Razão Social");
 
-        jtfFone.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20));
+        jtfFone.setDocument(new br.com.sigha.util.LimitaCaracterUpper(20));
         jtfFone.setEnabled(false);
 
         jlCodigo.setText("Código");
@@ -234,7 +234,7 @@ public class ViewUnidade extends javax.swing.JPanel {
         });
         jspCidade.setViewportView(jtUnidade);
 
-        JTrazaosocial.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(80)
+        JTrazaosocial.setDocument(new br.com.sigha.util.LimitaCaracterUpper(80)
         );
         JTrazaosocial.setEnabled(false);
         JTrazaosocial.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -251,7 +251,7 @@ public class ViewUnidade extends javax.swing.JPanel {
 
         jlFone.setText("Fone");
 
-        jtfComplemento.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20));
+        jtfComplemento.setDocument(new br.com.sigha.util.LimitaCaracterUpper(20));
         jtfComplemento.setEnabled(false);
 
         jlCEP.setText("CEP");
@@ -268,23 +268,23 @@ public class ViewUnidade extends javax.swing.JPanel {
 
         jLabel1.setText("Cnpj");
 
-        jtfN.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(20)
+        jtfN.setDocument(new br.com.sigha.util.LimitaCaracterUpper(20)
         );
         jtfN.setEnabled(false);
 
         jlEndereco.setText("Endereço");
 
-        jtfEndereco.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(80));
+        jtfEndereco.setDocument(new br.com.sigha.util.LimitaCaracterUpper(80));
         jtfEndereco.setEnabled(false);
 
         jlBairro.setText("Bairro");
 
-        jtfBairro.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(30));
+        jtfBairro.setDocument(new br.com.sigha.util.LimitaCaracterUpper(30));
         jtfBairro.setEnabled(false);
 
         jlComplemento.setText("Complemento");
 
-        jtfFantasia.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(80)
+        jtfFantasia.setDocument(new br.com.sigha.util.LimitaCaracterUpper(80)
         );
         jtfFantasia.setEnabled(false);
         jtfFantasia.addActionListener(new java.awt.event.ActionListener() {

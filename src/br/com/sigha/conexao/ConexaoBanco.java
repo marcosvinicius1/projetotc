@@ -6,8 +6,8 @@ package br.com.sigha.conexao;
 
 
 
-import br.com.sigha.Beans.ConfigBeans;
-import br.com.sigha.Config.Config;
+import br.com.sigha.beans.ConfigBeans;
+import br.com.sigha.config.Config;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -6,11 +6,11 @@
 
 package br.com.sigha.view;
 
-import br.com.sigha.Beans.CursoBeans;
-import br.com.sigha.Beans.MateriaBeans;
-import br.com.sigha.Beans.UnidadeLogadoBeans;
-import br.com.sigha.Dao.CursoDao;
-import br.com.sigha.Dao.MateriaDao;
+import br.com.sigha.beans.CursoBeans;
+import br.com.sigha.beans.MateriaBeans;
+import br.com.sigha.beans.UnidadeLogadoBeans;
+import br.com.sigha.dao.CursoDao;
+import br.com.sigha.dao.MateriaDao;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -353,7 +353,7 @@ public class ViewMaterias extends javax.swing.JPanel {
         jCcurso.setToolTipText("Curso que ela Pertence");
         jCcurso.setEnabled(false);
 
-        jTnome.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(50)
+        jTnome.setDocument(new br.com.sigha.util.LimitaCaracterUpper(50)
         );
         jTnome.setToolTipText("Nome da Disciplina");
         jTnome.setEnabled(false);
@@ -466,7 +466,7 @@ public class ViewMaterias extends javax.swing.JPanel {
         jCperiodo.setToolTipText("Perio/Ano da Disciplina");
         jCperiodo.setEnabled(false);
 
-        jTsigla.setDocument(new br.com.sigha.Util.LimitaCaracterUpper(5)
+        jTsigla.setDocument(new br.com.sigha.util.LimitaCaracterUpper(5)
         );
         jTsigla.setToolTipText("Sigla para Disciplina");
         jTsigla.setEnabled(false);
