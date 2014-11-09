@@ -16,7 +16,6 @@ import br.com.sigha.Dao.HorarioAulaDao;
 import br.com.sigha.Dao.HorarioAulaProfMatDao;
 import br.com.sigha.Logica.LAuxGradeHorario;
 import br.com.sigha.Logica.LProfessorHorario;
-import br.com.sigha.Logica.LSincronizaProfessor;
 import br.com.sigha.Logica.ThreadGeraHorario;
 import br.com.sigha.Logica.ThreadRelatorioHorario;
 import br.com.sigha.Util.DataSistema;
@@ -654,7 +653,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
         jBretira.setEnabled(false);
         jBemprimir.setEnabled(true);
     }
-
+//metodo gera horario
      public void GeraHorario(int geracao) {  
          //sera utilizado para gerar mais de um horario de aula do mesmo curso
         jTanohorario.setText(String.valueOf(Integer.valueOf(jTanohorario.getText())+geracao));       
@@ -662,9 +661,9 @@ public class ViewHorarioAula extends javax.swing.JPanel {
         try {
 
             for (int i = 0; i < jTcurso.getRowCount(); i++) {
-                //preenche tabela horarioauxiliar
+                //preenche tabela horarioauxiliar e horario de aula
                  lf.GradeHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
-                 //sincroniza professores no horario, de acordo com suas preferencias e configuraçao no horario
+                 //sincroniza professores no horario, de acordo com suas preferencias e configuraçao na tabela horario
                 SincronizaProfessor(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
                 while(verificaHorario(jYanohorario.getValue() + "/" + jTanohorario.getText(),Integer.valueOf(jTcurso.getValueAt(i, 0).toString()),new Date())){                                       
                     LProfessorHorario lpo=new LProfessorHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));        
@@ -729,7 +728,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
 
     //metodo verifica qual opcao de configuracao esta marcada
     private void SincronizaProfessor(int idcurso) {        
-        new LSincronizaProfessor().HorarioProfessor(idcurso, jYanohorario.getValue() + "/" + jTanohorario.getText(), new Date());
+        new LProfessorHorario(idcurso).HorarioProfessor(jYanohorario.getValue() + "/" + jTanohorario.getText(), new Date());
         
     }
 

@@ -1,0 +1,35 @@
+
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1aee115: update auxhorariocurso set sabado=concat(sabado,'29|') where curso=1 and anoletivo='2014/2' and sabado<>'false' and inicio='14:20' and termino='15:10'
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@5f7f06: update auxhorariocurso set sabado=concat(sabado,'29|') where curso=1 and anoletivo='2014/2' and sabado<>'false' and inicio='15:30' and termino='16:20'
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1a86784: update auxhorariocurso set sabado=concat(sabado,'29|') where curso=1 and anoletivo='2014/2' and sabado<>'false' and inicio='16:20' and termino='17:10'
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@e4725b: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@f1050d: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@18be596: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@108dacb: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@b9eec: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@8ee9c9: select hp.* from professor p left join professormateria pm on(p.id=pm.idprofessor) left join materia m on(pm.idmateria=m.id) left join horarioprofessor hp on(hp.idprofessormateria=pm.id) where m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.id=30
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@db7371: select materia.periodo,materia.idcurso,horariocurso.inicio,horariocurso.termino,horariocurso.segunda,horariocurso.terca,horariocurso.quarta,horariocurso.quinta,horariocurso.sexta,horariocurso.sabado,horariocurso.domingo from materia 
+left join horariocurso on (materia.idcurso=horariocurso.idcurso) 
+where materia.idcurso=1 and materia.ativo='true' group by materia.periodo,horariocurso.inicio,horariocurso.termino
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1b12dbb: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'13:30','14:20','2014/2','2014.11.09',1)
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@a21d88: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'14:20','15:10','2014/2','2014.11.09',1)
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@9120cc: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'15:30','16:20','2014/2','2014.11.09',1)
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d29ed8: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'16:20','17:10','2014/2','2014.11.09',1)
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d5c00a: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'19:00','19:50','2014/2','2014.11.09',1)
+---------------------------
+Sun Nov 09 17:24:26 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@126d2bf: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'19:50','20:40','2014/2','2014.11.09',1)

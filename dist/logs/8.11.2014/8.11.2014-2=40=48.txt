@@ -1,3 +1,0 @@
-
----------------------------
-Sat Nov 08 02:40:48 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@79fe3f51: select curso.*,professor.nome as nomecoordenador from curso left join professor on(curso.idprofessor=professor.id) where curso.idunidade=1 and curso.ativo='true'

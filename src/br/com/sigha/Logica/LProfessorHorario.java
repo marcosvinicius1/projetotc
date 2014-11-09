@@ -43,14 +43,11 @@ public class LProfessorHorario {
         this.idcurso = idcurso;
     }
 
-    public LProfessorHorario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     //cadastra horario dos cursos na tabela horario aula
     public void CadastraHorarioAula(String anoletivo, Date datageracao) {
         try {
-            CadastraHorario(this.idcurso, anoletivo, datageracao);//cadastra horario dos cursos na tabela horario aula
+            //cadastra horario dos cursos na tabela horario aula
+            CadastraHorario(this.idcurso, anoletivo, datageracao);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Buscar Horario do Curso\n" + ex, "Gera Horario", JOptionPane.ERROR_MESSAGE);
         }
@@ -152,7 +149,7 @@ public class LProfessorHorario {
                     //seleciona uma materia do periodo passado como parametro   
                     // compara o horario passado para a funcao e com o horario de aula se tem materia usando o dia
                     if (verificadia(dia, inicio, termino, lhorario.get(i).getPeriodo(), anoletivo, datageracao)) {                        
-                        MateriaBeans materia = new LSelecionaMateria().FiltraMateria(lmateria, lhorario.get(i).getPeriodo(), lhorario.get(i).getInicio(), lhorario.get(i).getTermino(), anoletivo, datageracao, dia, lhorario.get(i).getIdcurso());
+                        MateriaBeans materia = FiltraMateria(lmateria, lhorario.get(i).getPeriodo(), lhorario.get(i).getInicio(), lhorario.get(i).getTermino(), anoletivo, datageracao, dia, lhorario.get(i).getIdcurso());
                         //objeto recebe o professor referente a materia para inserção                        
                         ProfessorMateriaBeans lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(materia.getId(), new UnidadeLogadoBeans().getId());
                         //metodo para cadastro de materia
@@ -309,12 +306,12 @@ public class LProfessorHorario {
         LogsTxt logs=new LogsTxt();
         if (verQtdeAulaMatEDia(anoletivo, datageracao)) {
             for (int i = 0; i < erroperiodo.size(); i++) {
-                logs.setTxt(new Date()+"  Periodos com Erros"+String.valueOf(erroperiodo.size()),"Erro");
+                logs.setTxt(new Date()+" Periodos com Erros "+String.valueOf(erroperiodo.size())+" Curso: "+this.idcurso,"Erro");
             }
             logs.setTxt(new Date()+"  -------------------------","Erro");
             //verifica se tem dia sem aula e se as materia do dia sem aula esta todas utilizadas
             if (verificaQtdeDiaProfHor(anoletivo, datageracao)) {
-                logs.setTxt(new Date()+"  Tem erro QtdeDiaProfHora","Erro");
+                logs.setTxt(new Date()+" Dia da semana com erro: ","Erro");
                 logs.setTxt(new Date()+"  -------------------------","Erro");
                 resp = true;
 
@@ -603,8 +600,8 @@ public class LProfessorHorario {
         for (int i = 0; i < idmatprof.size(); i++) {
             try {
                 if (idmat != idmatprof.get(i)) {
-                    ocorrmath = new ProfessorMateriaDao().buscaProfessorQtdeOcorrHorario(idmat);
-                     System.out.println(idmat+"|"+ocorrmath+"|"+cont);
+                    ocorrmath = new ProfessorMateriaDao().buscaProfessorQtdeOcorrHorario(idmat);                                    
+                     new LogsTxt().setTxt(new Date()+" Ocorrencia Materia: "+idmat+"|"+ocorrmath+"|"+cont);
                     if (ocorrmath != cont) {
                         resp = true;
                     }
@@ -614,7 +611,7 @@ public class LProfessorHorario {
                 cont++;
                 if (idmatprof.size() == i + 1) {
                     ocorrmath = new ProfessorMateriaDao().buscaProfessorQtdeOcorrHorario(idmatprof.get(i));
-                     System.out.println(idmat+"|"+ocorrmath+"|"+cont);
+                        new LogsTxt().setTxt(new Date()+" Ocorencia Materia: "+idmat+"|"+ocorrmath+"|"+cont);
                     if (ocorrmath != cont) {
                         resp = true;
                     }
@@ -625,4 +622,182 @@ public class LProfessorHorario {
         }
         return resp;
     }
+ public void HorarioProfessor(String anoletivo, Date datageracao) {
+        try {
+//            //metodo busca o horario do curso na tabela horarioaula
+//            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(idcurso, anoletivo, datageracao);
+//            //metodo busaca os periodos de um curso na tabela horarioaula
+//            List<HorarioAulaBeans> lhorariop=new HorarioAulaDao().HorarioGroupPeriodo(idcurso, anoletivo, datageracao);
+            //metodo busca horario na tabela auxhorariocurso
+            List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(this.idcurso, anoletivo);            
+            for (int i = 0; i < lauxhorario.size(); i++) {
+                if (!"false".equals(lauxhorario.get(i).getSegunda())) {
+                    // JOptionPane.showMessageDialog(null, "segunda");
+                    FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getSegunda(), datageracao, "segunda");
+                }
+            }
+            for (int i = 0; i < lauxhorario.size(); i++) {
+                if (!"false".equals(lauxhorario.get(i).getTerca())) {
+                    // JOptionPane.showMessageDialog(null, "terca");
+                    FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getTerca(), datageracao, "terca");
+                }
+            }
+            for (int i = 0; i < lauxhorario.size(); i++) {
+                if (!"false".equals(lauxhorario.get(i).getQuarta())) {
+                    FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getQuarta(), datageracao, "quarta");
+                }
+            }
+            for (int i = 0; i < lauxhorario.size(); i++) {
+                if (!"false".equals(lauxhorario.get(i).getQuinta())) {
+                    FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getQuinta(), datageracao, "quinta");
+                }
+            }
+            for (int i = 0; i < lauxhorario.size(); i++) {
+                if (!"false".equals(lauxhorario.get(i).getSexta())) {
+                    FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getSexta(), datageracao, "sexta");
+                }
+            }
+            for (int i = 0; i < lauxhorario.size(); i++) {
+                if (!"false".equals(lauxhorario.get(i).getSabado())) {
+                    FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getSabado(), datageracao, "sabado");
+                }
+            }
+            for (int i = 0; i < lauxhorario.size(); i++) {
+                if (!"false".equals(lauxhorario.get(i).getDomingo())) {
+                    FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getDomingo(), datageracao, "domingo");
+                }
+            }
+
+            // new LAuxGradeHorario(anoletivo).SelecionaCursoHorario(lhorario.get(i).getInicio(), lhorario.get(i).getTermino(), idcurso);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Sincronizar Professor\n" + ex, "Gera Horario", JOptionPane.ERROR_MESSAGE);
+        }        
+        
+    
+ }
+ 
+  //verifica as materias e escolhe uma para inserir
+public MateriaBeans FiltraMateria(List<MateriaBeans> lmateria, int periodo, String inicio, String termino, String anoletivo, Date datageracao, String dia, int idcurso) {
+        ProfessorMateriaBeans lprofessor;
+        //  JOptionPane.showMessageDialog(null, inicio + "|" + termino + "|" + periodo);
+        List<MateriaBeans> resmataux = new ArrayList<>();//array de materia onde contem a que sera escolhida
+        List<MateriaBeans> lauxmateria = new ArrayList<>();
+        MateriaBeans resmat = new MateriaBeans();//objeto da materia escolhida
+        MateriaBeans materiab = new MateriaBeans();//objeto da materia auxiliar
+
+        //verifica a quantidade de ocorrencia e menor que a quantidade da semana
+        for (int l = 0; l < lmateria.size(); l++) {
+            try {
+                //busca id do professor relacionada a materia;
+                lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(lmateria.get(l).getId(), new UnidadeLogadoBeans().getId());
+                // metodo  verificar as ocorrencias de um professor com sua materia na grade de aula
+                int ocorrmat = new LProfessorHorario(periodo).VerOcorrencia(lprofessor.getId(), anoletivo, datageracao);
+                //se teve ocorrencia ele entra
+                // JOptionPane.showMessageDialog(null, "Ocorrencia Semana:"+ocorrmat+"\nMateria:"+lmateria.get(l).getSigla());
+                if (ocorrmat > 0) {
+                    //se a quantidade de ocorrencia for menor que a quantidade que pode ter na semana ele entra
+                    if (ocorrmat < Integer.valueOf(lmateria.get(l).getQtdeaulasem())) {
+                        materiab = lmateria.get(l);
+                        materiab.setOcorrencia(ocorrmat);//seta a ocorrencia na semana
+                        resmataux.add(materiab);
+                    }
+                    //se nao teve ocorrencia ele entra
+                } else {
+                    if (lprofessor.getId() > 0) {
+                        materiab = lmateria.get(l);
+                        materiab.setOcorrencia(ocorrmat);//seta a ocorrencia na semana
+                        resmataux.add(materiab);
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Filtrar Materia\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        //verifica se o professor tem preferencia para dar aula no dia ou nao
+        
+        //verifica se o professor da materia esta sendo utilizado no intervalo do horario        
+        for (int i = 0; i < resmataux.size(); i++) {
+            try {
+                //busca id do professor relacionada a materia;
+                lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(resmataux.get(i).getId(), new UnidadeLogadoBeans().getId());
+                //metodo verifica se o professor da materia da aula no mesmo horario independente da materia
+                Boolean ocorrencia = new HorarioAulaDao().VerificaOcorrencProfHor(dia, inicio, termino, anoletivo, datageracao, lprofessor.getIdprofessor());
+                //se o professor da materia tiver aula no horario passado no parametro ele entra no metodo é retirado da lista
+                //JOptionPane.showMessageDialog(null, "Ocorrencia Intervalo:"+ocorrencia);
+                if (ocorrencia || lprofessor.getId() == 0) {
+                    // JOptionPane.showMessageDialog(null, ""+ocorrencia+"\ninicio:"+inicio+"\ntermino:"+termino+"\nanoletivo:"+anoletivo+"\ndatageracao"+datageracao+"\nprofessor"+lprofessor.getIdprofessor()+"\nmateria:"+resmataux.get(i).getSigla());
+                    resmataux.remove(i);
+                    i--;
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Filtrar Materia Verifica Professor Utilizado\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        //verifica se a materia ja foi utilizada no dia e se pode ser utilizada novamente
+        for (int i = 0; i < resmataux.size(); i++) {
+            try {
+                //busca id do professor relacionada a materia;
+                lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(resmataux.get(i).getId(), new UnidadeLogadoBeans().getId());
+                //verifica a quantidade de ocorrencia de uma materia no dia
+                int ocorr = new HorarioAulaDao().VerificaOcorrencProfDia(dia, periodo, datageracao, anoletivo, lprofessor.getId());
+                // JOptionPane.showMessageDialog(null, "Ocorrencia Dia:"+ocorr+"\nMateria:"+lprofessor.getIdprofessor()+"\ndia"+dia);
+                if (ocorr >= Integer.valueOf(resmataux.get(i).getQtdeauladia())) {
+                    resmataux.remove(i);
+                    i--;
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Filtrar Materia Verificar Materia Dia\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }
+
+        //verifica se tem horario suficiente para adicionar a materia        
+        for (int i = 0; i < resmataux.size(); i++) {
+            try {
+                List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorarioPeriodo(idcurso, anoletivo, datageracao, resmataux.get(i).getPeriodo());
+                for (int j = 0; j < lhorario.size(); j++) {
+                    if (lhorario.get(j).getInicio().equals(inicio) && lhorario.get(j).getTermino().equals(termino)) {
+                        int qtdeh = lhorario.size() - j;
+                        //System.out.println("inicio:"+inicio+"|termino:"+termino+"|dia:"+dia+"|periodo:"+resmataux.get(i).getPeriodo()+"|qtdeh:"+qtdeh);
+                        if (qtdeh > 0) {
+                            if (resmataux.get(i).getSequencial().equals("true")) {
+                                if (Integer.valueOf(resmataux.get(i).getQtdeauladia()) > qtdeh) {
+                                    //      System.out.println("Removel:"+resmataux.get(i).getSigla()+"|"+Integer.valueOf(resmataux.get(i).getQtdeauladia())+"|qtdeh:"+qtdeh);
+                                    resmataux.remove(i);
+                                    i--;
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Filtrar Materia\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        // verifica se a materia sera chamada futuramente 
+        for (int i = 0; i < resmataux.size(); i++) {
+            if (!new LAuxGradeHorario(anoletivo).verificaChamaMateria(dia, inicio, termino, String.valueOf(resmataux.get(i).getId()), idcurso)) {
+                lauxmateria.add(resmataux.get(i));
+            }
+        }
+
+        //se na lista tiver registro ele apaga a lista resposta e copia os dados para ela
+        if (lauxmateria.size() > 0) {
+            resmataux.clear();
+            resmataux = new LProfessorHorario(idcurso).CopiaList(lauxmateria);
+        }
+
+        //se na lista tiver mais de uma materia escolhida ele escolhe uma randonicamente
+        // JOptionPane.showMessageDialog(null, "Quantidade Materia"+resmataux.size());
+        if (resmataux.size() > 1) {
+            resmat = new LProfessorHorario(1).EscolheMateria(resmataux);
+        } else if (resmataux.size() > 0) {
+            resmat = resmataux.get(0);
+        }
+        // JOptionPane.showMessageDialog(null, resmat.getSigla());
+        return resmat;
+    }
+
 }

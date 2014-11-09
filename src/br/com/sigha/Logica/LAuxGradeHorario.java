@@ -64,20 +64,24 @@ public class LAuxGradeHorario {
         return resp;
     }
     
-//metodo busca e insere na tabela auxhorario os dados referente horario do curso
+//metodo busca e insere na tabela auxhorarioe do horario definitivo os dados referente horario do curso
     public void GradeHorario(int idcurso) throws SQLException {
         //try {
        
             HorarioCursoDao hcd = new HorarioCursoDao();
             AuxHorarioCursoDao ahcd = new AuxHorarioCursoDao();
+            //lista de  horario do curso
             lhorariocurso = hcd.BuscaHorario(idcurso);
             
-            for (int i = 0; i < lhorariocurso.size(); i++) {                
-                ahcd.CadastraAuxHorarioCurso(lhorariocurso.get(i), this.anoletivo);//cadastra o horario do curso na tabela auxiliar       
+            for (int i = 0; i < lhorariocurso.size(); i++) {            
+                //cadastra o horario do curso na tabela auxiliar       
+                ahcd.CadastraAuxHorarioCurso(lhorariocurso.get(i), this.anoletivo);
             }
-             AjustaHorarioComCurso(lhorariocurso.get(1).getIdcurso());//ajusta auxhoario e coloca id dos curso
+            //ajusta auxhoario e coloca id dos curso
+             AjustaHorarioComCurso(lhorariocurso.get(1).getIdcurso());
              LProfessorHorario lpo=new LProfessorHorario(idcurso);        
-             lpo.CadastraHorarioAula(this.anoletivo,new Date());//Cadastra horario dos cursos na tabela horario aula
+             //Cadastra horario dos cursos na tabela horario aula
+             lpo.CadastraHorarioAula(this.anoletivo,new Date());
              
 
     }
