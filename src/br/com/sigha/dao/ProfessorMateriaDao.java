@@ -24,12 +24,12 @@ import java.util.List;
  */
 public class ProfessorMateriaDao {
 
-   // private Connection conexao;
+    // private Connection conexao;
     public ProfessorMateriaDao() throws SQLException {
         //   conexao = new ConexaoBanco().getConnect();
     }
 
-    public int AdicionaMateria(ProfessorMateriaBeans pmb) throws SQLException  {
+    public int AdicionaMateria(ProfessorMateriaBeans pmb) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             int idmateriaprofessor = 0;
             String sql = "insert into professormateria (idprofessor,idmateria,ativo)value(?,?,?)";
@@ -55,7 +55,7 @@ public class ProfessorMateriaDao {
                     + "where professormateria.idmateria=materia.id and materia.idcurso=curso.id and professormateria.idprofessor=?";
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idprofessor);
-            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
+            new LogsTxt().setTxt(new Date() + "Sql Execultada" + pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<ProfessorMateriaBeans> lprofessormateria = new ArrayList<ProfessorMateriaBeans>();
             while (rs.next()) {
@@ -84,7 +84,7 @@ public class ProfessorMateriaDao {
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idmateria);
             pstm.setInt(2, idunidade);
-            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
+            new LogsTxt().setTxt(new Date() + "Sql Execultada" + pstm.toString());
             ResultSet rs = pstm.executeQuery();
             List<ProfessorMateriaBeans> lprofessormateria = new ArrayList<ProfessorMateriaBeans>();
             while (rs.next()) {
@@ -109,7 +109,7 @@ public class ProfessorMateriaDao {
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idmateria);
             pstm.setInt(2, idunidade);
-            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
+            new LogsTxt().setTxt(new Date() + "Sql Execultada" + pstm.toString());
             ResultSet rs = pstm.executeQuery();
             ProfessorBeans pb = new ProfessorBeans();
             while (rs.next()) {
@@ -147,14 +147,14 @@ public class ProfessorMateriaDao {
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idmateria);
             pstm.setInt(2, idunidade);
-            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
+            new LogsTxt().setTxt(new Date() + "Sql Execultada" + pstm.toString());
             ResultSet rs = pstm.executeQuery();
             ProfessorMateriaBeans pfb = new ProfessorMateriaBeans();
             while (rs.next()) {
                 pfb.setId(rs.getInt("id"));
                 pfb.setIdmateria(rs.getInt("idmateria"));
                 pfb.setIdprofessor(rs.getInt("idprofessor"));
-            }            
+            }
             rs.close();
             pstm.close();
             return pfb;
@@ -164,7 +164,7 @@ public class ProfessorMateriaDao {
     public void DeletaMateria(String id, int idprofessor) throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
             String sql = "delete from professormateria where idprofessor=? and id not in(" + id + ")";
-            
+
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, idprofessor);
             pstm.execute();
@@ -185,36 +185,18 @@ public class ProfessorMateriaDao {
     }
 
     public int buscaProfessorQtdeOcorr(int idcurso, int periodo) throws SQLException {
-        int res=0;
-        try(Connection conexao=new ConexaoBanco().getConnect()){
-            String sql="SELECT periodo,sum(qtdeaulasem) as qtde FROM gerador.professormateria pm left join materia m on(pm.idmateria=m.id) "
-                    +"left join professor p on(p.id=pm.idprofessor) "
+        int res = 0;
+        try (Connection conexao = new ConexaoBanco().getConnect()) {
+            String sql = "SELECT periodo,sum(qtdeaulasem) as qtde FROM gerador.professormateria pm left join materia m on(pm.idmateria=m.id) "
+                    + "left join professor p on(p.id=pm.idprofessor) "
                     + "where pm.ativo='true' and m.ativo='true' and p.ativo='true' and m.idcurso=? and m.periodo=? group by 1;";
-            PreparedStatement pst=conexao.prepareCall(sql);
+            PreparedStatement pst = conexao.prepareCall(sql);
             pst.setInt(1, idcurso);
             pst.setInt(2, periodo);
-            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
-            ResultSet rs=pst.executeQuery();
-            while(rs.next()){
-                res=rs.getInt("qtde");
-            }
-            rs.close();
-            pst.close();
-        }
-        return res;
-    }
-    
-    public int buscaProfessorQtdeOcorrHorario(int idprofessormateria) throws SQLException {
-        int res=0;
-        try(Connection conexao=new ConexaoBanco().getConnect()){
-            String sql="select m.qtdeaulasem from professormateria pm left "
-                    + "join professor p on(pm.idprofessor=p.id) left join materia m on(m.id=pm.idmateria) where pm.id=?";
-            PreparedStatement pst=conexao.prepareStatement(sql);
-            pst.setInt(1, idprofessormateria);
-            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
-            ResultSet rs=pst.executeQuery();
-            while(rs.next()){
-                res=rs.getInt("qtdeaulasem");
+            new LogsTxt().setTxt(new Date() + "Sql Execultada" + pst.toString());
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                res = rs.getInt("qtde");
             }
             rs.close();
             pst.close();
@@ -222,4 +204,46 @@ public class ProfessorMateriaDao {
         return res;
     }
 
+    public int buscaProfessorQtdeOcorrHorario(int idprofessormateria) throws SQLException {
+        int res = 0;
+        try (Connection conexao = new ConexaoBanco().getConnect()) {
+            String sql = "select m.qtdeaulasem from professormateria pm left "
+                    + "join professor p on(pm.idprofessor=p.id) left join materia m on(m.id=pm.idmateria) where pm.id=?";
+            PreparedStatement pst = conexao.prepareStatement(sql);
+            pst.setInt(1, idprofessormateria);
+            new LogsTxt().setTxt(new Date() + "Sql Execultada" + pst.toString());
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                res = rs.getInt("qtdeaulasem");
+            }
+            rs.close();
+            pst.close();
+        }
+        return res;
+    }
+
+    public List<ProfessorMateriaBeans> BuscaIdMateria(String inicio, String termino, int idcurso, String diasemana) throws SQLException {
+        try (Connection conexao = new ConexaoBanco().getConnect()) {
+            String sql = "SELECT m.id from materia m left join professormateria pm on(m.id=pm.idmateria) "
+                    + "left join professor p on(p.id=pm.idprofessor) "
+                    + "inner join horarioprofessor hp on(pm.id=hp.idprofessormateria) "
+                    + "and m.ativo='true' and pm.ativo='true' and p.ativo='true' "
+                    + "and hp.inicio=? and hp.termino=? and m.idcurso=? and hp."+diasemana+"='true' and m." + diasemana + "='true' order by 1";
+            PreparedStatement pstm = conexao.prepareStatement(sql);
+            pstm.setString(1, inicio);
+            pstm.setString(2, termino);
+            pstm.setInt(3, idcurso);
+            new LogsTxt().setTxt(new Date() + "Sql Execultada" + pstm.toString());
+            ResultSet rs = pstm.executeQuery();
+            List<ProfessorMateriaBeans> listamateria = new ArrayList<>();
+            while (rs.next()) {
+                ProfessorMateriaBeans hb = new ProfessorMateriaBeans();
+                hb.setIdmateria(rs.getInt("id"));
+                listamateria.add(hb);
+            }
+            rs.close();
+            pstm.close();
+            return listamateria;
+        }
+    }
 }

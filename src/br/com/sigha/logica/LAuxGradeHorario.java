@@ -8,10 +8,12 @@ package br.com.sigha.logica;
 import br.com.sigha.beans.HorarioCursoBeans;
 import br.com.sigha.beans.MateriaBeans;
 import br.com.sigha.beans.ProfessorHorarioBeans;
+import br.com.sigha.beans.ProfessorMateriaBeans;
 import br.com.sigha.dao.AuxHorarioCursoDao;
 import br.com.sigha.dao.HorarioCursoDao;
 import br.com.sigha.dao.MateriaDao;
 import br.com.sigha.dao.ProfessorHorarioDao;
+import br.com.sigha.dao.ProfessorMateriaDao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,11 +76,12 @@ public class LAuxGradeHorario {
             lhorariocurso = hcd.BuscaHorario(idcurso);
             
             for (int i = 0; i < lhorariocurso.size(); i++) {            
-                //cadastra o horario do curso na tabela auxiliar       
+                //cadastra o horario do curso na tabela auxiliarhorario       
                 ahcd.CadastraAuxHorarioCurso(lhorariocurso.get(i), this.anoletivo);
             }
             //ajusta auxhoario e coloca id dos curso
-             AjustaHorarioComCurso(lhorariocurso.get(1).getIdcurso());
+             AjustaHorarioComCurso(lhorariocurso.get(1).getIdcurso(),lhorariocurso);
+             JOptionPane.showMessageDialog(null, "Terminou");
              LProfessorHorario lpo=new LProfessorHorario(idcurso);        
              //Cadastra horario dos cursos na tabela horario aula
              lpo.CadastraHorarioAula(this.anoletivo,new Date());
@@ -89,70 +92,91 @@ public class LAuxGradeHorario {
     
     
     //metodo coloca a sigla no curso nos dias onde provavelmente devera ter aula
-    private void AjustaHorarioComCurso(int idcurso){
+    private void AjustaHorarioComCurso(int idcurso,List<HorarioCursoBeans> hc){
         try {
-            lmateria=new MateriaDao().BuscaMateriaCurso(idcurso);//busca materia do curso
+           // lmateria=new MateriaDao().BuscaMateriaCurso(idcurso);//busca materia do curso
             List<ProfessorHorarioBeans> phb=new ArrayList<>();
             
             AuxHorarioCursoDao ahcd=new AuxHorarioCursoDao();
             
-            for(int i=0;i<lmateria.size();i++){
-                if(!"false".equals(lmateria.get(i).getSegunda())){
-                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());//busca horario da materia do professor
-                    for(int j=0;j<phb.size();j++){                        
-                        if(phb.get(j).getSegunda().equals("true")){                            
-                            ahcd.AtualizaAuxHoararioCurso(lmateria.get(i).getId()+"|", idcurso, this.anoletivo, "segunda",phb.get(j).getInicio(),phb.get(j).getTermino());
-                        }
-                    }
+            for(int i=0;i<hc.size();i++){
+                if(!"false".equals(hc.get(i).getSegunda())){
+                    //busca horario da materia do professor                                        
+                    String id=ConcatenaIdmateria(new ProfessorMateriaDao().BuscaIdMateria(hc.get(i).getInicio(),hc.get(i).getTermino(),hc.get(i).getIdcurso(),"segunda"));
+//                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());
+//                    for(int j=0;j<phb.size();j++){                        
+//                        if(phb.get(j).getSegunda().equals("true")){                            
+                            ahcd.AtualizaAuxHoararioCurso(id, idcurso, this.anoletivo, "segunda",hc.get(i).getInicio(),hc.get(i).getTermino());
+//                        }
+//                    }
                     
                 }
-                if(!"false".equals(lmateria.get(i).getTerca())){
-                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());//busca horario da materia do professor
-                    for(int j=0;j<phb.size();j++){
-                        if(phb.get(j).getTerca().equals("true")){
-                            ahcd.AtualizaAuxHoararioCurso(lmateria.get(i).getId()+"|", idcurso, this.anoletivo, "terca",phb.get(j).getInicio(),phb.get(j).getTermino());
-                        }
-                    }                   
+                if(!"false".equals(hc.get(i).getTerca())){
+                    //busca horario da materia do professor                                        
+                    String id=ConcatenaIdmateria(new ProfessorMateriaDao().BuscaIdMateria(hc.get(i).getInicio(),hc.get(i).getTermino(),hc.get(i).getIdcurso(),"terca"));
+//                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());
+//                    for(int j=0;j<phb.size();j++){                        
+//                        if(phb.get(j).getSegunda().equals("true")){                            
+                            ahcd.AtualizaAuxHoararioCurso(id, idcurso, this.anoletivo, "terca",hc.get(i).getInicio(),hc.get(i).getTermino());
+//                        }
+//                    }
+                    
+                }                  
+                
+                if(!"false".equals(hc.get(i).getQuarta())){
+                    //busca horario da materia do professor                                        
+                    String id=ConcatenaIdmateria(new ProfessorMateriaDao().BuscaIdMateria(hc.get(i).getInicio(),hc.get(i).getTermino(),hc.get(i).getIdcurso(),"quarta"));
+//                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());
+//                    for(int j=0;j<phb.size();j++){                        
+//                        if(phb.get(j).getSegunda().equals("true")){                            
+                            ahcd.AtualizaAuxHoararioCurso(id, idcurso, this.anoletivo, "quarta",hc.get(i).getInicio(),hc.get(i).getTermino());
+//                        }
+//                    }
+                    
                 }
-                if(!"false".equals(lmateria.get(i).getQuarta())){
-                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());//busca horario da materia do professor
-                    for(int j=0;j<phb.size();j++){
-                        if(phb.get(j).getQuarta().equals("true")){
-                            ahcd.AtualizaAuxHoararioCurso(lmateria.get(i).getId()+"|", idcurso, this.anoletivo, "quarta",phb.get(j).getInicio(),phb.get(j).getTermino());
-                        }
-                    }                   
+                if(!"false".equals(hc.get(i).getQuinta())){
+                    //busca horario da materia do professor                                        
+                    String id=ConcatenaIdmateria(new ProfessorMateriaDao().BuscaIdMateria(hc.get(i).getInicio(),hc.get(i).getTermino(),hc.get(i).getIdcurso(),"quinta"));
+//                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());
+//                    for(int j=0;j<phb.size();j++){                        
+//                        if(phb.get(j).getSegunda().equals("true")){                            
+                            ahcd.AtualizaAuxHoararioCurso(id, idcurso, this.anoletivo, "quinta",hc.get(i).getInicio(),hc.get(i).getTermino());
+//                        }
+//                    }
+                    
                 }
-                if(!"false".equals(lmateria.get(i).getQuinta())){
-                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());//busca horario da materia do professor
-                    for(int j=0;j<phb.size();j++){
-                        if(phb.get(j).getQuinta().equals("true")){
-                            ahcd.AtualizaAuxHoararioCurso(lmateria.get(i).getId()+"|", idcurso, this.anoletivo, "quinta",phb.get(j).getInicio(),phb.get(j).getTermino());
-                        }
-                    }                    
+                if(!"false".equals(hc.get(i).getSexta())){
+                    //busca horario da materia do professor                                        
+                    String id=ConcatenaIdmateria(new ProfessorMateriaDao().BuscaIdMateria(hc.get(i).getInicio(),hc.get(i).getTermino(),hc.get(i).getIdcurso(),"sexta"));
+//                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());
+//                    for(int j=0;j<phb.size();j++){                        
+//                        if(phb.get(j).getSegunda().equals("true")){                            
+                            ahcd.AtualizaAuxHoararioCurso(id, idcurso, this.anoletivo, "sexta",hc.get(i).getInicio(),hc.get(i).getTermino());
+//                        }
+//                    }
+                    
                 }
-                if(!"false".equals(lmateria.get(i).getSexta())){
-                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());//busca horario da materia do professor
-                    for(int j=0;j<phb.size();j++){
-                        if(phb.get(j).getSexta().equals("true")){
-                            ahcd.AtualizaAuxHoararioCurso(lmateria.get(i).getId()+"|", idcurso, this.anoletivo, "sexta",phb.get(j).getInicio(),phb.get(j).getTermino());
-                        }
-                    }                    
+                if(!"false".equals(hc.get(i).getSabado())){
+                    //busca horario da materia do professor                                        
+                    String id=ConcatenaIdmateria(new ProfessorMateriaDao().BuscaIdMateria(hc.get(i).getInicio(),hc.get(i).getTermino(),hc.get(i).getIdcurso(),"sabado"));
+//                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());
+//                    for(int j=0;j<phb.size();j++){                        
+//                        if(phb.get(j).getSegunda().equals("true")){                            
+                            ahcd.AtualizaAuxHoararioCurso(id, idcurso, this.anoletivo, "sabado",hc.get(i).getInicio(),hc.get(i).getTermino());
+//                        }
+//                    }
+                    
                 }
-                if(!"false".equals(lmateria.get(i).getSabado())){
-                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());//busca horario da materia do professor
-                    for(int j=0;j<phb.size();j++){
-                        if(phb.get(j).getSabado().equals("true")){
-                            ahcd.AtualizaAuxHoararioCurso(lmateria.get(i).getId()+"|", idcurso, this.anoletivo, "sabado",phb.get(j).getInicio(),phb.get(j).getTermino());
-                        }
-                    }                    
-                }
-                if(!"false".equals(lmateria.get(i).getDomingo())){
-                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());//busca horario da materia do professor
-                    for(int j=0;j<phb.size();j++){
-                        if(phb.get(j).getDomingo().equals("true")){
-                            ahcd.AtualizaAuxHoararioCurso(lmateria.get(i).getId()+"|", idcurso, this.anoletivo, "domingo",phb.get(j).getInicio(),phb.get(j).getTermino());
-                        }
-                    }                    
+                if(!"false".equals(hc.get(i).getDomingo())){
+                    //busca horario da materia do professor                                        
+                    String id=ConcatenaIdmateria(new ProfessorMateriaDao().BuscaIdMateria(hc.get(i).getInicio(),hc.get(i).getTermino(),hc.get(i).getIdcurso(),"domingo"));
+//                    phb=new ProfessorHorarioDao().BuscaProfessorHorarioMateria(lmateria.get(i).getId());
+//                    for(int j=0;j<phb.size();j++){                        
+//                        if(phb.get(j).getSegunda().equals("true")){                            
+                            ahcd.AtualizaAuxHoararioCurso(id, idcurso, this.anoletivo, "domingo",hc.get(i).getInicio(),hc.get(i).getTermino());
+//                        }
+//                    }
+                    
                 }
             }
         } catch (SQLException ex) {
@@ -163,6 +187,14 @@ public class LAuxGradeHorario {
     //cadastra professor no dia de aula
     void SelecionaCursoHorario(String inicio, String termino, int idcurso) {
         
+    }
+
+    private String ConcatenaIdmateria(List<ProfessorMateriaBeans> BsId) {
+        String id="";
+        for(int i=0;i<BsId.size();i++){
+            id=id+BsId.get(i).getIdmateria()+"|";
+        }
+        return id;
     }
     
     

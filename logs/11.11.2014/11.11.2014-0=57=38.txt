@@ -1,0 +1,5 @@
+
+---------------------------
+Tue Nov 11 00:57:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@ddb0f9: select curso.*,professor.nome as nomecoordenador from curso left join professor on(curso.idprofessor=professor.id) where curso.idunidade=1 and curso.ativo='true'
+---------------------------
+Tue Nov 11 00:57:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@207e0: SELECT materia.id,materia.nome,materia.idcurso,materia.segunda,materia.terca,materia.quarta,materia.quinta,materia.sexta,materia.sabado,materia.domingo,curso.nome as nomecurso,materia.sigla FROM gerador.materia left join curso on(materia.idcurso=curso.id) where materia.idcurso=1 and materia.ativo='true';

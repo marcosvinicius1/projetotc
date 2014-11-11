@@ -1,0 +1,21 @@
+
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@56c4a2: SELECT m.id from materia m left join professormateria pm on(m.id=pm.idmateria) left join professor p on(p.id=pm.idprofessor) inner join horarioprofessor hp on(pm.id=hp.idprofessormateria) and m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.idcurso=1 and hp.inicio='21:40' and hp.termino='22:30' and m.idcurso=1 and m.sexta='true' order by 1
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@18414fa: update auxhorariocurso set sexta=concat(sexta,'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|') where curso=1 and anoletivo='2014/3' and sexta<>'false' and inicio='21:40' and termino='22:30'
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1df6877: SELECT m.id from materia m left join professormateria pm on(m.id=pm.idmateria) left join professor p on(p.id=pm.idprofessor) inner join horarioprofessor hp on(pm.id=hp.idprofessormateria) and m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.idcurso=1 and hp.inicio='13:30' and hp.termino='14:20' and m.idcurso=1 and m.sabado='true' order by 1
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@5bf734: update auxhorariocurso set sabado=concat(sabado,'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='13:30' and termino='14:20'
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1fd01f7: SELECT m.id from materia m left join professormateria pm on(m.id=pm.idmateria) left join professor p on(p.id=pm.idprofessor) inner join horarioprofessor hp on(pm.id=hp.idprofessormateria) and m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.idcurso=1 and hp.inicio='14:20' and hp.termino='15:10' and m.idcurso=1 and m.sabado='true' order by 1
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@9f6ece: update auxhorariocurso set sabado=concat(sabado,'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='14:20' and termino='15:10'
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@15a792d: SELECT m.id from materia m left join professormateria pm on(m.id=pm.idmateria) left join professor p on(p.id=pm.idprofessor) inner join horarioprofessor hp on(pm.id=hp.idprofessormateria) and m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.idcurso=1 and hp.inicio='15:30' and hp.termino='16:20' and m.idcurso=1 and m.sabado='true' order by 1
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1c6ce97: update auxhorariocurso set sabado=concat(sabado,'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='15:30' and termino='16:20'
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@38ba04: SELECT m.id from materia m left join professormateria pm on(m.id=pm.idmateria) left join professor p on(p.id=pm.idprofessor) inner join horarioprofessor hp on(pm.id=hp.idprofessormateria) and m.ativo='true' and pm.ativo='true' and p.ativo='true' and m.idcurso=1 and hp.inicio='16:20' and hp.termino='17:10' and m.idcurso=1 and m.sabado='true' order by 1
+---------------------------
+Tue Nov 11 00:52:00 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@780c0e: update auxhorariocurso set sabado=concat(sabado,'1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|') where curso=1 and anoletivo='2014/3' and sabado<>'false' and inicio='16:20' and termino='17:10'
