@@ -1,3 +1,0 @@
-
----------------------------
-Tue Nov 11 00:57:17 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@702455: SELECT materia.*,curso.nome as nomecurso FROM gerador.materia left join curso on(materia.idcurso=curso.id) where curso.idunidade=1;

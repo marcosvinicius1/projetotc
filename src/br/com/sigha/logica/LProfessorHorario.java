@@ -148,7 +148,7 @@ public class LProfessorHorario {
                     List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(materias.replace("|", ",0"), lhorario.get(i).getPeriodo());
                     //seleciona uma materia do periodo passado como parametro   
                     // compara o horario passado para a funcao e com o horario de aula se tem materia usando o dia
-                    if (verificadia(dia, inicio, termino, lhorario.get(i).getPeriodo(), anoletivo, datageracao)) {                        
+                    if (verificadia(dia, inicio, termino, lhorario.get(i).getPeriodo(), anoletivo, datageracao,lhorario)) {                        
                         MateriaBeans materia = FiltraMateria(lmateria, lhorario.get(i).getPeriodo(), lhorario.get(i).getInicio(), lhorario.get(i).getTermino(), anoletivo, datageracao, dia, lhorario.get(i).getIdcurso());
                         //objeto recebe o professor referente a materia para inserção                        
                         ProfessorMateriaBeans lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(materia.getId(), new UnidadeLogadoBeans().getId());
@@ -237,9 +237,9 @@ public class LProfessorHorario {
     }
 //verifica se tem materia utilizando o dia
 
-    private boolean verificadia(String dia, String inicio, String termino, int periodo, String anoletivo, Date datageracao) throws SQLException {
+    private boolean verificadia(String dia, String inicio, String termino, int periodo, String anoletivo, Date datageracao,List<HorarioAulaBeans> lhorariotext) throws SQLException {
         Boolean resp = true;
-        List<HorarioAulaBeans> lhorariotext = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+       // List<HorarioAulaBeans> lhorariotext = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
         if (dia.equals("segunda")) {
             for (int i = 0; i < lhorariotext.size(); i++) {
                 if (lhorariotext.get(i).getInicio().equals(inicio) && lhorariotext.get(i).getTermino().equals(termino) && lhorariotext.get(i).getPeriodo() == periodo) {
@@ -627,9 +627,9 @@ public class LProfessorHorario {
 //            //metodo busca o horario do curso na tabela horarioaula
 //            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(idcurso, anoletivo, datageracao);
 //            //metodo busaca os periodos de um curso na tabela horarioaula
-//            List<HorarioAulaBeans> lhorariop=new HorarioAulaDao().HorarioGroupPeriodo(idcurso, anoletivo, datageracao);
+//            List<HorarioAulaBeans> lhorariop=new HorarioAulaDao().HorarioGroupPeriodo(idcurso, anoletivo, datageracao);            
             //metodo busca horario na tabela auxhorariocurso
-            List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(this.idcurso, anoletivo);            
+            List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(this.idcurso, anoletivo);                        
             for (int i = 0; i < lauxhorario.size(); i++) {
                 if (!"false".equals(lauxhorario.get(i).getSegunda())) {
                     // JOptionPane.showMessageDialog(null, "segunda");

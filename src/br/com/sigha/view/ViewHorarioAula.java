@@ -657,18 +657,17 @@ public class ViewHorarioAula extends javax.swing.JPanel {
      public void GeraHorario(int geracao) {  
          //sera utilizado para gerar mais de um horario de aula do mesmo curso
         jTanohorario.setText(String.valueOf(Integer.valueOf(jTanohorario.getText())+geracao));       
-        LAuxGradeHorario lf = new LAuxGradeHorario(jYanohorario.getValue() + "/" + jTanohorario.getText());
+        //LAuxGradeHorario lf = new LAuxGradeHorario(jYanohorario.getValue() + "/" + jTanohorario.getText());
         try {
-
             for (int i = 0; i < jTcurso.getRowCount(); i++) {
                 //preenche tabela horarioauxiliar e horario de aula
-                 lf.GradeHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
+                 new LAuxGradeHorario(jYanohorario.getValue() + "/" + jTanohorario.getText()).GradeHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
                  //sincroniza professores no horario, de acordo com suas preferencias e configuraçao na tabela horario
                 SincronizaProfessor(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
                 while(verificaHorario(jYanohorario.getValue() + "/" + jTanohorario.getText(),Integer.valueOf(jTcurso.getValueAt(i, 0).toString()),new Date())){                                       
-                    LProfessorHorario lpo=new LProfessorHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));        
+                  //  LProfessorHorario lpo=new LProfessorHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));        
                     //cadastra horario de aula
-                    lpo.CadastraHorarioAula(jYanohorario.getValue() + "/" + jTanohorario.getText(),new Date());
+                    new LProfessorHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0)))).CadastraHorarioAula(jYanohorario.getValue() + "/" + jTanohorario.getText(),new Date());
                     //sincroniza professor com horario de aula
                     SincronizaProfessor(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
                 }               
@@ -738,13 +737,21 @@ public class ViewHorarioAula extends javax.swing.JPanel {
             DefaultTableModel tabelahorario = (DefaultTableModel) jThorario.getModel();
             tabelahorario.setNumRows(0);
             for (int i = 0; i < hapmb.size(); i++) {
-                tabelahorario.addRow(new Object[]{hapmb.get(i).getCurso(), hapmb.get(i).getPeriodo(), hapmb.get(i).getInicio(), hapmb.get(i).getTermino(), hapmb.get(i).getProfessorsegunda() + " : " + hapmb.get(i).getMateriasegunda(),
-                    hapmb.get(i).getProfessorterca() + " : " + hapmb.get(i).getMateriaterca(),
-                    hapmb.get(i).getProfessorquarta() + " : " + hapmb.get(i).getMateriaquarta(),
-                    hapmb.get(i).getProfessorquinta() + " : " + hapmb.get(i).getMateriaquinta(),
-                    hapmb.get(i).getProfessorsexta() + " : " + hapmb.get(i).getMateriasexta(),
-                    hapmb.get(i).getProfessorsabado() + " : " + hapmb.get(i).getMateriasabado(),
-                    hapmb.get(i).getProfessordomingo() + " : " + hapmb.get(i).getMateriadomingo(),
+                tabelahorario.addRow(new Object[]{hapmb.get(i).getCurso(), hapmb.get(i).getPeriodo(), hapmb.get(i).getInicio(), hapmb.get(i).getTermino(),
+                    (hapmb.get(i).getProfessorsegunda() + " : " + hapmb.get(i).getMateriasegunda()).equals(" : ")?""
+                            :hapmb.get(i).getProfessorsegunda() + " : " + hapmb.get(i).getMateriasegunda(),
+                    (hapmb.get(i).getProfessorterca() + " : " + hapmb.get(i).getMateriaterca()).equals(" : ")?""
+                            :hapmb.get(i).getProfessorterca() + " : " + hapmb.get(i).getMateriaterca(),
+                    (hapmb.get(i).getProfessorquarta() + " : " + hapmb.get(i).getMateriaquarta()).equals(" : ")?""
+                            :hapmb.get(i).getProfessorquarta() + " : " + hapmb.get(i).getMateriaquarta(),
+                    (hapmb.get(i).getProfessorquinta() + " : " + hapmb.get(i).getMateriaquinta()).equals(" : ")?""
+                            :hapmb.get(i).getProfessorquinta() + " : " + hapmb.get(i).getMateriaquinta(),
+                    (hapmb.get(i).getProfessorsexta() + " : " + hapmb.get(i).getMateriasexta()).equals(" : ")?""
+                            :hapmb.get(i).getProfessorsexta() + " : " + hapmb.get(i).getMateriasexta(),
+                    (hapmb.get(i).getProfessorsabado() + " : " + hapmb.get(i).getMateriasabado()).equals(" : ")?""
+                            :hapmb.get(i).getProfessorsabado() + " : " + hapmb.get(i).getMateriasabado(),
+                    (hapmb.get(i).getProfessordomingo() + " : " + hapmb.get(i).getMateriadomingo()).equals(" : ")?""
+                            :hapmb.get(i).getProfessordomingo() + " : " + hapmb.get(i).getMateriadomingo(),
                     hapmb.get(i).getAnoletivo(), new SimpleDateFormat("dd.MM.yyyy").format(hapmb.get(i).getDatageracao())});
             }
 

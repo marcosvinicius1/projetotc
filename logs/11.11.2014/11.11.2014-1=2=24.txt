@@ -1,3 +1,0 @@
-
----------------------------
-Tue Nov 11 01:02:24 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ddd078: select * from (select c.nome curso,h.anoletivo,h.datageracao,u.razao unidade from horarioaula h left join curso c on(h.idcurso=c.id)left join unidade u on(h.idunidade=u.id) group by 1,2,3,4) sh where sh.CURSO like '%%'

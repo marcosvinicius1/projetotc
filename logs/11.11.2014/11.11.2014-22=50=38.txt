@@ -1,0 +1,67 @@
+
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1852a95: select * from horarioaula where anoletivo='2014/4' and datageracao = '2014.11.11' and idcurso=1 and periodo=1
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@170e652: select * from horarioaula where anoletivo='2014/4' and datageracao = '2014.11.11' and idcurso=1 and periodo=1
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@180e426: select * from auxhorariocurso where terca like '%2|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4ded8e: select * from auxhorariocurso where terca like '%2|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1481b9a: select * from auxhorariocurso where terca like '%2|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@6cc873: select * from auxhorariocurso where terca like '%2|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1aa994e: select * from auxhorariocurso where terca like '%2|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@c26e4a: select * from auxhorariocurso where terca like '%2|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1a61e5e: select * from auxhorariocurso where terca like '%2|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@37a013: select * from auxhorariocurso where terca like '%3|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ae84c3: select * from auxhorariocurso where terca like '%3|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1b220a3: select * from auxhorariocurso where terca like '%3|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@24df87: select * from auxhorariocurso where terca like '%3|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@16265c3: select * from auxhorariocurso where terca like '%3|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@15792a0: select * from auxhorariocurso where terca like '%3|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1758781: select * from auxhorariocurso where terca like '%3|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@60db08: select * from auxhorariocurso where terca like '%4|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1895c4c: select * from auxhorariocurso where terca like '%4|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@ed41a7: select * from auxhorariocurso where terca like '%4|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d13bb0: select * from auxhorariocurso where terca like '%4|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@18bc78e: select * from auxhorariocurso where terca like '%4|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@17ddc70: select * from auxhorariocurso where terca like '%4|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@14defcc: select * from auxhorariocurso where terca like '%4|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@52a793: select * from auxhorariocurso where terca like '%5|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1e18e8c: select * from auxhorariocurso where terca like '%5|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@e13409: select * from auxhorariocurso where terca like '%5|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@30a451: select * from auxhorariocurso where terca like '%5|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@17f2ad0: select * from auxhorariocurso where terca like '%5|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@d0fd7b: select * from auxhorariocurso where terca like '%5|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ccc11d: select * from auxhorariocurso where terca like '%5|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@11238a0: select * from auxhorariocurso where terca like '%6|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@874cc3: select * from auxhorariocurso where terca like '%6|%' and curso=1 and anoletivo='2014/4'
+---------------------------
+Tue Nov 11 22:50:38 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@bdd4d8: select * from auxhorariocurso where terca like '%6|%' and curso=1 and anoletivo='2014/4'

@@ -80,8 +80,7 @@ public class LAuxGradeHorario {
                 ahcd.CadastraAuxHorarioCurso(lhorariocurso.get(i), this.anoletivo);
             }
             //ajusta auxhoario e coloca id dos curso
-             AjustaHorarioComCurso(lhorariocurso.get(1).getIdcurso(),lhorariocurso);
-             JOptionPane.showMessageDialog(null, "Terminou");
+             AjustaHorarioComCurso(lhorariocurso.get(1).getIdcurso(),lhorariocurso);             
              LProfessorHorario lpo=new LProfessorHorario(idcurso);        
              //Cadastra horario dos cursos na tabela horario aula
              lpo.CadastraHorarioAula(this.anoletivo,new Date());
