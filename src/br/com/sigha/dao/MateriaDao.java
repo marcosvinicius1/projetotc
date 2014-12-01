@@ -201,6 +201,39 @@ public class MateriaDao {
             return mb;
         }
     }
+    
+    public MateriaBeans BuscaMateriaidprof(int idprofmat) throws SQLException {
+        try (Connection conexao = new ConexaoBanco().getConnect()) {
+            String sql = "SELECT m.* FROM materia m left join professormateria pm on (m.id=pm.idmateria) where pm.id=?";
+            PreparedStatement pst = conexao.prepareStatement(sql);
+            pst.setInt(1, idprofmat);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pst.toString());
+            ResultSet rs = pst.executeQuery();
+            MateriaBeans mb = new MateriaBeans();
+            while (rs.next()) {
+                mb.setAtivo(rs.getString("ativo"));
+                mb.setChanual(rs.getString("chanual"));
+                mb.setChaula(rs.getString("chaula"));
+                mb.setDomingo(rs.getString("domingo"));
+                mb.setId(rs.getInt("id"));
+                mb.setIdcurso(rs.getInt("idcurso"));
+                mb.setNome(rs.getString("nome"));
+                mb.setPeriodo(rs.getInt("periodo"));
+                mb.setQtdeauladia(rs.getString("qtdeauladia"));
+                mb.setQtdeaulasem(rs.getString("qtdeaulasem"));
+                mb.setQuarta(rs.getString("quarta"));
+                mb.setQuinta(rs.getString("quinta"));
+                mb.setSabado(rs.getString("sabado"));
+                mb.setSegunda(rs.getString("segunda"));
+                mb.setSexta(rs.getString("sexta"));
+                mb.setTerca(rs.getString("terca"));
+                mb.setSequencial(rs.getString("sequencial"));
+            }
+            rs.close();
+            pst.close();
+            return mb;
+        }
+    }
 
     //
     public void CadastraMateria(MateriaBeans mb) throws SQLException {

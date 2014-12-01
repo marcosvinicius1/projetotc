@@ -664,8 +664,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
                  new LAuxGradeHorario(jYanohorario.getValue() + "/" + jTanohorario.getText()).GradeHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
                  //sincroniza professores no horario, de acordo com suas preferencias e configuraçao na tabela horario
                 SincronizaProfessor(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));
-                while(verificaHorario(jYanohorario.getValue() + "/" + jTanohorario.getText(),Integer.valueOf(jTcurso.getValueAt(i, 0).toString()),new Date())){                                       
-                  //  LProfessorHorario lpo=new LProfessorHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0))));        
+                if(verificaHorario(jYanohorario.getValue() + "/" + jTanohorario.getText(),Integer.valueOf(jTcurso.getValueAt(i, 0).toString()),new Date())){                                                        
                     //cadastra horario de aula
                     new LProfessorHorario(Integer.valueOf(String.valueOf(jTcurso.getValueAt(i, 0)))).CadastraHorarioAula(jYanohorario.getValue() + "/" + jTanohorario.getText(),new Date());
                     //sincroniza professor com horario de aula

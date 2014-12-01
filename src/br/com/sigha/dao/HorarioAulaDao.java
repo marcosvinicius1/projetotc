@@ -6,6 +6,7 @@
 package br.com.sigha.dao;
 
 import br.com.sigha.beans.HorarioAulaBeans;
+import br.com.sigha.beans.HorarioAulaDiaBeans;
 import br.com.sigha.beans.HorarioAulaPesquisaBeans;
 import br.com.sigha.beans.MateriaBeans;
 import br.com.sigha.util.LogsTxt;
@@ -236,7 +237,6 @@ public class HorarioAulaDao {
             if (ocorrencia > 0) {
                 rs.close();
                 pst.close();
-
                 return true;
             } else {
                 rs.close();
@@ -342,4 +342,29 @@ public class HorarioAulaDao {
         }
         return resp;
     }
+    
+    public HorarioAulaDiaBeans BuscaHorarioIntervalo(String inicio,String termino,String anoletivo,int idcurso,int periodo,String dia) throws SQLException{
+        HorarioAulaDiaBeans horarioaula=new HorarioAulaDiaBeans();
+        try(Connection conexao=new ConexaoBanco().getConnect()){
+            String sql="select horarioaula.*,professormateria.idmateria,materia.qtdeauladia,materia.sequencial,materia.periodo from horarioaula "
+                    + "left join professormateria on (horarioaula."+dia+"=professormateria.id)"
+                    + "left join materia on(professormateria.idmateria=materia.id)"
+                    + " where anoletivo='"+anoletivo+"' and horarioaula.idcurso="+idcurso+" and horarioaula.periodo="+periodo+" and inicio='"+inicio+"' and termino='"+termino+"'";
+            PreparedStatement pstm=conexao.prepareStatement(sql);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
+            ResultSet rs=pstm.executeQuery();            
+            while(rs.next()){
+                horarioaula.setId(rs.getInt("id"));
+                horarioaula.setIdmateriap(rs.getInt(""+dia+""));
+                horarioaula.setInicio(rs.getString("inicio"));
+                horarioaula.setTermino(rs.getString("termino"));
+               horarioaula.setIdmateria(rs.getInt("idmateria"));
+               horarioaula.setSequencial(rs.getString("sequencial"));
+               horarioaula.setQtdeauladia(rs.getInt("qtdeauladia"));
+               horarioaula.setPeriodo(rs.getInt("periodo"));
+            }
+        }
+        return horarioaula;
+    }
+    
 }

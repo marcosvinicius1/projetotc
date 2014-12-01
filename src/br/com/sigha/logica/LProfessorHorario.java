@@ -7,6 +7,8 @@ package br.com.sigha.logica;
 
 import br.com.sigha.beans.AuxHorarioCursoBeans;
 import br.com.sigha.beans.HorarioAulaBeans;
+import br.com.sigha.beans.HorarioAulaDiaBeans;
+import br.com.sigha.beans.HorarioVazioBeans;
 import br.com.sigha.beans.MateriaBeans;
 import br.com.sigha.beans.ProfessorMateriaBeans;
 import br.com.sigha.beans.UnidadeLogadoBeans;
@@ -15,19 +17,13 @@ import br.com.sigha.dao.HorarioAulaDao;
 import br.com.sigha.dao.MateriaDao;
 import br.com.sigha.dao.ProfessorMateriaDao;
 import br.com.sigha.util.LogsTxt;
-import br.com.sigha.util.QtdeOcorrenciaCaracter;
-import static java.rmi.Naming.list;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import static java.util.Collections.list;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.eclipse.persistence.internal.core.helper.CoreClassConstants;
 
 /**
  *
@@ -134,6 +130,7 @@ public class LProfessorHorario {
 //        }
 //    }
 //busca horario do dia e verifica se pode ser usado
+
     public void FiltraGrava(String anoletivo, String inicio, String termino, String materias, Date datageracao, String dia) {
         try {
             //lista de sigla de cursos que esta no campo segunda da tabela auxiliar
@@ -145,10 +142,10 @@ public class LProfessorHorario {
             for (int i = 0; i < lhorario.size(); i++) {
                 if (inicio.equals(lhorario.get(i).getInicio()) && termino.equals(lhorario.get(i).getTermino())) {
                     //lista com as materias referente a id da materia e ao periodo passada 
-                    List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(materias.replace("|", ",0"), lhorario.get(i).getPeriodo());
+                    List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria("0" + materias + "0", lhorario.get(i).getPeriodo());
                     //seleciona uma materia do periodo passado como parametro   
                     // compara o horario passado para a funcao e com o horario de aula se tem materia usando o dia
-                    if (verificadia(dia, inicio, termino, lhorario.get(i).getPeriodo(), anoletivo, datageracao,lhorario)) {                        
+                    if (verificadia(dia, inicio, termino, lhorario.get(i).getPeriodo(), anoletivo, datageracao, lhorario)) {
                         MateriaBeans materia = FiltraMateria(lmateria, lhorario.get(i).getPeriodo(), lhorario.get(i).getInicio(), lhorario.get(i).getTermino(), anoletivo, datageracao, dia, lhorario.get(i).getIdcurso());
                         //objeto recebe o professor referente a materia para inserção                        
                         ProfessorMateriaBeans lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(materia.getId(), new UnidadeLogadoBeans().getId());
@@ -211,7 +208,7 @@ public class LProfessorHorario {
     }
 
     //metodo cadastra materia no horario de aula
-    private void CadastraMateria(List<HorarioAulaBeans> lhorario, int idprofessor, String anoletivo, String inicio, String termino, Date datageracao, String dia, MateriaBeans materia, int idcurso) throws SQLException {
+    private void CadastraMateria(List<HorarioAulaBeans> lhorario, int idprofessormateria, String anoletivo, String inicio, String termino, Date datageracao, String dia, MateriaBeans materia, int idcurso) throws SQLException {
         //faz o cadastro da materia no horario de aula
         //JOptionPane.showMessageDialog(null, materia);
         if (materia.getSequencial().equals("true")) {
@@ -223,23 +220,23 @@ public class LProfessorHorario {
                         // System.out.println("Mandou"+dia+"\n"+idprofessor+"\n"+inicio+"\n"+termino+"\nValor poisica:"+i);
                         // JOptionPane.showMessageDialog(null, "Vai incerir"+lhorario.get(j+i).getInicio()+"\n"+lhorario.get(j+i).getTermino());                            
                         // System.out.println("Vai incerir"+lhorario.get(j+i).getInicio()+"\n"+lhorario.get(j+i).getTermino());
-                        new HorarioAulaDao().CadastraMateriaAula(idprofessor, anoletivo, lhorario.get(j + i).getInicio(), lhorario.get(j + i).getTermino(), datageracao, dia, materia.getPeriodo(), idcurso, new UnidadeLogadoBeans().getId());
+                        new HorarioAulaDao().CadastraMateriaAula(idprofessormateria, anoletivo, lhorario.get(j + i).getInicio(), lhorario.get(j + i).getTermino(), datageracao, dia, materia.getPeriodo(), idcurso, new UnidadeLogadoBeans().getId());
                     }
                 }
                 //    }
 
             }
         } else {
-            new HorarioAulaDao().CadastraMateriaAula(idprofessor, anoletivo, inicio, termino, datageracao, dia, materia.getPeriodo(), idcurso, new UnidadeLogadoBeans().getId());
+            new HorarioAulaDao().CadastraMateriaAula(idprofessormateria, anoletivo, inicio, termino, datageracao, dia, materia.getPeriodo(), idcurso, new UnidadeLogadoBeans().getId());
         }
 //        JOptionPane.showMessageDialog(null, "Mandou" + dia + "\n" + idprofessor + "\n" + inicio + "\n" + termino + "\nValor poisica:");
 //        new HorarioAulaDao().CadastraMateriaAula(idprofessor, anoletivo, inicio, termino, datageracao, dia, materia.getPeriodo());
     }
 //verifica se tem materia utilizando o dia
 
-    private boolean verificadia(String dia, String inicio, String termino, int periodo, String anoletivo, Date datageracao,List<HorarioAulaBeans> lhorariotext) throws SQLException {
+    private boolean verificadia(String dia, String inicio, String termino, int periodo, String anoletivo, Date datageracao, List<HorarioAulaBeans> lhorariotext) throws SQLException {
         Boolean resp = true;
-       // List<HorarioAulaBeans> lhorariotext = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+        // List<HorarioAulaBeans> lhorariotext = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
         if (dia.equals("segunda")) {
             for (int i = 0; i < lhorariotext.size(); i++) {
                 if (lhorariotext.get(i).getInicio().equals(inicio) && lhorariotext.get(i).getTermino().equals(termino) && lhorariotext.get(i).getPeriodo() == periodo) {
@@ -302,36 +299,555 @@ public class LProfessorHorario {
 
 //verifica se o horario gerado tem erros
     public Boolean verificaErroHorario(String anoletivo, Date datageracao) {
+        //JOptionPane.showMessageDialog(null, "Foi");
         Boolean resp = false;
-        LogsTxt logs=new LogsTxt();
-        if (verQtdeAulaMatEDia(anoletivo, datageracao)) {
-            for (int i = 0; i < erroperiodo.size(); i++) {
-                logs.setTxt(new Date()+" Periodos com Erros "+String.valueOf(erroperiodo.size())+" Curso: "+this.idcurso,"Erro");
-            }
-            logs.setTxt(new Date()+"  -------------------------","Erro");
-            //verifica se tem dia sem aula e se as materia do dia sem aula esta todas utilizadas
-            if (verificaQtdeDiaProfHor(anoletivo, datageracao)) {
-                logs.setTxt(new Date()+" Dia da semana com erro: ","Erro");
-                logs.setTxt(new Date()+"  -------------------------","Erro");
-                resp = true;
+        Boolean troca = true;
+        LogsTxt logs = new LogsTxt();
+        try {
+            List<HorarioVazioBeans> horariovazio = new ArrayList<>();
+            //busca horario auxiliar
+            List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(this.idcurso, anoletivo);
+            //verifica a soma de quantidade de aula por semana somando no cadastro de materia com a quantidade
+            //de materia utilizado no horario
+            if (verQtdeAulaMatEDia(anoletivo, datageracao)) {
+                for (int i = 0; i < erroperiodo.size(); i++) {
+                    logs.setTxt(new Date() + " Periodos com quantidade de mat menor que tem que haver no horario "
+                            + String.valueOf(erroperiodo.size()) + " Curso: " + this.idcurso, "Erro");
+                }
+                logs.setTxt(new Date() + "  -------------------------", "Erro");
+                //verifica se tem dia sem aula e se as materia do dia sem aula esta todas utilizadas
+                //foi auterado onde retorna os horario sem aula que tem materia possivel de dar aula
+                if ((horariovazio = verificaQtdeDiaProfHor(anoletivo, datageracao)).size() > 0) {
+                    logs.setTxt(new Date() + " Dia da semana com erro: ", "Erro");
+                    logs.setTxt(new Date() + "  -------------------------", "Erro");
 
-            } else if (respexevqtdeauh == 3) {
-                if (verificaQteAulaHorario(anoletivo, datageracao)) {
-//                    System.out.println("Tem erroQtdeAulaHorario");
-//                    System.out.println("-------------------------");
-//                    JOptionPane.showMessageDialog(null, resp);
-//                    resp = true;
-                    JOptionPane.showMessageDialog(null, "Conflito de horario de Mais de uma materia\nProblema "
-                            + "Esta Sendo Resolvido pela Programação\nCausa do Problema:Mais de Uma materia escolhido o mesmo dia e horario e com a quantidade exata somente para ministrar as aulas");
-                    logs.setTxt(new Date()+"  Conflito de horario de Mais de uma materia\nProblema "
-                            + "Esta Sendo Resolvido pela Programação\nCausa do Problema:Mais de Uma materia escolhido o mesmo dia e horario e com a quantidade exata somente para ministrar as aulas","Erro");
-                } 
-            }
+                    //percorre os horario vazios e verifica se todas as materias ja forao utilizadas
+                    for (int i = 0; i < horariovazio.size(); i++) {
+                        //retorna lista das materias do periodo
+                        System.out.println("\n-------------------\nHorario vazio" + horariovazio.size() + "|" + horariovazio.get(i).getDia());
+                        List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria("0" + horariovazio.get(i).getMaterias() + "0", horariovazio.get(i).getPeriodo());
+                        //retorna as materia que nao forao utilizadas totalmente
+                        List<MateriaBeans> lmaterianutilizada = qtdeOcorrenciaMateria(lmateria, horariovazio.get(i).getAnoletivo(), horariovazio.get(i).getDatageracao(), horariovazio.get(i).getPeriodo());
+                        //verifica se ha materia nao utilizada
+                        if (lmaterianutilizada.size() > 0) {
+                            troca=true;
+                            //  JOptionPane.showMessageDialog(null, "QTDE de Materia:"+lmaterianutilizada.size());
+                            System.out.println("qtde de Materia Nao utilizada" + lmaterianutilizada.size());
+                            //no metodo que for utilizar analizar a quantidade que tem que ser inserida no dia
+                            //metodo percorre as materias que nao foi utilizada
+                            for (int j = 0; j < lmaterianutilizada.size(); j++) {
+                                System.out.println("Materia nao utilizado" + lmaterianutilizada.get(j).getId());
+                                System.out.println("Horario curso:" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino());
+                                //busca o id do professor da materia nao utilizada
+                                ProfessorMateriaBeans lprofessormateria = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(lmaterianutilizada.get(j).getId(), new UnidadeLogadoBeans().getId());
+                                //metodo percorre em busca de dia que a materia e utilizada na segunda                                
+                                for (int l = 0; l < lauxhorario.size(); l++) {
+                                    System.out.println("percorrendo horario auxiliar");
+                                    //se nao trocou nenhuma vez entra
+                                    
+                                    if (troca) {
+                                        if (!"false".equals(lauxhorario.get(l).getSegunda()) && !"".equals(lauxhorario.get(l).getSegunda())) {
+                                            if (lauxhorario.get(l).getSegunda().contains(String.valueOf(lmaterianutilizada.get(j).getId()))) {
+                                                System.out.println(lauxhorario.get(l).getSegunda() + "|" + lauxhorario.get(l).getInicio());
+                                            //buscar materia do dia e verificar se ela pode ser usada no dia que nao foi usado    
+                                                //fazer um metodo que verifica a materia do dia se pode ser usada no dia sem aula 
 
+                                            //busca o dia com a materia que esta sendo utilizada na tabela horario aula do dia
+                                                //onde podera ter a materia nao utilizada
+                                                HorarioAulaDiaBeans horariodi = new HorarioAulaDao().BuscaHorarioIntervalo(lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), lauxhorario.get(l).getAnoletivo(), lauxhorario.get(l).getIdcurso(), lmaterianutilizada.get(j).getPeriodo(), "segunda");
+                                            //verifica se materia esta marcado como dia provavel de aula onde podera ser utilizada
+                                                //no dia vazio
+                                                System.out.println("Materia dia que esta veficando" + horariodi.getIdmateriap() + "|" + horariodi.getIdmateria() + "-" + horariovazio.get(i).getDia());
+                                                if (verificaMateriaDiaVazio(horariodi.getIdmateria(), lauxhorario, horariovazio.get(i).getDia(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino())) {
+                                                    System.out.println("Pode dar aula no dia vazio" + horariodi.getIdmateria() + "|" + horariodi.getPeriodo() + "|" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino() + "|" + anoletivo + "|" + datageracao + "|" + horariovazio.get(i).getDia() + "|" + new UnidadeLogadoBeans().getId() + "|" + horariodi.getSequencial() + "|" + horariodi.getQtdeauladia());
+                                                    //verifica se o professor da materia que ira para o dia sem materia nao esta dando aula em outra turma do dia provavel da mudanca
+                                                    if (FiltraMateriaTroca(horariodi.getIdmateria(), horariodi.getPeriodo(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), anoletivo, datageracao, horariovazio.get(i).getDia(), new UnidadeLogadoBeans().getId(), horariodi.getSequencial(), horariodi.getQtdeauladia())) {
+                                                        System.out.println("Professor nao esta dando aula em outra sala no mesmo horario" + horariodi.getIdmateria());
+                                                        //verifica se o professor da materia na utilizada nao esta dando aula em outra turma do dia provavel da mudanca
+                                                        System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId() + "|" + lauxhorario.get(l).getInicio());
+                                                        if (FiltraMateriaTroca(lprofessormateria.getIdmateria(), lmaterianutilizada.get(j).getPeriodo(), lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), anoletivo, datageracao, "segunda", new UnidadeLogadoBeans().getId(), lmaterianutilizada.get(j).getSequencial(), Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()))) {
+                                                            System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId());
+                                                            //se der tudo certo e so fazer o metodo para cadastrar                                                            
+                                                            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+                                                            //verifica se o dia nao utilizado tem qtde de repeticao no dia maior doque que sera trocado
+                                                            if (Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()) >= horariodi.getQtdeauladia()) {
+                                                                //cadastra materia que nao foi utilizada na segunda
+                                                                CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "segunda", lmaterianutilizada.get(j), this.idcurso);
+                                                                // busca os dados da materia que sera trocada para o dia vazio
+                                                                MateriaBeans materiadia = new MateriaDao().BuscaMateriaidprof(horariodi.getIdmateriap());
+                                                                //cadastra materia no dia que nao foi utilizado
+                                                                CadastraMateria(lhorario, horariodi.getIdmateriap(), anoletivo, horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), datageracao, horariovazio.get(i).getDia(), materiadia, this.idcurso);
+                                                                //avanca os contadores
+                                                                l = lauxhorario.size();
+                                                                i = i + (Integer.valueOf(materiadia.getQtdeauladia()) - 1);
+                                                                troca=false;
+                                                            }
+//                                                        //dia nao usado cadastrado no dia da troca
+//                                                        CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "segunda", lmaterianutilizada.get(j), this.idcurso);
+//                                                      
+//                                                        //dia que foi removido indo para dia nao usado
+//                                                        MateriaBeans mb=new MateriaBeans();
+//                                                        mb.setQtdeauladia(String.valueOf(horariodi.getQtdeauladia()));
+//                                                        mb.setSequencial(horariodi.getSequencial());
+//                                                        CadastraMateria(lhorario, horariodi.getIdmateria(), anoletivo, lmaterianutilizada.get(j).getInicio(), lmaterianutilizada.get(j).getTermino(), datageracao, horariovazio.get(i).getDia(), mb, this.idcurso);
+
+                                                          //i=horariodi.getQtdeauladia()+i;
+                                                            //implementar se a quantidade de aula vazia cabe na aula de troca e virse e versa
+                                                            //verificar tambem se for materia se bustituira mais de uma verificar todos os 
+                                                            //horarios
+                                                            System.out.println("\nCurso que foi para " + horariodi.getIdmateriap() + "|" + horariovazio.get(i).getDia());
+                                                            System.out.println("\n Curso foi para segunda" + lprofessormateria.getId() + "------------------------------\n");
+                                                       // JOptionPane.showMessageDialog(null, "\nTrocou\n---------------------------\n");                                                      
+                                                            //   l=lauxhorario.size();//verificar por que esta sempre que insere ele esta começão do inicio no
+                                                            //objeto horariodi sendo que tem que pegar nova materia dando continuidade
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            //fazer um metodo onde verifica se tem qtde de horario para incerir materia
+                                                //nao utilizada e depois verificar se elas pode ser usada no horario vago
+                                                //verifica se tem horario suficiente para adicionar a materia        
+                                            }
+                                        }
+                                    }
+                                    //se nao trocou nenhuma vez entra
+                                    if (troca) {
+                                        if (!"false".equals(lauxhorario.get(l).getTerca()) && !"".equals(lauxhorario.get(l).getTerca())) {
+                                            if (lauxhorario.get(l).getTerca().contains(String.valueOf(lmaterianutilizada.get(j).getId()))) {
+                                                System.out.println(lauxhorario.get(l).getTerca() + "|" + lauxhorario.get(l).getInicio());
+                                            //buscar materia do dia e verificar se ela pode ser usada no dia que nao foi usado    
+                                                //fazer um metodo que verifica a materia do dia se pode ser usada no dia sem aula 
+
+                                            //busca o dia com a materia que esta sendo utilizada na tabela horario aula do dia
+                                                //onde podera ter a materia nao utilizada
+                                                HorarioAulaDiaBeans horariodi = new HorarioAulaDao().BuscaHorarioIntervalo(lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), lauxhorario.get(l).getAnoletivo(), lauxhorario.get(l).getIdcurso(), lmaterianutilizada.get(j).getPeriodo(), "terca");
+                                            //verifica se materia esta marcado como dia provavel de aula onde podera ser utilizada
+                                                //no dia vazio
+                                                System.out.println("Materia dia que esta veficando" + horariodi.getIdmateriap() + "|" + horariodi.getIdmateria() + "-" + horariovazio.get(i).getDia());
+                                                if (verificaMateriaDiaVazio(horariodi.getIdmateria(), lauxhorario, horariovazio.get(i).getDia(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino())) {
+                                                    System.out.println("Pode dar aula no dia vazio" + horariodi.getIdmateria() + "|" + horariodi.getPeriodo() + "|" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino() + "|" + anoletivo + "|" + datageracao + "|" + horariovazio.get(i).getDia() + "|" + new UnidadeLogadoBeans().getId() + "|" + horariodi.getSequencial() + "|" + horariodi.getQtdeauladia());
+                                                    //verifica se o professor da materia que ira para o dia sem materia nao esta dando aula em outra turma do dia provavel da mudanca
+                                                    if (FiltraMateriaTroca(horariodi.getIdmateria(), horariodi.getPeriodo(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), anoletivo, datageracao, horariovazio.get(i).getDia(), new UnidadeLogadoBeans().getId(), horariodi.getSequencial(), horariodi.getQtdeauladia())) {
+                                                        System.out.println("Professor nao esta dando aula em outra sala no mesmo horario" + horariodi.getIdmateria());
+                                                        //verifica se o professor da materia na utilizada nao esta dando aula em outra turma do dia provavel da mudanca
+                                                        System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId() + "|" + lauxhorario.get(l).getInicio());
+                                                        if (FiltraMateriaTroca(lprofessormateria.getIdmateria(), lmaterianutilizada.get(j).getPeriodo(), lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), anoletivo, datageracao, "terca", new UnidadeLogadoBeans().getId(), lmaterianutilizada.get(j).getSequencial(), Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()))) {
+                                                            System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId());
+                                                            //se der tudo certo e so fazer o metodo para cadastrar                                                            
+                                                            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+                                                            //verifica se o dia nao utilizado tem qtde de repeticao no dia maior doque que sera trocado
+                                                            if (Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()) >= horariodi.getQtdeauladia()) {
+                                                                //cadastra materia que nao foi utilizada na segunda
+                                                                CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "terca", lmaterianutilizada.get(j), this.idcurso);
+                                                                // busca os dados da materia que sera trocada para o dia vazio
+                                                                MateriaBeans materiadia = new MateriaDao().BuscaMateriaidprof(horariodi.getIdmateriap());
+                                                                //cadastra materia no dia que nao foi utilizado
+                                                                CadastraMateria(lhorario, horariodi.getIdmateriap(), anoletivo, horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), datageracao, horariovazio.get(i).getDia(), materiadia, this.idcurso);
+                                                                //avanca os contadores
+                                                                l = lauxhorario.size();
+                                                                i = i + (Integer.valueOf(materiadia.getQtdeauladia()) - 1);
+                                                                troca=false;
+                                                            }
+//                                                        //dia nao usado cadastrado no dia da troca
+//                                                        CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "segunda", lmaterianutilizada.get(j), this.idcurso);
+//                                                      
+//                                                        //dia que foi removido indo para dia nao usado
+//                                                        MateriaBeans mb=new MateriaBeans();
+//                                                        mb.setQtdeauladia(String.valueOf(horariodi.getQtdeauladia()));
+//                                                        mb.setSequencial(horariodi.getSequencial());
+//                                                        CadastraMateria(lhorario, horariodi.getIdmateria(), anoletivo, lmaterianutilizada.get(j).getInicio(), lmaterianutilizada.get(j).getTermino(), datageracao, horariovazio.get(i).getDia(), mb, this.idcurso);
+
+                                                          //i=horariodi.getQtdeauladia()+i;
+                                                            //implementar se a quantidade de aula vazia cabe na aula de troca e virse e versa
+                                                            //verificar tambem se for materia se bustituira mais de uma verificar todos os 
+                                                            //horarios
+                                                            System.out.println("\nCurso que foi para " + horariodi.getIdmateriap() + "|" + horariovazio.get(i).getDia());
+                                                            System.out.println("\n Curso foi para terca" + lprofessormateria.getId() + "------------------------------\n");
+                                                       // JOptionPane.showMessageDialog(null, "\nTrocou\n---------------------------\n");                                                      
+                                                            //   l=lauxhorario.size();//verificar por que esta sempre que insere ele esta começão do inicio no
+                                                            //objeto horariodi sendo que tem que pegar nova materia dando continuidade
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            //fazer um metodo onde verifica se tem qtde de horario para incerir materia
+                                                //nao utilizada e depois verificar se elas pode ser usada no horario vago
+                                                //verifica se tem horario suficiente para adicionar a materia        
+                                            }
+                                        }
+                                    }
+                                    //se nao trocou nenhuma vez entra
+                                    if (troca) {
+                                        if (!"false".equals(lauxhorario.get(l).getQuarta()) && !"".equals(lauxhorario.get(l).getQuarta())) {
+                                            if (lauxhorario.get(l).getQuarta().contains(String.valueOf(lmaterianutilizada.get(j).getId()))) {
+                                                System.out.println(lauxhorario.get(l).getQuarta() + "|" + lauxhorario.get(l).getInicio());
+                                            //buscar materia do dia e verificar se ela pode ser usada no dia que nao foi usado    
+                                                //fazer um metodo que verifica a materia do dia se pode ser usada no dia sem aula 
+
+                                            //busca o dia com a materia que esta sendo utilizada na tabela horario aula do dia
+                                                //onde podera ter a materia nao utilizada
+                                                HorarioAulaDiaBeans horariodi = new HorarioAulaDao().BuscaHorarioIntervalo(lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), lauxhorario.get(l).getAnoletivo(), lauxhorario.get(l).getIdcurso(), lmaterianutilizada.get(j).getPeriodo(), "quarta");
+                                            //verifica se materia esta marcado como dia provavel de aula onde podera ser utilizada
+                                                //no dia vazio
+                                                System.out.println("Materia dia que esta veficando" + horariodi.getIdmateriap() + "|" + horariodi.getIdmateria() + "-" + horariovazio.get(i).getDia());
+                                                if (verificaMateriaDiaVazio(horariodi.getIdmateria(), lauxhorario, horariovazio.get(i).getDia(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino())) {
+                                                    System.out.println("Pode dar aula no dia vazio" + horariodi.getIdmateria() + "|" + horariodi.getPeriodo() + "|" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino() + "|" + anoletivo + "|" + datageracao + "|" + horariovazio.get(i).getDia() + "|" + new UnidadeLogadoBeans().getId() + "|" + horariodi.getSequencial() + "|" + horariodi.getQtdeauladia());
+                                                    //verifica se o professor da materia que ira para o dia sem materia nao esta dando aula em outra turma do dia provavel da mudanca
+                                                    if (FiltraMateriaTroca(horariodi.getIdmateria(), horariodi.getPeriodo(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), anoletivo, datageracao, horariovazio.get(i).getDia(), new UnidadeLogadoBeans().getId(), horariodi.getSequencial(), horariodi.getQtdeauladia())) {
+                                                        System.out.println("Professor nao esta dando aula em outra sala no mesmo horario" + horariodi.getIdmateria());
+                                                        //verifica se o professor da materia na utilizada nao esta dando aula em outra turma do dia provavel da mudanca
+                                                        System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId() + "|" + lauxhorario.get(l).getInicio());
+                                                        if (FiltraMateriaTroca(lprofessormateria.getIdmateria(), lmaterianutilizada.get(j).getPeriodo(), lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), anoletivo, datageracao, "quarta", new UnidadeLogadoBeans().getId(), lmaterianutilizada.get(j).getSequencial(), Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()))) {
+                                                            System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId());
+                                                            //se der tudo certo e so fazer o metodo para cadastrar                                                            
+                                                            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+                                                            //verifica se o dia nao utilizado tem qtde de repeticao no dia maior doque que sera trocado
+                                                            if (Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()) >= horariodi.getQtdeauladia()) {
+                                                                //cadastra materia que nao foi utilizada na quarta
+                                                                CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "quarta", lmaterianutilizada.get(j), this.idcurso);
+                                                                // busca os dados da materia que sera trocada para o dia vazio
+                                                                MateriaBeans materiadia = new MateriaDao().BuscaMateriaidprof(horariodi.getIdmateriap());
+                                                                //cadastra materia no dia que nao foi utilizado
+                                                                CadastraMateria(lhorario, horariodi.getIdmateriap(), anoletivo, horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), datageracao, horariovazio.get(i).getDia(), materiadia, this.idcurso);
+                                                                //avanca os contadores
+                                                                l = lauxhorario.size();
+                                                                i = i + (Integer.valueOf(materiadia.getQtdeauladia()) - 1);
+                                                                troca=false;
+                                                            }
+//                                                        //dia nao usado cadastrado no dia da troca
+//                                                        CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "quarta", lmaterianutilizada.get(j), this.idcurso);
+//                                                      
+//                                                        //dia que foi removido indo para dia nao usado
+//                                                        MateriaBeans mb=new MateriaBeans();
+//                                                        mb.setQtdeauladia(String.valueOf(horariodi.getQtdeauladia()));
+//                                                        mb.setSequencial(horariodi.getSequencial());
+//                                                        CadastraMateria(lhorario, horariodi.getIdmateria(), anoletivo, lmaterianutilizada.get(j).getInicio(), lmaterianutilizada.get(j).getTermino(), datageracao, horariovazio.get(i).getDia(), mb, this.idcurso);
+
+                                                          //i=horariodi.getQtdeauladia()+i;
+                                                            //implementar se a quantidade de aula vazia cabe na aula de troca e virse e versa
+                                                            //verificar tambem se for materia se bustituira mais de uma verificar todos os 
+                                                            //horarios
+                                                            System.out.println("\nCurso que foi para " + horariodi.getIdmateriap() + "|" + horariovazio.get(i).getDia());
+                                                            System.out.println("\n Curso foi para quarta" + lprofessormateria.getId() + "------------------------------\n");
+                                                       // JOptionPane.showMessageDialog(null, "\nTrocou\n---------------------------\n");                                                      
+                                                            //   l=lauxhorario.size();//verificar por que esta sempre que insere ele esta começão do inicio no
+                                                            //objeto horariodi sendo que tem que pegar nova materia dando continuidade
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            //fazer um metodo onde verifica se tem qtde de horario para incerir materia
+                                                //nao utilizada e depois verificar se elas pode ser usada no horario vago
+                                                //verifica se tem horario suficiente para adicionar a materia        
+                                            }
+                                        }
+                                    }
+                                    //se nao trocou nenhuma vez entra
+                                    if (troca) {
+                                        if (!"false".equals(lauxhorario.get(l).getQuinta()) && !"".equals(lauxhorario.get(l).getQuinta())) {
+                                            if (lauxhorario.get(l).getQuinta().contains(String.valueOf(lmaterianutilizada.get(j).getId()))) {
+                                                System.out.println(lauxhorario.get(l).getQuinta() + "|" + lauxhorario.get(l).getInicio());
+                                            //buscar materia do dia e verificar se ela pode ser usada no dia que nao foi usado    
+                                                //fazer um metodo que verifica a materia do dia se pode ser usada no dia sem aula 
+
+                                            //busca o dia com a materia que esta sendo utilizada na tabela horario aula do dia
+                                                //onde podera ter a materia nao utilizada
+                                                HorarioAulaDiaBeans horariodi = new HorarioAulaDao().BuscaHorarioIntervalo(lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), lauxhorario.get(l).getAnoletivo(), lauxhorario.get(l).getIdcurso(), lmaterianutilizada.get(j).getPeriodo(), "quinta");
+                                            //verifica se materia esta marcado como dia provavel de aula onde podera ser utilizada
+                                                //no dia vazio
+                                                System.out.println("Materia dia que esta veficando" + horariodi.getIdmateriap() + "|" + horariodi.getIdmateria() + "-" + horariovazio.get(i).getDia());
+                                                if (verificaMateriaDiaVazio(horariodi.getIdmateria(), lauxhorario, horariovazio.get(i).getDia(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino())) {
+                                                    System.out.println("Pode dar aula no dia vazio" + horariodi.getIdmateria() + "|" + horariodi.getPeriodo() + "|" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino() + "|" + anoletivo + "|" + datageracao + "|" + horariovazio.get(i).getDia() + "|" + new UnidadeLogadoBeans().getId() + "|" + horariodi.getSequencial() + "|" + horariodi.getQtdeauladia());
+                                                    //verifica se o professor da materia que ira para o dia sem materia nao esta dando aula em outra turma do dia provavel da mudanca
+                                                    if (FiltraMateriaTroca(horariodi.getIdmateria(), horariodi.getPeriodo(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), anoletivo, datageracao, horariovazio.get(i).getDia(), new UnidadeLogadoBeans().getId(), horariodi.getSequencial(), horariodi.getQtdeauladia())) {
+                                                        System.out.println("Professor nao esta dando aula em outra sala no mesmo horario" + horariodi.getIdmateria());
+                                                        //verifica se o professor da materia na utilizada nao esta dando aula em outra turma do dia provavel da mudanca
+                                                        System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId() + "|" + lauxhorario.get(l).getInicio());
+                                                        if (FiltraMateriaTroca(lprofessormateria.getIdmateria(), lmaterianutilizada.get(j).getPeriodo(), lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), anoletivo, datageracao, "quinta", new UnidadeLogadoBeans().getId(), lmaterianutilizada.get(j).getSequencial(), Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()))) {
+                                                            System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId());
+                                                            //se der tudo certo e so fazer o metodo para cadastrar                                                            
+                                                            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+                                                            //verifica se o dia nao utilizado tem qtde de repeticao no dia maior doque que sera trocado
+                                                            if (Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()) >= horariodi.getQtdeauladia()) {
+                                                                //cadastra materia que nao foi utilizada na quinta
+                                                                CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "quinta", lmaterianutilizada.get(j), this.idcurso);
+                                                                // busca os dados da materia que sera trocada para o dia vazio
+                                                                MateriaBeans materiadia = new MateriaDao().BuscaMateriaidprof(horariodi.getIdmateriap());
+                                                                //cadastra materia no dia que nao foi utilizado
+                                                                CadastraMateria(lhorario, horariodi.getIdmateriap(), anoletivo, horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), datageracao, horariovazio.get(i).getDia(), materiadia, this.idcurso);
+                                                                //avanca os contadores
+                                                                l = lauxhorario.size();
+                                                                i = i + (Integer.valueOf(materiadia.getQtdeauladia()) - 1);
+                                                                troca=false;
+                                                            }
+//                                                        //dia nao usado cadastrado no dia da troca
+//                                                        CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "quinta", lmaterianutilizada.get(j), this.idcurso);
+//                                                      
+//                                                        //dia que foi removido indo para dia nao usado
+//                                                        MateriaBeans mb=new MateriaBeans();
+//                                                        mb.setQtdeauladia(String.valueOf(horariodi.getQtdeauladia()));
+//                                                        mb.setSequencial(horariodi.getSequencial());
+//                                                        CadastraMateria(lhorario, horariodi.getIdmateria(), anoletivo, lmaterianutilizada.get(j).getInicio(), lmaterianutilizada.get(j).getTermino(), datageracao, horariovazio.get(i).getDia(), mb, this.idcurso);
+
+                                                          //i=horariodi.getQtdeauladia()+i;
+                                                            //implementar se a quantidade de aula vazia cabe na aula de troca e virse e versa
+                                                            //verificar tambem se for materia se bustituira mais de uma verificar todos os 
+                                                            //horarios
+                                                            System.out.println("\nCurso que foi para " + horariodi.getIdmateriap() + "|" + horariovazio.get(i).getDia());
+                                                            System.out.println("\n Curso foi para quinta" + lprofessormateria.getId() + "------------------------------\n");
+                                                       // JOptionPane.showMessageDialog(null, "\nTrocou\n---------------------------\n");                                                      
+                                                            //   l=lauxhorario.size();//verificar por que esta sempre que insere ele esta começão do inicio no
+                                                            //objeto horariodi sendo que tem que pegar nova materia dando continuidade
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            //fazer um metodo onde verifica se tem qtde de horario para incerir materia
+                                                //nao utilizada e depois verificar se elas pode ser usada no horario vago
+                                                //verifica se tem horario suficiente para adicionar a materia        
+                                            }
+                                        }
+                                    }
+                                   //se nao trocou nenhuma vez entra
+                                    if (troca) {
+                                        if (!"false".equals(lauxhorario.get(l).getSexta()) && !"".equals(lauxhorario.get(l).getSexta())) {
+                                            if (lauxhorario.get(l).getSexta().contains(String.valueOf(lmaterianutilizada.get(j).getId()))) {
+                                                System.out.println(lauxhorario.get(l).getSexta() + "|" + lauxhorario.get(l).getInicio());
+                                            //buscar materia do dia e verificar se ela pode ser usada no dia que nao foi usado    
+                                                //fazer um metodo que verifica a materia do dia se pode ser usada no dia sem aula 
+
+                                            //busca o dia com a materia que esta sendo utilizada na tabela horario aula do dia
+                                                //onde podera ter a materia nao utilizada
+                                                HorarioAulaDiaBeans horariodi = new HorarioAulaDao().BuscaHorarioIntervalo(lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), lauxhorario.get(l).getAnoletivo(), lauxhorario.get(l).getIdcurso(), lmaterianutilizada.get(j).getPeriodo(), "sexta");
+                                            //verifica se materia esta marcado como dia provavel de aula onde podera ser utilizada
+                                                //no dia vazio
+                                                System.out.println("Materia dia que esta veficando" + horariodi.getIdmateriap() + "|" + horariodi.getIdmateria() + "-" + horariovazio.get(i).getDia());
+                                                if (verificaMateriaDiaVazio(horariodi.getIdmateria(), lauxhorario, horariovazio.get(i).getDia(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino())) {
+                                                    System.out.println("Pode dar aula no dia vazio" + horariodi.getIdmateria() + "|" + horariodi.getPeriodo() + "|" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino() + "|" + anoletivo + "|" + datageracao + "|" + horariovazio.get(i).getDia() + "|" + new UnidadeLogadoBeans().getId() + "|" + horariodi.getSequencial() + "|" + horariodi.getQtdeauladia());
+                                                    //verifica se o professor da materia que ira para o dia sem materia nao esta dando aula em outra turma do dia provavel da mudanca
+                                                    if (FiltraMateriaTroca(horariodi.getIdmateria(), horariodi.getPeriodo(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), anoletivo, datageracao, horariovazio.get(i).getDia(), new UnidadeLogadoBeans().getId(), horariodi.getSequencial(), horariodi.getQtdeauladia())) {
+                                                        System.out.println("Professor nao esta dando aula em outra sala no mesmo horario" + horariodi.getIdmateria());
+                                                        //verifica se o professor da materia na utilizada nao esta dando aula em outra turma do dia provavel da mudanca
+                                                        System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId() + "|" + lauxhorario.get(l).getInicio());
+                                                        if (FiltraMateriaTroca(lprofessormateria.getIdmateria(), lmaterianutilizada.get(j).getPeriodo(), lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), anoletivo, datageracao, "sexta", new UnidadeLogadoBeans().getId(), lmaterianutilizada.get(j).getSequencial(), Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()))) {
+                                                            System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId());
+                                                            //se der tudo certo e so fazer o metodo para cadastrar                                                            
+                                                            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+                                                            //verifica se o dia nao utilizado tem qtde de repeticao no dia maior doque que sera trocado
+                                                            if (Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()) >= horariodi.getQtdeauladia()) {
+                                                                //cadastra materia que nao foi utilizada na sexta
+                                                                CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "sexta", lmaterianutilizada.get(j), this.idcurso);
+                                                                // busca os dados da materia que sera trocada para o dia vazio
+                                                                MateriaBeans materiadia = new MateriaDao().BuscaMateriaidprof(horariodi.getIdmateriap());
+                                                                //cadastra materia no dia que nao foi utilizado
+                                                                CadastraMateria(lhorario, horariodi.getIdmateriap(), anoletivo, horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), datageracao, horariovazio.get(i).getDia(), materiadia, this.idcurso);
+                                                                //avanca os contadores
+                                                                l = lauxhorario.size();
+                                                                i = i + (Integer.valueOf(materiadia.getQtdeauladia()) - 1);
+                                                                troca=false;
+                                                            }
+//                                                        //dia nao usado cadastrado no dia da troca
+//                                                        CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "sexta", lmaterianutilizada.get(j), this.idcurso);
+//                                                      
+//                                                        //dia que foi removido indo para dia nao usado
+//                                                        MateriaBeans mb=new MateriaBeans();
+//                                                        mb.setQtdeauladia(String.valueOf(horariodi.getQtdeauladia()));
+//                                                        mb.setSequencial(horariodi.getSequencial());
+//                                                        CadastraMateria(lhorario, horariodi.getIdmateria(), anoletivo, lmaterianutilizada.get(j).getInicio(), lmaterianutilizada.get(j).getTermino(), datageracao, horariovazio.get(i).getDia(), mb, this.idcurso);
+
+                                                          //i=horariodi.getQtdeauladia()+i;
+                                                            //implementar se a quantidade de aula vazia cabe na aula de troca e virse e versa
+                                                            //verificar tambem se for materia se bustituira mais de uma verificar todos os 
+                                                            //horarios
+                                                            System.out.println("\nCurso que foi para " + horariodi.getIdmateriap() + "|" + horariovazio.get(i).getDia());
+                                                            System.out.println("\n Curso foi para sexta" + lprofessormateria.getId() + "------------------------------\n");
+                                                       // JOptionPane.showMessageDialog(null, "\nTrocou\n---------------------------\n");                                                      
+                                                            //   l=lauxhorario.size();//verificar por que esta sempre que insere ele esta começão do inicio no
+                                                            //objeto horariodi sendo que tem que pegar nova materia dando continuidade
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            //fazer um metodo onde verifica se tem qtde de horario para incerir materia
+                                                //nao utilizada e depois verificar se elas pode ser usada no horario vago
+                                                //verifica se tem horario suficiente para adicionar a materia        
+                                            }
+                                        }
+                                    }
+                                    //se nao trocou nenhuma vez entra
+                                    if (troca) {
+                                        if (!"false".equals(lauxhorario.get(l).getSabado()) && !"".equals(lauxhorario.get(l).getSabado())) {
+                                            if (lauxhorario.get(l).getSabado().contains(String.valueOf(lmaterianutilizada.get(j).getId()))) {
+                                                System.out.println(lauxhorario.get(l).getSabado() + "|" + lauxhorario.get(l).getInicio());
+                                            //buscar materia do dia e verificar se ela pode ser usada no dia que nao foi usado    
+                                                //fazer um metodo que verifica a materia do dia se pode ser usada no dia sem aula 
+
+                                            //busca o dia com a materia que esta sendo utilizada na tabela horario aula do dia
+                                                //onde podera ter a materia nao utilizada
+                                                HorarioAulaDiaBeans horariodi = new HorarioAulaDao().BuscaHorarioIntervalo(lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), lauxhorario.get(l).getAnoletivo(), lauxhorario.get(l).getIdcurso(), lmaterianutilizada.get(j).getPeriodo(), "sabado");
+                                            //verifica se materia esta marcado como dia provavel de aula onde podera ser utilizada
+                                                //no dia vazio
+                                                System.out.println("Materia dia que esta veficando" + horariodi.getIdmateriap() + "|" + horariodi.getIdmateria() + "-" + horariovazio.get(i).getDia());
+                                                if (verificaMateriaDiaVazio(horariodi.getIdmateria(), lauxhorario, horariovazio.get(i).getDia(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino())) {
+                                                    System.out.println("Pode dar aula no dia vazio" + horariodi.getIdmateria() + "|" + horariodi.getPeriodo() + "|" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino() + "|" + anoletivo + "|" + datageracao + "|" + horariovazio.get(i).getDia() + "|" + new UnidadeLogadoBeans().getId() + "|" + horariodi.getSequencial() + "|" + horariodi.getQtdeauladia());
+                                                    //verifica se o professor da materia que ira para o dia sem materia nao esta dando aula em outra turma do dia provavel da mudanca
+                                                    if (FiltraMateriaTroca(horariodi.getIdmateria(), horariodi.getPeriodo(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), anoletivo, datageracao, horariovazio.get(i).getDia(), new UnidadeLogadoBeans().getId(), horariodi.getSequencial(), horariodi.getQtdeauladia())) {
+                                                        System.out.println("Professor nao esta dando aula em outra sala no mesmo horario" + horariodi.getIdmateria());
+                                                        //verifica se o professor da materia na utilizada nao esta dando aula em outra turma do dia provavel da mudanca
+                                                        System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId() + "|" + lauxhorario.get(l).getInicio());
+                                                        if (FiltraMateriaTroca(lprofessormateria.getIdmateria(), lmaterianutilizada.get(j).getPeriodo(), lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), anoletivo, datageracao, "sabado", new UnidadeLogadoBeans().getId(), lmaterianutilizada.get(j).getSequencial(), Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()))) {
+                                                            System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId());
+                                                            //se der tudo certo e so fazer o metodo para cadastrar                                                            
+                                                            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+                                                            //verifica se o dia nao utilizado tem qtde de repeticao no dia maior doque que sera trocado
+                                                            if (Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()) >= horariodi.getQtdeauladia()) {
+                                                                //cadastra materia que nao foi utilizada na sabado
+                                                                CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "sabado", lmaterianutilizada.get(j), this.idcurso);
+                                                                // busca os dados da materia que sera trocada para o dia vazio
+                                                                MateriaBeans materiadia = new MateriaDao().BuscaMateriaidprof(horariodi.getIdmateriap());
+                                                                //cadastra materia no dia que nao foi utilizado
+                                                                CadastraMateria(lhorario, horariodi.getIdmateriap(), anoletivo, horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), datageracao, horariovazio.get(i).getDia(), materiadia, this.idcurso);
+                                                                //avanca os contadores
+                                                                l = lauxhorario.size();
+                                                                i = i + (Integer.valueOf(materiadia.getQtdeauladia()) - 1);
+                                                                troca=false;
+                                                            }
+//                                                        //dia nao usado cadastrado no dia da troca
+//                                                        CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "sabado", lmaterianutilizada.get(j), this.idcurso);
+//                                                      
+//                                                        //dia que foi removido indo para dia nao usado
+//                                                        MateriaBeans mb=new MateriaBeans();
+//                                                        mb.setQtdeauladia(String.valueOf(horariodi.getQtdeauladia()));
+//                                                        mb.setSequencial(horariodi.getSequencial());
+//                                                        CadastraMateria(lhorario, horariodi.getIdmateria(), anoletivo, lmaterianutilizada.get(j).getInicio(), lmaterianutilizada.get(j).getTermino(), datageracao, horariovazio.get(i).getDia(), mb, this.idcurso);
+
+                                                          //i=horariodi.getQtdeauladia()+i;
+                                                            //implementar se a quantidade de aula vazia cabe na aula de troca e virse e versa
+                                                            //verificar tambem se for materia se bustituira mais de uma verificar todos os 
+                                                            //horarios
+                                                            System.out.println("\nCurso que foi para " + horariodi.getIdmateriap() + "|" + horariovazio.get(i).getDia());
+                                                            System.out.println("\n Curso foi para sabado" + lprofessormateria.getId() + "------------------------------\n");
+                                                       // JOptionPane.showMessageDialog(null, "\nTrocou\n---------------------------\n");                                                      
+                                                            //   l=lauxhorario.size();//verificar por que esta sempre que insere ele esta começão do inicio no
+                                                            //objeto horariodi sendo que tem que pegar nova materia dando continuidade
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            //fazer um metodo onde verifica se tem qtde de horario para incerir materia
+                                                //nao utilizada e depois verificar se elas pode ser usada no horario vago
+                                                //verifica se tem horario suficiente para adicionar a materia        
+                                            }
+                                        }
+                                    }
+                                    //se nao trocou nenhuma vez entra
+                                    if (troca) {
+                                        if (!"false".equals(lauxhorario.get(l).getDomingo()) && !"".equals(lauxhorario.get(l).getDomingo())) {
+                                            if (lauxhorario.get(l).getDomingo().contains(String.valueOf(lmaterianutilizada.get(j).getId()))) {
+                                                System.out.println(lauxhorario.get(l).getDomingo() + "|" + lauxhorario.get(l).getInicio());
+                                            //buscar materia do dia e verificar se ela pode ser usada no dia que nao foi usado    
+                                                //fazer um metodo que verifica a materia do dia se pode ser usada no dia sem aula 
+
+                                            //busca o dia com a materia que esta sendo utilizada na tabela horario aula do dia
+                                                //onde podera ter a materia nao utilizada
+                                                HorarioAulaDiaBeans horariodi = new HorarioAulaDao().BuscaHorarioIntervalo(lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), lauxhorario.get(l).getAnoletivo(), lauxhorario.get(l).getIdcurso(), lmaterianutilizada.get(j).getPeriodo(), "domingo");
+                                            //verifica se materia esta marcado como dia provavel de aula onde podera ser utilizada
+                                                //no dia vazio
+                                                System.out.println("Materia dia que esta veficando" + horariodi.getIdmateriap() + "|" + horariodi.getIdmateria() + "-" + horariovazio.get(i).getDia());
+                                                if (verificaMateriaDiaVazio(horariodi.getIdmateria(), lauxhorario, horariovazio.get(i).getDia(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino())) {
+                                                    System.out.println("Pode dar aula no dia vazio" + horariodi.getIdmateria() + "|" + horariodi.getPeriodo() + "|" + horariovazio.get(i).getInicio() + "|" + horariovazio.get(i).getTermino() + "|" + anoletivo + "|" + datageracao + "|" + horariovazio.get(i).getDia() + "|" + new UnidadeLogadoBeans().getId() + "|" + horariodi.getSequencial() + "|" + horariodi.getQtdeauladia());
+                                                    //verifica se o professor da materia que ira para o dia sem materia nao esta dando aula em outra turma do dia provavel da mudanca
+                                                    if (FiltraMateriaTroca(horariodi.getIdmateria(), horariodi.getPeriodo(), horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), anoletivo, datageracao, horariovazio.get(i).getDia(), new UnidadeLogadoBeans().getId(), horariodi.getSequencial(), horariodi.getQtdeauladia())) {
+                                                        System.out.println("Professor nao esta dando aula em outra sala no mesmo horario" + horariodi.getIdmateria());
+                                                        //verifica se o professor da materia na utilizada nao esta dando aula em outra turma do dia provavel da mudanca
+                                                        System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId() + "|" + lauxhorario.get(l).getInicio());
+                                                        if (FiltraMateriaTroca(lprofessormateria.getIdmateria(), lmaterianutilizada.get(j).getPeriodo(), lauxhorario.get(l).getInicio(), lauxhorario.get(l).getTermino(), anoletivo, datageracao, "domingo", new UnidadeLogadoBeans().getId(), lmaterianutilizada.get(j).getSequencial(), Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()))) {
+                                                            System.out.println("Professor do dia vazio pode dar aula" + lprofessormateria.getId());
+                                                            //se der tudo certo e so fazer o metodo para cadastrar                                                            
+                                                            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(this.idcurso, anoletivo, datageracao);
+                                                            //verifica se o dia nao utilizado tem qtde de repeticao no dia maior doque que sera trocado
+                                                            if (Integer.parseInt(lmaterianutilizada.get(j).getQtdeauladia()) >= horariodi.getQtdeauladia()) {
+                                                                //cadastra materia que nao foi utilizada na domingo
+                                                                CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "domingo", lmaterianutilizada.get(j), this.idcurso);
+                                                                // busca os dados da materia que sera trocada para o dia vazio
+                                                                MateriaBeans materiadia = new MateriaDao().BuscaMateriaidprof(horariodi.getIdmateriap());
+                                                                //cadastra materia no dia que nao foi utilizado
+                                                                CadastraMateria(lhorario, horariodi.getIdmateriap(), anoletivo, horariovazio.get(i).getInicio(), horariovazio.get(i).getTermino(), datageracao, horariovazio.get(i).getDia(), materiadia, this.idcurso);
+                                                                //avanca os contadores
+                                                                l = lauxhorario.size();
+                                                                i = i + (Integer.valueOf(materiadia.getQtdeauladia()) - 1);
+                                                                troca=false;
+                                                            }
+//                                                        //dia nao usado cadastrado no dia da troca
+//                                                        CadastraMateria(lhorario, lprofessormateria.getId(), anoletivo, horariodi.getInicio(), horariodi.getTermino(), datageracao, "domingo", lmaterianutilizada.get(j), this.idcurso);
+//                                                      
+//                                                        //dia que foi removido indo para dia nao usado
+//                                                        MateriaBeans mb=new MateriaBeans();
+//                                                        mb.setQtdeauladia(String.valueOf(horariodi.getQtdeauladia()));
+//                                                        mb.setSequencial(horariodi.getSequencial());
+//                                                        CadastraMateria(lhorario, horariodi.getIdmateria(), anoletivo, lmaterianutilizada.get(j).getInicio(), lmaterianutilizada.get(j).getTermino(), datageracao, horariovazio.get(i).getDia(), mb, this.idcurso);
+
+                                                          //i=horariodi.getQtdeauladia()+i;
+                                                            //implementar se a quantidade de aula vazia cabe na aula de troca e virse e versa
+                                                            //verificar tambem se for materia se bustituira mais de uma verificar todos os 
+                                                            //horarios
+                                                            System.out.println("\nCurso que foi para " + horariodi.getIdmateriap() + "|" + horariovazio.get(i).getDia());
+                                                            System.out.println("\n Curso foi para domingo" + lprofessormateria.getId() + "------------------------------\n");
+                                                       // JOptionPane.showMessageDialog(null, "\nTrocou\n---------------------------\n");                                                      
+                                                            //   l=lauxhorario.size();//verificar por que esta sempre que insere ele esta começão do inicio no
+                                                            //objeto horariodi sendo que tem que pegar nova materia dando continuidade
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            //fazer um metodo onde verifica se tem qtde de horario para incerir materia
+                                                //nao utilizada e depois verificar se elas pode ser usada no horario vago
+                                                //verifica se tem horario suficiente para adicionar a materia        
+                                            }
+                                        }
+                                    }                                    
+                                }
+                            }
+                        }
+
+                    }
+
+                    resp = false;
+
+                } else if (respexevqtdeauh == 3) {
+                    //verifica se as materias utilizada esta sendo utilizada totalmente
+                    if (verificaQteAulaHorario(anoletivo, datageracao)) {
+                        JOptionPane.showMessageDialog(null, "Conflito de horario de Mais de uma materia\nProblema "
+                                + "Esta Sendo Resolvido pela Programação\nCausa do Problema:Mais de Uma materia escolhido o mesmo dia e horario e com a quantidade exata somente para ministrar as aulas");
+                        logs.setTxt(new Date() + "  Conflito de horario de Mais de uma materia\nProblema "
+                                + "Esta Sendo Resolvido pela Programação\nCausa do Problema:Mais de Uma materia escolhido o mesmo dia e horario e com a quantidade exata somente para ministrar as aulas", "Erro");
+                    }
+                }
+
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Verificar Erro em Horario Gerado\n" + ex, "Gera Horario", JOptionPane.ERROR_MESSAGE);
         }
         return resp;
+
     }
 
+    //verifica a soma de quantidade de aula por semana somando no cadastro de materia com a quantidade
+    //de materia utilizado no horario
     private Boolean verQtdeAulaMatEDia(String anoletivo, Date datageracao) {
         Boolean resp = false;
         int hqtdeocorr = 0;
@@ -351,6 +867,7 @@ public class LProfessorHorario {
                     periodo = lhaula.get(i).getPeriodo();
                     hqtdeocorr = 0;
                     pqtdeocorr = 0;
+                    //retorna a soma da quantidade de aula por semana de acordo com cadastro de materia
                     pqtdeocorr = new ProfessorMateriaDao().buscaProfessorQtdeOcorr(idcurso, lhaula.get(i).getPeriodo());
                 }
                 if (lhaula.get(i).getSegunda() > 0) {
@@ -391,9 +908,11 @@ public class LProfessorHorario {
 
     //verifica se tem dia sem aula no horario se tiver verifica se todas as aulas provavel ja foi usada
     //retorna true para gerar o horario navamente
-    private boolean verificaQtdeDiaProfHor(String anoletivo, Date datageracao) {
+    //sera utilizado na nova estrutura
+    private List<HorarioVazioBeans> verificaQtdeDiaProfHor(String anoletivo, Date datageracao) {
         Boolean resp = false;
-        LogsTxt logs=new LogsTxt();
+        LogsTxt logs = new LogsTxt();
+        List<HorarioVazioBeans> horariovazio = new ArrayList<>();
         try {
             List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(idcurso, anoletivo);
             List<HorarioAulaBeans> lhaula = new HorarioAulaDao().BuscaHorario(idcurso, anoletivo, datageracao);
@@ -403,16 +922,27 @@ public class LProfessorHorario {
                         //acha o dia e horario referente ao dia sem aula                        
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getSegunda().equals("false") && !lauxhorario.get(j).getSegunda().equals("")) {//verifica se tem materia de provavel aula nesse dia
-                                //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSegunda().replace("|", ",0"), lhaula.get(i).getPeriodo());
+                                //retorna as materias refenrente aos id de cada materia
+                                // List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSegunda().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao retorna true se pode utilizar
-                                resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                                logs.setTxt(new Date()+"  Segunda" + lauxhorario.get(j).getSegunda() + "resp:" + resp,"Erro");
-                                if (resp) {
-                                    respexevqtdeauh = 2;
-                                } else {
-                                    respexevqtdeauh = 3;
-                                }
+                                //    resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
+                                logs.setTxt(new Date() + "  Segunda" + lauxhorario.get(j).getSegunda() + "resp:" + resp, "Erro");
+                                HorarioVazioBeans hvb = new HorarioVazioBeans();
+                                hvb.setId(lhaula.get(i).getId());
+                                hvb.setAnoletivo(lhaula.get(i).getAnoletivo());
+                                hvb.setDatageracao(lhaula.get(i).getDatageracao());
+                                hvb.setIdcurso(lhaula.get(i).getIdcurso());
+                                hvb.setInicio(lhaula.get(i).getInicio());
+                                hvb.setTermino(lhaula.get(i).getTermino());
+                                hvb.setPeriodo(lhaula.get(i).getPeriodo());
+                                hvb.setMaterias(lauxhorario.get(j).getSegunda());
+                                hvb.setDia("segunda");
+                                horariovazio.add(hvb);
+//                                if (resp) {
+//                                    respexevqtdeauh = 2;
+//                                } else {
+//                                    respexevqtdeauh = 3;
+//                                }
                                 // resp=verificaQteAulaHorario(anoletivo, datageracao);
                             }
                         }
@@ -424,15 +954,26 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getTerca().equals("false") && !lauxhorario.get(j).getTerca().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getTerca().replace("|", ",0"), lhaula.get(i).getPeriodo());
+                                // List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getTerca().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
-                                resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                                logs.setTxt(new Date()+"  terca" + lauxhorario.get(j).getTerca() + "resp:" + resp,"Erro");
-                                if (resp) {
-                                    respexevqtdeauh = 2;
-                                } else {
-                                    respexevqtdeauh = 3;
-                                }
+                                //  resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
+                                logs.setTxt(new Date() + "  terca" + lauxhorario.get(j).getTerca() + "resp:" + resp, "Erro");
+                                HorarioVazioBeans hvb = new HorarioVazioBeans();
+                                hvb.setId(lhaula.get(i).getId());
+                                hvb.setAnoletivo(lhaula.get(i).getAnoletivo());
+                                hvb.setDatageracao(lhaula.get(i).getDatageracao());
+                                hvb.setIdcurso(lhaula.get(i).getIdcurso());
+                                hvb.setInicio(lhaula.get(i).getInicio());
+                                hvb.setTermino(lhaula.get(i).getTermino());
+                                hvb.setPeriodo(lhaula.get(i).getPeriodo());
+                                hvb.setMaterias(lauxhorario.get(j).getTerca());
+                                hvb.setDia("terca");
+                                horariovazio.add(hvb);
+//                                if (resp) {
+//                                    respexevqtdeauh = 2;
+//                                } else {
+//                                    respexevqtdeauh = 3;
+//                                }
                             }
                         }
                     }
@@ -443,15 +984,26 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getQuarta().equals("false") && !lauxhorario.get(j).getQuarta().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getQuarta().replace("|", ",0"), lhaula.get(i).getPeriodo());
+                                //List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getQuarta().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
-                                resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                             logs.setTxt(new Date()+" quarta" + lauxhorario.get(j).getQuarta() + "resp:" + resp,"Erro");
-                                if (resp) {
-                                    respexevqtdeauh = 2;
-                                } else {
-                                    respexevqtdeauh = 3;
-                                }
+                                //   resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
+                                logs.setTxt(new Date() + " quarta" + lauxhorario.get(j).getQuarta() + "resp:" + resp, "Erro");
+                                HorarioVazioBeans hvb = new HorarioVazioBeans();
+                                hvb.setId(lhaula.get(i).getId());
+                                hvb.setAnoletivo(lhaula.get(i).getAnoletivo());
+                                hvb.setDatageracao(lhaula.get(i).getDatageracao());
+                                hvb.setIdcurso(lhaula.get(i).getIdcurso());
+                                hvb.setInicio(lhaula.get(i).getInicio());
+                                hvb.setTermino(lhaula.get(i).getTermino());
+                                hvb.setPeriodo(lhaula.get(i).getPeriodo());
+                                hvb.setMaterias(lauxhorario.get(j).getQuarta());
+                                hvb.setDia("quarta");
+                                horariovazio.add(hvb);
+//                                if (resp) {
+//                                    respexevqtdeauh = 2;
+//                                } else {
+//                                    respexevqtdeauh = 3;
+//                                }
                             }
                         }
                     }
@@ -462,15 +1014,26 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getQuinta().equals("false") && !lauxhorario.get(j).getQuinta().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getQuinta().replace("|", ",0"), lhaula.get(i).getPeriodo());
+                                // List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getQuinta().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
-                                resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                            logs.setTxt(new Date()+"  quinta" + lauxhorario.get(j).getQuinta() + "resp:" + resp,"Erro");
-                                if (resp) {
-                                    respexevqtdeauh = 2;
-                                } else {
-                                    respexevqtdeauh = 3;
-                                }
+                                //  resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
+                                logs.setTxt(new Date() + "  quinta" + lauxhorario.get(j).getQuinta() + "resp:" + resp, "Erro");
+                                HorarioVazioBeans hvb = new HorarioVazioBeans();
+                                hvb.setId(lhaula.get(i).getId());
+                                hvb.setAnoletivo(lhaula.get(i).getAnoletivo());
+                                hvb.setDatageracao(lhaula.get(i).getDatageracao());
+                                hvb.setIdcurso(lhaula.get(i).getIdcurso());
+                                hvb.setInicio(lhaula.get(i).getInicio());
+                                hvb.setTermino(lhaula.get(i).getTermino());
+                                hvb.setPeriodo(lhaula.get(i).getPeriodo());
+                                hvb.setMaterias(lauxhorario.get(j).getQuinta());
+                                hvb.setDia("quinta");
+                                horariovazio.add(hvb);
+//                                if (resp) {
+//                                    respexevqtdeauh = 2;
+//                                } else {
+//                                    respexevqtdeauh = 3;
+//                                }
                             }
                         }
                     }
@@ -481,15 +1044,26 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getSexta().equals("false") && !lauxhorario.get(j).getSexta().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSexta().replace("|", ",0"), lhaula.get(i).getPeriodo());
+                                // List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSexta().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
-                                resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                            logs.setTxt(new Date()+"  sexta" + lauxhorario.get(j).getSexta() + "resp:" + resp,"Erro");
-                                if (resp) {
-                                    respexevqtdeauh = 2;
-                                } else {
-                                    respexevqtdeauh = 3;
-                                }
+                                //  resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
+                                logs.setTxt(new Date() + "  sexta" + lauxhorario.get(j).getSexta() + "resp:" + resp, "Erro");
+                                HorarioVazioBeans hvb = new HorarioVazioBeans();
+                                hvb.setId(lhaula.get(i).getId());
+                                hvb.setAnoletivo(lhaula.get(i).getAnoletivo());
+                                hvb.setDatageracao(lhaula.get(i).getDatageracao());
+                                hvb.setIdcurso(lhaula.get(i).getIdcurso());
+                                hvb.setInicio(lhaula.get(i).getInicio());
+                                hvb.setTermino(lhaula.get(i).getTermino());
+                                hvb.setPeriodo(lhaula.get(i).getPeriodo());
+                                hvb.setMaterias(lauxhorario.get(j).getSexta());
+                                hvb.setDia("sexta");
+                                horariovazio.add(hvb);
+//                                if (resp) {
+//                                    respexevqtdeauh = 2;
+//                                } else {
+//                                    respexevqtdeauh = 3;
+//                                }
                             }
                         }
                     }
@@ -500,15 +1074,26 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getSabado().equals("false") && !lauxhorario.get(j).getSabado().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSabado().replace("|", ",0"), lhaula.get(i).getPeriodo());
+                                // List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getSabado().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
-                                resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                            logs.setTxt(new Date()+"  sabado" + lauxhorario.get(j).getSabado() + "resp:" + resp,"Erro");
-                                if (resp) {
-                                    respexevqtdeauh = 2;
-                                } else {
-                                    respexevqtdeauh = 3;
-                                }
+                                //  resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
+                                logs.setTxt(new Date() + "  sabado" + lauxhorario.get(j).getSabado() + "resp:" + resp, "Erro");
+                                HorarioVazioBeans hvb = new HorarioVazioBeans();
+                                hvb.setId(lhaula.get(i).getId());
+                                hvb.setAnoletivo(lhaula.get(i).getAnoletivo());
+                                hvb.setDatageracao(lhaula.get(i).getDatageracao());
+                                hvb.setIdcurso(lhaula.get(i).getIdcurso());
+                                hvb.setInicio(lhaula.get(i).getInicio());
+                                hvb.setTermino(lhaula.get(i).getTermino());
+                                hvb.setPeriodo(lhaula.get(i).getPeriodo());
+                                hvb.setMaterias(lauxhorario.get(j).getSabado());
+                                hvb.setDia("sabado");
+                                horariovazio.add(hvb);
+//                                if (resp) {
+//                                    respexevqtdeauh = 2;
+//                                } else {
+//                                    respexevqtdeauh = 3;
+//                                }
                             }
                         }
                     }
@@ -519,15 +1104,26 @@ public class LProfessorHorario {
                         if (lhaula.get(i).getInicio().equals(lauxhorario.get(j).getInicio()) && lhaula.get(i).getTermino().equals(lauxhorario.get(j).getTermino())) {
                             if (!lauxhorario.get(j).getDomingo().equals("false") && !lauxhorario.get(j).getDomingo().equals("")) {//verifica se tem materia de provavel aula nesse dia
                                 //retorna as materias refenrente as siglas de cada materia
-                                List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getDomingo().replace("|", ",0"), lhaula.get(i).getPeriodo());
+                                // List<MateriaBeans> lmateria = new MateriaDao().BuscaIdMateria(lauxhorario.get(j).getDomingo().replace("|", ",0"), lhaula.get(i).getPeriodo());
                                 //retorna se a materia ja foi utilizada todas as aulas ou nao
-                                resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
-                          logs.setTxt(new Date()+"  domingo" + lauxhorario.get(j).getDomingo() + "resp:" + resp,"Erro");
-                                if (resp) {
-                                    respexevqtdeauh = 2;
-                                } else {
-                                    respexevqtdeauh = 3;
-                                }
+//                              //  resp = qtdeOcorrenciaMateria(lmateria, anoletivo, datageracao, lhaula.get(i).getPeriodo());
+                                logs.setTxt(new Date() + "  domingo" + lauxhorario.get(j).getDomingo() + "resp:" + resp, "Erro");
+                                HorarioVazioBeans hvb = new HorarioVazioBeans();
+                                hvb.setId(lhaula.get(i).getId());
+                                hvb.setAnoletivo(lhaula.get(i).getAnoletivo());
+                                hvb.setDatageracao(lhaula.get(i).getDatageracao());
+                                hvb.setIdcurso(lhaula.get(i).getIdcurso());
+                                hvb.setInicio(lhaula.get(i).getInicio());
+                                hvb.setTermino(lhaula.get(i).getTermino());
+                                hvb.setPeriodo(lhaula.get(i).getPeriodo());
+                                hvb.setMaterias(lauxhorario.get(j).getDomingo());
+                                hvb.setDia("domingo");
+                                horariovazio.add(hvb);
+//                                if (resp) {
+//                                    respexevqtdeauh = 2;
+//                                } else {
+//                                    respexevqtdeauh = 3;
+//                                }
                             }
                         }
                     }
@@ -538,13 +1134,15 @@ public class LProfessorHorario {
             JOptionPane.showMessageDialog(null, "Erro ao Verifica Horario sem Aula\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
         }
 
-        return resp;
+        return horariovazio;
 
     }
+//verifica se todas as materias foram utilizadas todas as vezes cadastrada
 
-    private Boolean qtdeOcorrenciaMateria(List<MateriaBeans> lmateria, String anoletivo, Date datageracao, int periodo) {
+    private List<MateriaBeans> qtdeOcorrenciaMateria(List<MateriaBeans> lmateria, String anoletivo, Date datageracao, int periodo) {
         ProfessorMateriaBeans lprofessor;
         Boolean resp = false;
+        List<MateriaBeans> materia = new ArrayList<>();
         for (int l = 0; l < lmateria.size(); l++) {
             try {
                 //busca id do professor relacionada a materia;
@@ -556,19 +1154,21 @@ public class LProfessorHorario {
                 if (ocorrmat > 0) {
                     //se a quantidade de ocorrencia for menor que a quantidade que pode ter na semana ele entra
                     if (ocorrmat < Integer.valueOf(lmateria.get(l).getQtdeaulasem())) {
-                        resp = true;
+                        //resp = true;
+                        materia.add(lmateria.get(l));
                     }
                     //se nao teve ocorrencia ele entra
                 } else {
                     if (lprofessor.getId() > 0) {
-                        resp = true;
+                        //resp = true;
+                        materia.add(lmateria.get(l));
                     }
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao Verifica Ocorrencia Materia\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
             }
         }
-        return resp;
+        return materia;
     }
 
     //verifica se as materias utilizada esta sendo utilizada totalmente
@@ -600,8 +1200,8 @@ public class LProfessorHorario {
         for (int i = 0; i < idmatprof.size(); i++) {
             try {
                 if (idmat != idmatprof.get(i)) {
-                    ocorrmath = new ProfessorMateriaDao().buscaProfessorQtdeOcorrHorario(idmat);                                    
-                     new LogsTxt().setTxt(new Date()+" Ocorrencia Materia: "+idmat+"|"+ocorrmath+"|"+cont);
+                    ocorrmath = new ProfessorMateriaDao().buscaProfessorQtdeOcorrHorario(idmat);
+                    new LogsTxt().setTxt(new Date() + " Ocorrencia Materia: " + idmat + "|" + ocorrmath + "|" + cont);
                     if (ocorrmath != cont) {
                         resp = true;
                     }
@@ -611,7 +1211,7 @@ public class LProfessorHorario {
                 cont++;
                 if (idmatprof.size() == i + 1) {
                     ocorrmath = new ProfessorMateriaDao().buscaProfessorQtdeOcorrHorario(idmatprof.get(i));
-                        new LogsTxt().setTxt(new Date()+" Ocorencia Materia: "+idmat+"|"+ocorrmath+"|"+cont);
+                    new LogsTxt().setTxt(new Date() + " Ocorencia Materia: " + idmat + "|" + ocorrmath + "|" + cont);
                     if (ocorrmath != cont) {
                         resp = true;
                     }
@@ -622,48 +1222,49 @@ public class LProfessorHorario {
         }
         return resp;
     }
- public void HorarioProfessor(String anoletivo, Date datageracao) {
+
+    public void HorarioProfessor(String anoletivo, Date datageracao) {
         try {
 //            //metodo busca o horario do curso na tabela horarioaula
 //            List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorario(idcurso, anoletivo, datageracao);
 //            //metodo busaca os periodos de um curso na tabela horarioaula
 //            List<HorarioAulaBeans> lhorariop=new HorarioAulaDao().HorarioGroupPeriodo(idcurso, anoletivo, datageracao);            
             //metodo busca horario na tabela auxhorariocurso
-            List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(this.idcurso, anoletivo);                        
+            List<AuxHorarioCursoBeans> lauxhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCurso(this.idcurso, anoletivo);
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getSegunda())) {
+                if (!"false".equals(lauxhorario.get(i).getSegunda()) && !"".equals(lauxhorario.get(i).getSegunda())) {
                     // JOptionPane.showMessageDialog(null, "segunda");
                     FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getSegunda(), datageracao, "segunda");
                 }
             }
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getTerca())) {
+                if (!"false".equals(lauxhorario.get(i).getTerca()) && !"".equals(lauxhorario.get(i).getTerca())) {
                     // JOptionPane.showMessageDialog(null, "terca");
                     FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getTerca(), datageracao, "terca");
                 }
             }
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getQuarta())) {
+                if (!"false".equals(lauxhorario.get(i).getQuarta()) && !"".equals(lauxhorario.get(i).getQuarta())) {
                     FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getQuarta(), datageracao, "quarta");
                 }
             }
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getQuinta())) {
+                if (!"false".equals(lauxhorario.get(i).getQuinta()) && !"".equals(lauxhorario.get(i).getQuinta())) {
                     FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getQuinta(), datageracao, "quinta");
                 }
             }
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getSexta())) {
+                if (!"false".equals(lauxhorario.get(i).getSexta()) && !"".equals(lauxhorario.get(i).getSexta())) {
                     FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getSexta(), datageracao, "sexta");
                 }
             }
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getSabado())) {
+                if (!"false".equals(lauxhorario.get(i).getSabado()) && !"".equals(lauxhorario.get(i).getSabado())) {
                     FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getSabado(), datageracao, "sabado");
                 }
             }
             for (int i = 0; i < lauxhorario.size(); i++) {
-                if (!"false".equals(lauxhorario.get(i).getDomingo())) {
+                if (!"false".equals(lauxhorario.get(i).getDomingo()) && !"".equals(lauxhorario.get(i).getDomingo())) {
                     FiltraGrava(anoletivo, lauxhorario.get(i).getInicio(), lauxhorario.get(i).getTermino(), lauxhorario.get(i).getDomingo(), datageracao, "domingo");
                 }
             }
@@ -671,13 +1272,12 @@ public class LProfessorHorario {
             // new LAuxGradeHorario(anoletivo).SelecionaCursoHorario(lhorario.get(i).getInicio(), lhorario.get(i).getTermino(), idcurso);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Sincronizar Professor\n" + ex, "Gera Horario", JOptionPane.ERROR_MESSAGE);
-        }        
-        
-    
- }
- 
-  //verifica as materias e escolhe uma para inserir
-public MateriaBeans FiltraMateria(List<MateriaBeans> lmateria, int periodo, String inicio, String termino, String anoletivo, Date datageracao, String dia, int idcurso) {
+        }
+
+    }
+
+    //verifica as materias e escolhe uma para inserir
+    public MateriaBeans FiltraMateria(List<MateriaBeans> lmateria, int periodo, String inicio, String termino, String anoletivo, Date datageracao, String dia, int idcurso) {
         ProfessorMateriaBeans lprofessor;
         //  JOptionPane.showMessageDialog(null, inicio + "|" + termino + "|" + periodo);
         List<MateriaBeans> resmataux = new ArrayList<>();//array de materia onde contem a que sera escolhida
@@ -715,7 +1315,6 @@ public MateriaBeans FiltraMateria(List<MateriaBeans> lmateria, int periodo, Stri
         }
 
         //verifica se o professor tem preferencia para dar aula no dia ou nao
-        
         //verifica se o professor da materia esta sendo utilizado no intervalo do horario        
         for (int i = 0; i < resmataux.size(); i++) {
             try {
@@ -749,13 +1348,14 @@ public MateriaBeans FiltraMateria(List<MateriaBeans> lmateria, int periodo, Stri
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao Filtrar Materia Verificar Materia Dia\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         }
 
         //verifica se tem horario suficiente para adicionar a materia        
         for (int i = 0; i < resmataux.size(); i++) {
             try {
-                List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorarioPeriodo(idcurso, anoletivo, datageracao, resmataux.get(i).getPeriodo());
+                //List<HorarioAulaBeans> lhorario = new HorarioAulaDao().BuscaHorarioPeriodoDia(idcurso, anoletivo, datageracao, resmataux.get(i).getPeriodo(),dia);
+                List<AuxHorarioCursoBeans> lhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCursoDia(idcurso, anoletivo, dia);
                 for (int j = 0; j < lhorario.size(); j++) {
                     if (lhorario.get(j).getInicio().equals(inicio) && lhorario.get(j).getTermino().equals(termino)) {
                         int qtdeh = lhorario.size() - j;
@@ -799,5 +1399,119 @@ public MateriaBeans FiltraMateria(List<MateriaBeans> lmateria, int periodo, Stri
         // JOptionPane.showMessageDialog(null, resmat.getSigla());
         return resmat;
     }
+//verifica se o professor da materia nao esta dando aula em outra turma
 
+    public Boolean FiltraMateriaTroca(int idmateria, int periodo, String inicio, String termino, String anoletivo, Date datageracao, String dia, int idcurso, String sequencia, int qtdeaula) {
+        ProfessorMateriaBeans lprofessor;
+        Boolean resp = true;
+        try {
+            //busca id do professor relacionada a materia;
+            lprofessor = new ProfessorMateriaDao().BuscaProfessorMateriaAtivo(idmateria, new UnidadeLogadoBeans().getId());
+            //metodo verifica se o professor da materia da aula no mesmo horario independente da materia
+            Boolean ocorrencia = new HorarioAulaDao().VerificaOcorrencProfHor(dia, inicio, termino, anoletivo, datageracao, lprofessor.getIdprofessor());
+            //se o professor da materia tiver aula no horario passado no parametro e retornado false
+            if (ocorrencia || (lprofessor.getId() == 0)) {
+                resp = false;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Filtrar a Troca Materia \n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //verifica se tem horario suficiente para adicionar a materia                    
+        if (resp) {
+            try {
+                List<AuxHorarioCursoBeans> lhorario = new AuxHorarioCursoDao().BuscaAuxHorarioCursoDia(idcurso, anoletivo, dia);
+                //percorre o horario de aula
+                for (int j = 0; j < lhorario.size(); j++) {
+                    //verifica se esta no mesmo horario do parametro
+                    if (lhorario.get(j).getInicio().equals(inicio) && lhorario.get(j).getTermino().equals(termino)) {
+                        //recebe a quantidade de horario que falta
+                        int qtdeh = lhorario.size() - j;
+                        //compara que e maior que zero
+                        if (qtdeh > 0) {
+                            //verifica se tem sequencia
+                            if (sequencia.equals("true")) {
+                                //verifica se a quantidade de aula e maior que a que pode colocar no dia
+                                if (qtdeaula > qtdeh) {
+                                    //      System.out.println("Removel:"+resmataux.get(i).getSigla()+"|"+Integer.valueOf(resmataux.get(i).getQtdeauladia())+"|qtdeh:"+qtdeh);
+                                    resp = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao Filtrar Materia Troca\n" + ex, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return resp;
+    }
+
+    private boolean verificaMateriaDiaVazio(Integer idmateria, List<AuxHorarioCursoBeans> horario, String dia, String inicio, String termino) {
+        Boolean resp = false;
+        if ("segunda".equals(dia)) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(i).getInicio().equals(inicio) && horario.get(i).getTermino().equals(termino)) {
+                    if (horario.get(i).getSegunda().contains("," + String.valueOf(idmateria) + ",")) {
+                        resp = true;
+                    }
+                }
+            }
+        }
+        if ("terca".equals(dia)) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(i).getInicio().equals(inicio) && horario.get(i).getTermino().equals(termino)) {
+                    if (horario.get(i).getTerca().contains("," + String.valueOf(idmateria) + ",")) {
+                        resp = true;
+                    }
+                }
+            }
+        }
+        if ("quarta".equals(dia)) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(i).getInicio().equals(inicio) && horario.get(i).getTermino().equals(termino)) {
+                    if (horario.get(i).getQuarta().contains("," + String.valueOf(idmateria) + ",")) {
+                        resp = true;
+                    }
+                }
+            }
+        }
+        if ("quinta".equals(dia)) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(i).getInicio().equals(inicio) && horario.get(i).getTermino().equals(termino)) {
+                    if (horario.get(i).getQuinta().contains("," + String.valueOf(idmateria) + ",")) {
+                        resp = true;
+                    }
+                }
+            }
+        }
+        if ("sexta".equals(dia)) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(i).getInicio().equals(inicio) && horario.get(i).getTermino().equals(termino)) {
+                    if (horario.get(i).getSexta().contains("," + String.valueOf(idmateria) + ",")) {
+                        resp = true;
+                    }
+                }
+            }
+        }
+        if ("sabado".equals(dia)) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(i).getInicio().equals(inicio) && horario.get(i).getTermino().equals(termino)) {
+                    if (horario.get(i).getSabado().contains("," + String.valueOf(idmateria) + ",")) {
+                        resp = true;
+                    }
+                }
+            }
+        }
+        if ("domingo".equals(dia)) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(i).getInicio().equals(inicio) && horario.get(i).getTermino().equals(termino)) {
+                    if (horario.get(i).getDomingo().contains("," + String.valueOf(idmateria) + ",")) {
+                        resp = true;
+                    }
+                }
+            }
+        }
+        return resp;
+    }
 }

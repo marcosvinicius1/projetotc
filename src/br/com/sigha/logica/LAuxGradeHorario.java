@@ -189,9 +189,9 @@ public class LAuxGradeHorario {
     }
 
     private String ConcatenaIdmateria(List<ProfessorMateriaBeans> BsId) {
-        String id="";
+        String id=",";
         for(int i=0;i<BsId.size();i++){
-            id=id+BsId.get(i).getIdmateria()+"|";
+            id=id+BsId.get(i).getIdmateria()+",";
         }
         return id;
     }

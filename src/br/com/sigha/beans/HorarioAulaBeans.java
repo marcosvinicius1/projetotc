@@ -138,9 +138,7 @@ public class HorarioAulaBeans {
 
     public void setDatageracao(Date datageracao) {
         this.datageracao = datageracao;
-    }
-        
-    
+    } 
     
     
 }

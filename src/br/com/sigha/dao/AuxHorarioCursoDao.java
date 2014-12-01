@@ -94,6 +94,37 @@ public class AuxHorarioCursoDao {
             return lauxhorario;
         }
     }
+    
+     public List<AuxHorarioCursoBeans> BuscaAuxHorarioCursoDia(int curso, String anoletivo,String dia) throws SQLException {
+        try (Connection conexao = new ConexaoBanco().getConnect()) {
+            String sql = "SELECT * FROM auxhorariocurso WHERE  curso=? and anoletivo=? and "+dia+"<>'false'";
+            PreparedStatement pstm = conexao.prepareStatement(sql);
+            pstm.setInt(1, curso);
+            pstm.setString(2, anoletivo);
+            new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
+            ResultSet rs = pstm.executeQuery();
+            List<AuxHorarioCursoBeans> lauxhorario = new ArrayList<>();
+            while (rs.next()) {
+                AuxHorarioCursoBeans auxhorario = new AuxHorarioCursoBeans();
+                auxhorario.setId(rs.getInt("id"));
+                auxhorario.setIdcurso(rs.getInt("curso"));
+                auxhorario.setInicio(rs.getString("inicio"));
+                auxhorario.setTermino(rs.getString("termino"));
+                auxhorario.setSegunda(rs.getString("segunda"));
+                auxhorario.setTerca(rs.getString("terca"));
+                auxhorario.setQuarta(rs.getString("quarta"));
+                auxhorario.setQuinta(rs.getString("quinta"));
+                auxhorario.setSexta(rs.getString("sexta"));
+                auxhorario.setSabado(rs.getString("sabado"));
+                auxhorario.setDomingo(rs.getString("domingo"));
+                auxhorario.setAnoletivo(rs.getString("anoletivo"));
+                lauxhorario.add(auxhorario);
+            }
+            rs.close();
+            pstm.close();
+            return lauxhorario;
+        }
+    }
 
     public void DeletaHorarioAux() throws SQLException {
         try (Connection conexao = new ConexaoBanco().getConnect()) {
@@ -108,7 +139,7 @@ public class AuxHorarioCursoDao {
     public Boolean OcorrenciaMateria(String dia, int curso, String anoletivo, String sigla) throws SQLException {
         Boolean resp = false;
         try (Connection conexao = new ConexaoBanco().getConnect()) {
-            String sql = "select * from auxhorariocurso where " + dia + " like '%"+sigla+"|%' and curso=? and anoletivo=?";            
+            String sql = "select * from auxhorariocurso where " + dia + " like '%"+sigla+",%' and curso=? and anoletivo=?";            
             PreparedStatement pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, curso);
             pstm.setString(2, anoletivo);
