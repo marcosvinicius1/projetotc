@@ -1,0 +1,5 @@
+
+---------------------------
+Wed Dec 03 00:15:22 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4ee7c0: select professor.id,professor.nome,ativo,idunidade,datacadastro,tipo,email,cpf,datanascimento,estadocivil,registro,telfixo,telcel,rua,numero,bairro,idcidade,cidade.nome cidade,estado.uf estado from professor left join cidade on (professor.idcidade=cidade.id) left join estado on (estado.id=cidade.estado) where professor.NOME like'%r%' and idunidade=1
+---------------------------
+Wed Dec 03 00:15:22 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@39ca2c: select professor.id,professor.nome,ativo,idunidade,datacadastro,tipo,email,cpf,datanascimento,estadocivil,registro,telfixo,telcel,rua,numero,bairro,idcidade,cidade.nome cidade,estado.uf estado from professor left join cidade on (professor.idcidade=cidade.id) left join estado on (estado.id=cidade.estado) where professor.NOME like'%ro%' and idunidade=1

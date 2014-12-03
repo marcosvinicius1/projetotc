@@ -21,30 +21,35 @@ import javax.swing.JOptionPane;
  *
  * @author MarcosVinicius
  */
-public class LogsTxt {
+public final class LogsTxt {
+
+    public LogsTxt() {
+        criaPasta(new DataSistema().getDia() + "." + new DataSistema().getMes() + "." + new DataSistema().getAno());
+    }
     String tipo;
-    String data=new DataSistema().getDia()+"."+new DataSistema().getMes()+"."+new DataSistema().getAno();
-String dataarquivo=new DataSistema().getDia()+"."+new DataSistema().getMes()+"."+new DataSistema().getAno()+"-"+new DataSistema().getHora()+"="+new DataSistema().getMinuto()+"="+new DataSistema().getSegundo();
+    String data = new DataSistema().getDia() + "." + new DataSistema().getMes() + "." + new DataSistema().getAno();
+    String dataarquivo = new DataSistema().getDia() + "." + new DataSistema().getMes() + "." + new DataSistema().getAno() + "-" + new DataSistema().getHora() + "=" + new DataSistema().getMinuto() + "=" + new DataSistema().getSegundo();
+
     public void setTxt(String texto) {
         FileWriter arquivo;
         String artexto = getTxt() + "\n---------------------------\n";
-        
+
         try {
-            arquivo = new FileWriter(new File("./logs/"+data+"/"+dataarquivo+".txt"));
+            arquivo = new FileWriter(new File("./logs/" + data + "/" + dataarquivo + ".txt"));
             arquivo.write(artexto + "" + texto);
             arquivo.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Gravar Logs\n" + e, "Gerar Horario", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public void setTxt(String texto,String tipo) {
+
+    public void setTxt(String texto, String tipo) {
         FileWriter arquivo;
-        this.tipo=tipo;
+        this.tipo = tipo;
         String artexto = getTxtTipo() + "\n---------------------------\n";
-        
+
         try {
-            arquivo = new FileWriter(new File("./logs/"+data+"/"+tipo+"-"+dataarquivo+".txt"));
+            arquivo = new FileWriter(new File("./logs/" + data + "/" + tipo + "-" + dataarquivo + ".txt"));
             arquivo.write(artexto + "" + texto);
             arquivo.close();
         } catch (Exception e) {
@@ -55,7 +60,7 @@ String dataarquivo=new DataSistema().getDia()+"."+new DataSistema().getMes()+"."
     public String getTxt() {
         File arquivo;
         String texto = "";
-        arquivo = new File("./logs/"+data+"/"+dataarquivo+".txt");
+        arquivo = new File("./logs/" + data + "/" + dataarquivo + ".txt");
         if (arquivo.exists()) {
             try {
                 FileInputStream fis = new FileInputStream(arquivo);
@@ -71,11 +76,11 @@ String dataarquivo=new DataSistema().getDia()+"."+new DataSistema().getMes()+"."
 
         return texto;
     }
-    
-     public String getTxtTipo() {
+
+    public String getTxtTipo() {
         File arquivo;
         String texto = "";
-        arquivo = new File("./logs/"+data+"/"+this.tipo+"-"+dataarquivo+".txt");
+        arquivo = new File("./logs/" + data + "/" + this.tipo + "-" + dataarquivo + ".txt");
         if (arquivo.exists()) {
             try {
                 FileInputStream fis = new FileInputStream(arquivo);
@@ -91,9 +96,10 @@ String dataarquivo=new DataSistema().getDia()+"."+new DataSistema().getMes()+"."
 
         return texto;
     }
-     public void criaPasta(String nome){
-                if(!new File("./logs/"+nome).exists()){
-                    new File("./logs/"+nome).mkdir();
-                }         
-     }
+
+    public void criaPasta(String nome) {
+        if (!new File("./logs/" + nome).exists()) {
+            new File("./logs/" + nome).mkdir();
+        }
+    }
 }

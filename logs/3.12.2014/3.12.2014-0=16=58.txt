@@ -1,0 +1,5 @@
+
+---------------------------
+Wed Dec 03 00:16:58 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@75a83d: SELECT * FROM gerador.horariocurso where idcurso=1
+---------------------------
+Wed Dec 03 00:16:58 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ff7feb: SELECT * FROM gerador.materia  where id=2
