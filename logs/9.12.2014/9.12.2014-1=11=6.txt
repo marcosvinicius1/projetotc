@@ -1,0 +1,37 @@
+
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@8a169f: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'19:00','19:50','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d344e7: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'19:50','20:40','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@150a3dc: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'20:50','21:40','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@7c824e: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,1,'21:40','22:30','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4ee7c0: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'13:30','14:20','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@510e35: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'14:20','15:10','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ec0883: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'15:30','16:20','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@ae0e27: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'16:20','17:10','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@17c323d: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'19:00','19:50','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@d8ce8f: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'19:50','20:40','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@abce30: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'20:50','21:40','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@84ada4: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,2,'21:40','22:30','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@15914ac: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,3,'13:30','14:20','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1f9b62f: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,3,'14:20','15:10','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1b779cf: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,3,'15:30','16:20','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@39ca2c: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,3,'16:20','17:10','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@7308ce: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,3,'19:00','19:50','2014/3','2014.12.09',1)
+---------------------------
+Tue Dec 09 01:11:06 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@450ea8: insert into horarioaula(idcurso,periodo,inicio,termino,anoletivo,datageracao,idunidade)value(1,3,'19:50','20:40','2014/3','2014.12.09',1)

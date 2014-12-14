@@ -315,6 +315,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
 
         jLabel3.setText("/");
 
+        jTanohorario.setEditable(false);
         jTanohorario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#"))));
         jTanohorario.setText("1");
 
@@ -547,7 +548,8 @@ public class ViewHorarioAula extends javax.swing.JPanel {
     private void jBnovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnovoActionPerformed
         // TODO add your handling code here:
         ativaGerarHorarioCancelar();
-        limpaTela();
+        inicializaTela();
+        buscaAnoletivo();
     }//GEN-LAST:event_jBnovoActionPerformed
 
     private void jBcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcancelarActionPerformed
@@ -617,10 +619,15 @@ public class ViewHorarioAula extends javax.swing.JPanel {
         DefaultTableModel tabelahorario = (DefaultTableModel) jThorario.getModel();
         tabelahorario.setNumRows(0);
         jTanohorario.setText("1");
-        jYanohorario.setValue(2014);
+        jYanohorario.setValue(Integer.valueOf(new DataSistema().getAno()));
 
     }
-
+     private void inicializaTela() {
+        tabelacurso.setNumRows(0);
+        DefaultTableModel tabelahorario = (DefaultTableModel) jThorario.getModel();
+        tabelahorario.setNumRows(0);        
+    }
+    
     private void ativaGerarHorarioCancelar() {
         jBnovo.setEnabled(false);
         jBcancelar.setEnabled(true);
@@ -630,6 +637,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
         jBadiciona.setEnabled(true);
         jBretira.setEnabled(true);
         jBemprimir.setEnabled(false);
+        jYanohorario.setEnabled(false);
     }
 
     private void ativaNovoPesquisa() {
@@ -641,6 +649,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
         jBadiciona.setEnabled(false);
         jBretira.setEnabled(false);
         jBemprimir.setEnabled(false);
+        jYanohorario.setEnabled(true);
     }
 
     public void ativaNovoPesquisaExcluirEmprimir() {
@@ -652,6 +661,7 @@ public class ViewHorarioAula extends javax.swing.JPanel {
         jBadiciona.setEnabled(false);
         jBretira.setEnabled(false);
         jBemprimir.setEnabled(true);
+        jYanohorario.setEnabled(true);
     }
 //metodo gera horario
      public void GeraHorario(int geracao) {  
@@ -803,6 +813,14 @@ public class ViewHorarioAula extends javax.swing.JPanel {
             resp=true;
         }        
         return resp;
+    }
+
+    private void buscaAnoletivo() {
+        try {
+            jTanohorario.setText(String.valueOf(new HorarioAulaDao().retornaAnoletivo(jYanohorario.getValue())+1));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Sequencia Horario\n" + ex, "Gera Horario", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
 }

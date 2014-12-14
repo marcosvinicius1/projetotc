@@ -366,5 +366,21 @@ public class HorarioAulaDao {
         }
         return horarioaula;
     }
-    
+public int retornaAnoletivo(int ano) throws SQLException{
+    int aux=0;
+    int aux2=0;
+    try(Connection conexao=new ConexaoBanco().getConnect()){
+        String sql="SELECT mid(anoletivo,6,3) as ano FROM gerador.horarioaula where anoletivo like'"+ano+"%' group by 1";
+        PreparedStatement pstm=conexao.prepareStatement(sql);
+        new LogsTxt().setTxt(new Date()+"Sql Execultada"+pstm.toString());
+        ResultSet rs=pstm.executeQuery();
+        while(rs.next()){
+            aux2=Integer.valueOf(rs.getInt("ano"));
+            if(aux<aux2){
+                aux=aux2;
+            }
+        }
+    }
+        return aux;
+}    
 }

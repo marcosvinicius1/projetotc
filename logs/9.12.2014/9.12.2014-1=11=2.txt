@@ -1,0 +1,21 @@
+
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@441fdb: delete from auxhorariocurso
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@18d8415: SELECT * FROM gerador.horariocurso where idcurso=1
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1a21acf: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'','','','','','false','false','19:00','19:50','2014/3')
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@fac7c5: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'','','','','','false','false','19:50','20:40','2014/3')
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ed8c3: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'','','','','','false','false','20:50','21:40','2014/3')
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@27491a: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'','','','','','false','false','21:40','22:30','2014/3')
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@195f1cc: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'false','false','false','false','false','','false','13:30','14:20','2014/3')
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1c506f7: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'false','false','false','false','false','','false','14:20','15:10','2014/3')
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@633079: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'false','false','false','false','false','','false','15:30','16:20','2014/3')
+---------------------------
+Tue Dec 09 01:11:02 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d4150: insert into auxhorariocurso(curso,segunda,terca,quarta,quinta,sexta,sabado,domingo,inicio,termino,anoletivo)values(1,'false','false','false','false','false','','false','16:20','17:10','2014/3')
