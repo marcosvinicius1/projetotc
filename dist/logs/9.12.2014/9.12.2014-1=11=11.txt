@@ -1,0 +1,5 @@
+
+---------------------------
+Tue Dec 09 01:11:11 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@905eb5: select * from auxhorariocurso where terca like '%6,%' and curso=1 and anoletivo='2014/3'
+---------------------------
+Tue Dec 09 01:11:11 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@6e9145: select * from auxhorariocurso where terca like '%6,%' and curso=1 and anoletivo='2014/3'

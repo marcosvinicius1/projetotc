@@ -1,0 +1,64 @@
+
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1053a6b: SELECT * FROM auxhorariocurso WHERE  curso=1 and anoletivo='2014/2' and terca<>'false'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@d4fd09: select * from auxhorariocurso where quarta like '%25,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@133c9a1: select * from auxhorariocurso where quarta like '%25,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@197a7f9: select * from auxhorariocurso where quarta like '%25,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1987b05: select * from auxhorariocurso where quarta like '%25,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@c9ea1c: select * from auxhorariocurso where quarta like '%25,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@63048e: select * from auxhorariocurso where quarta like '%25,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@8f21d: select * from auxhorariocurso where quarta like '%26,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1efb21d: select * from auxhorariocurso where quarta like '%26,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@ea9900: select * from auxhorariocurso where quarta like '%26,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@113425f: select * from auxhorariocurso where quarta like '%26,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@ec4af6: select * from auxhorariocurso where quarta like '%26,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1ccd156: select * from auxhorariocurso where quarta like '%26,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1f2c3f4: select * from auxhorariocurso where quarta like '%28,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1227d01: select * from auxhorariocurso where quarta like '%28,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@195d263: select * from auxhorariocurso where quarta like '%28,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@5c80e8: select * from auxhorariocurso where quarta like '%28,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1b4cec7: select * from auxhorariocurso where quarta like '%28,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@10957b1: select * from auxhorariocurso where quarta like '%28,%' and curso=1 and anoletivo='2014/2'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@b6b7e3: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=25 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1f457c8: update horarioaula set terca=66 where anoletivo='2014/2' and inicio='20:50' and termino='21:40' and datageracao='2014.12.01' and periodo=4 and idcurso=1 and idunidade=1
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@12e8306: update horarioaula set terca=66 where anoletivo='2014/2' and inicio='21:40' and termino='22:30' and datageracao='2014.12.01' and periodo=4 and idcurso=1 and idunidade=1
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@d4cd45: select * from horarioaula where anoletivo='2014/2' and datageracao = '2014.12.01' and idcurso=1
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@10fcfe5: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,0) and periodo=1 and ativo='true'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@e1ef11: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,0) and periodo=2 and ativo='true'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@664d6a: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,0) and periodo=3 and ativo='true'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1c427b3: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,0) and periodo=4 and ativo='true'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1b5ff11: select * from horarioaula where anoletivo='2014/2' and datageracao = '2014.12.01' and idcurso=1
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@32f533: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,0) and periodo=1 and ativo='true'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@18bcd0: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=1 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Mon Dec 01 23:45:40 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@92d5fb: select h.* from horarioaula h where 
+h.segunda=40 and anoletivo='2014/2' and datageracao='2014.12.01' or(h.terca=40 and anoletivo='2014/2' and datageracao='2014.12.01') or(h.quarta=40 and anoletivo='2014/2' and datageracao='2014.12.01') or(h.quinta=40 and anoletivo='2014/2' and datageracao='2014.12.01') or(h.sexta=40 and anoletivo='2014/2' and datageracao='2014.12.01') or(h.sabado=40 and anoletivo='2014/2' and datageracao='2014.12.01') or(h.domingo=40 and anoletivo='2014/2' and datageracao='2014.12.01') 

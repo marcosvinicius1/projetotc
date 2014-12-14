@@ -1,0 +1,66 @@
+
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@49689c98: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=20 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@5c4e3bb0: select h.* from horarioaula h where 
+h.segunda=60 and anoletivo='2014/3' and datageracao='2014.12.11' or(h.terca=60 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quarta=60 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quinta=60 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sexta=60 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sabado=60 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.domingo=60 and anoletivo='2014/3' and datageracao='2014.12.11') 
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@366a2ed6: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=21 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@6c1d201c: select h.* from horarioaula h where 
+h.segunda=48 and anoletivo='2014/3' and datageracao='2014.12.11' or(h.terca=48 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quarta=48 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quinta=48 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sexta=48 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sabado=48 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.domingo=48 and anoletivo='2014/3' and datageracao='2014.12.11') 
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4439eccf: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=22 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@79f3bad9: select h.* from horarioaula h where 
+h.segunda=63 and anoletivo='2014/3' and datageracao='2014.12.11' or(h.terca=63 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quarta=63 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quinta=63 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sexta=63 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sabado=63 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.domingo=63 and anoletivo='2014/3' and datageracao='2014.12.11') 
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@66129da5: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=17 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@70fab733: select * from (select h.* from horarioaula h , professormateria p where h.sexta=p.id and anoletivo='2014/3' and datageracao='2014.12.11' and p.idprofessor=10 ) ho where inicio='20:50' and termino='21:40'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1e58fa31: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=19 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@463b1057: select * from (select h.* from horarioaula h , professormateria p where h.sexta=p.id and anoletivo='2014/3' and datageracao='2014.12.11' and p.idprofessor=2 ) ho where inicio='20:50' and termino='21:40'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4ba6a982: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=17 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@6fc8fce8: select count(id) from horarioaula where sexta=55 and periodo=3 and datageracao='2014.12.11' and anoletivo='2014/3'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@44e9660: SELECT * FROM auxhorariocurso WHERE  curso=1 and anoletivo='2014/3' and sexta<>'false'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@5d92135: select * from auxhorariocurso where sabado like '%17,%' and curso=1 and anoletivo='2014/3'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@666f5678: select * from auxhorariocurso where sabado like '%17,%' and curso=1 and anoletivo='2014/3'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@7b0b4b9a: select * from auxhorariocurso where sabado like '%17,%' and curso=1 and anoletivo='2014/3'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@36aefedd: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=17 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@2831300d: update horarioaula set sexta=55 where anoletivo='2014/3' and inicio='20:50' and termino='21:40' and datageracao='2014.12.11' and periodo=3 and idcurso=1 and idunidade=1
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@68662676: update horarioaula set sexta=55 where anoletivo='2014/3' and inicio='21:40' and termino='22:30' and datageracao='2014.12.11' and periodo=3 and idcurso=1 and idunidade=1
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@722fd5ba: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,0) and periodo=4 and ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@55610d1f: select * from horarioaula where anoletivo='2014/3' and datageracao = '2014.12.11' and idcurso=1
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1d26be5: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,0) and periodo=1 and ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@2060e79c: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,0) and periodo=2 and ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@5bdb6c36: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,0) and periodo=3 and ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@186686b5: SELECT * FROM gerador.materia where id in(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,0) and periodo=4 and ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@3920a91: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=23 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@7fd0e77e: select h.* from horarioaula h where 
+h.segunda=64 and anoletivo='2014/3' and datageracao='2014.12.11' or(h.terca=64 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quarta=64 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quinta=64 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sexta=64 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sabado=64 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.domingo=64 and anoletivo='2014/3' and datageracao='2014.12.11') 
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@446d853d: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=24 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@4aae6c4e: select h.* from horarioaula h where 
+h.segunda=65 and anoletivo='2014/3' and datageracao='2014.12.11' or(h.terca=65 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quarta=65 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.quinta=65 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sexta=65 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.sabado=65 and anoletivo='2014/3' and datageracao='2014.12.11') or(h.domingo=65 and anoletivo='2014/3' and datageracao='2014.12.11') 
+---------------------------
+Thu Dec 11 01:17:14 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@413692c8: SELECT professormateria.* from professormateria left join professor on(professormateria.idprofessor=professor.id) where idmateria=25 and professor.idunidade=1 and professor.ativo='true' and professormateria.ativo='true'

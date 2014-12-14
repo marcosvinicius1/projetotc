@@ -1,0 +1,3 @@
+
+---------------------------
+Thu Dec 11 01:11:23 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@73898f52: SELECT mid(anoletivo,6,3) as ano FROM gerador.horarioaula where anoletivo like'2014%' group by 1

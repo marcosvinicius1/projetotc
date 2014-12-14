@@ -1,0 +1,3 @@
+
+---------------------------
+Tue Dec 09 01:01:33 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@43cc83: SELECT mid(anoletivo,6,3) as ano FROM gerador.horarioaula group by 1

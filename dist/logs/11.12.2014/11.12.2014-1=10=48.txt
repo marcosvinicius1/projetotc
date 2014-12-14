@@ -1,0 +1,3 @@
+
+---------------------------
+Thu Dec 11 01:10:48 BRST 2014Sql Execultadacom.mysql.jdbc.JDBC4PreparedStatement@1f55bc48: delete from horarioaula where date_format(datageracao,'%d.%m.%Y')='11.12.2014' and anoletivo='2014/5'
